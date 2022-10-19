@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Create new plugin</title>
+</head>
+<body>
+
+<form action="#" th:action="@{/all}" th:object="${plugin}" method="post">
+    <p>Name: <input type="text" th:field="*{name}" /></p>
+    <p>Description: <input type="text" th:field="*{description}" /></p>
+    <p>Price: <input type="text" th:field="*{price}" /></p>
+    <p>Mark: <input type="text" th:field="*{mark}" /></p>
+    <p><input type="submit" value="Submit" /> </p>
+</form>
+
+<form action="/all">
+    <input type="submit" value="Exit" />
+</form>
+
+
+</body>
+</html>

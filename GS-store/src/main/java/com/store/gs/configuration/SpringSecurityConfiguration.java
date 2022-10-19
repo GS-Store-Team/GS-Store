@@ -2,8 +2,6 @@ package com.store.gs.configuration;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,8 +11,7 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
 import java.util.Arrays;
 
-@Configuration
-@EnableWebSecurity
+//@EnableWebSecurity
 public class SpringSecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public FilterRegistrationBean hiddenHttpMethodFilter(){

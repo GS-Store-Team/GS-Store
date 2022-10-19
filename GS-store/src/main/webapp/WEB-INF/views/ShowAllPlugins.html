@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All plugins</title>
+</head>
+<body>
+    <h1>Plugins list:</h1>
+
+    <section th:each="plugin : ${plugins}">
+        <a th:text="${plugin.getName()}" th:href="@{/all/{id}(id = ${plugin.getId()})}">name</a>
+        <p th:text="${plugin.description}">description</p>
+        <p></p>
+    </section>
+
+    <form action="/all/new">
+        <input type="submit" value="New plugin" />
+    </form>
+</body>
+</html>

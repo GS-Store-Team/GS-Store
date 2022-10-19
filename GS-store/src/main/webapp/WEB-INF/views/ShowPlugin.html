@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plugin</title>
+</head>
+<body>
+
+  <section>
+      <h1>Current Plugin:</h1>
+    <p th:text = "${plugin.getName()}">name</p>
+    <p th:text = "${plugin.description}">description</p>
+    <p th:text = "${plugin.getPrice()}">price</p>
+    <p th:text = "${plugin.getMark()}">mark</p>
+  </section>
+
+  <form th:action="@{/all/{id}/edit(id = ${plugin.getId()})}"><input type="submit" value="edit plugin"/></form>
+
+  <form action="/all"><input type="submit" value="all plugins"/></form>
+
+
+
+</body>
+</html>
