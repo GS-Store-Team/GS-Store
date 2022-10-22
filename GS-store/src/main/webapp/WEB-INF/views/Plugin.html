@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Plugin</title>
+</head>
+<body>
+
+  <h1>Current Plugin:</h1>
+  <section th:object="${plugin}">
+    <hr />
+    <p th:text = "*{name}" id="name"/>
+    <p th:text = "*{description}">description</p>
+    <p th:text = "*{price}">price</p>
+    <p th:text = "*{mark}">mark</p>
+    <hr />
+  </section>
+
+  <a th:href="@{/all/{id}/edit(id = ${plugin.getId()})}"><button>edit</button></a>
+  <form th:method="delete" th:action="@{/all/{id}(id = ${plugin.getId()})}"><button>delete</button></form>
+
+  <p>
+    <a href="/all"><button>all plugins</button></a>
+  </p>
+
+</body>
+</html>

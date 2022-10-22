@@ -2,18 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Edit plugin</title>
 </head>
 <body>
-<form action="#" th:action="@{/all/{id}(id = ${plugin.getId()})}" th:object="${plugin}" method="patch">
+  <h1>Edit plugin:</h1>
+
+  <form th:method="patch" th:action="@{/all/{id}(id = ${plugin.getId()})}" th:object="${plugin}">
+    <hr />
     <p>Name: <input type="text" th:field="*{name}" /></p>
     <p>Description: <input type="text" th:field="*{description}" /></p>
     <p>Price: <input type="text" th:field="*{price}" /></p>
     <p>Mark: <input type="text" th:field="*{mark}" /></p>
     <p><input type="submit" value="Submit" /> </p>
-</form>
+    <hr />
+  </form>
 
-<form th:action="@{/all/{id}(id = ${plugin.getId()})}"><input type="submit" value="exit"/></form>
+  <form th:action="@{/all/{id}(id = ${plugin.getId()})}"><input type="submit" value="exit"/></form>
 
 </body>
 </html>

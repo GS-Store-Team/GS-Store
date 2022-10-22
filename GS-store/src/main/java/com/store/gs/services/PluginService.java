@@ -16,7 +16,7 @@ public class PluginService {
     }
 
     public List<PluginLight> getPage(long pageNumber){
-        return pluginRepository.getPage(pageNumber);
+        return pluginRepository.getListByPage(pageNumber);
     }
 
     public Plugin getById(long id){
@@ -24,10 +24,13 @@ public class PluginService {
     }
 
     public void add(Plugin plugin) {
-        pluginRepository.add(plugin);
+        pluginRepository.create(plugin);
     }
 
     public void changeById(Plugin plugin, long id){
-        pluginRepository.changeById(plugin, id);
+        pluginRepository.updateById(plugin, id);
+    }
+    public void deleteById(long id){
+        pluginRepository.deleteById(id);
     }
 }

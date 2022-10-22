@@ -4,9 +4,9 @@ import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginLight;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
-
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 @Qualifier("InMemory")
@@ -14,83 +14,73 @@ public class PhonyPluginRepository implements PluginRepository{
 
     private static final int pluginCount = 10;
     private static long cnt = 0;
-    private List<PluginLight> pluginsLight;
+    private static Plugin nullPlugin;
     private List<Plugin> plugins;
     {
-        pluginsLight = new ArrayList<>();
+        nullPlugin = new Plugin();
+        nullPlugin.setId(-1);
+        nullPlugin.setName("NULL");
+        nullPlugin.setDescription("NULL");
+
+
         plugins = new ArrayList<>();
-
-        var pl = new PluginLight();
-        pl.setId(cnt++);
-        pl.setName("Valera");
-        pl.setDescription("asdadadasd");
-        pluginsLight.add(pl);
         var p = new Plugin();
-        p.setId(pl.getId());
-        p.setName(pl.getName());
-        p.setDescription(pl.getDescription());
+        p.setId(cnt++);
+        p.setName("First");
+        p.setDescription("Some description");
         plugins.add(p);
 
-        pl = new PluginLight();
-        pl.setId(cnt++);
-        pl.setName("Egor");
-        pl.setDescription("bgbfbfg");
-        pluginsLight.add(pl);
         p = new Plugin();
-        p.setId(pl.getId());
-        p.setName(pl.getName());
-        p.setDescription(pl.getDescription());
+        p.setId(cnt++);
+        p.setName("Second");
+        p.setDescription("Some description");
         plugins.add(p);
 
-        pl = new PluginLight();
-        pl.setId(cnt++);
-        pl.setName("Igor");
-        pl.setDescription("qweewrqwrwrqw");
-        pluginsLight.add(pl);
         p = new Plugin();
-        p.setId(pl.getId());
-        p.setName(pl.getName());
-        p.setDescription(pl.getDescription());
+        p.setId(cnt++);
+        p.setName("Third");
+        p.setDescription("Some description");
         plugins.add(p);
     }
 
-
+    private PluginLight pToPlMapper(Plugin p){
+        var pluginLight = new PluginLight();
+        pluginLight.setId(p.getId());
+        pluginLight.setName(p.getName());
+        pluginLight.setDescription(p.getDescription());
+        pluginLight.setMark(p.getMark());
+        return pluginLight;
+    }
     @Override
-    public List<PluginLight> getPage(long pageNumber){
+    public List<PluginLight> getListByPage(long pageNumber){
         try {
-            return pluginsLight.subList((int) (pageNumber * 10), (int) (pageNumber * 11));
+            return plugins.subList((int) (pageNumber * 10), (int) (pageNumber * 10 +10)).stream().map(this::pToPlMapper).collect(Collectors.toList());
         }catch (IndexOutOfBoundsException e){
-            return pluginsLight;
+            return plugins.stream().map(this::pToPlMapper).collect(Collectors.toList());
         }
     }
 
     @Override
     public Plugin getById(long id) {
-        return plugins.stream().filter(p -> p.getId() == id).findFirst().orElse(new Plugin());
+        return plugins.stream().filter(p -> p.getId() == id).findFirst().orElse(nullPlugin);
     }
 
     @Override
-    public void add(Plugin plugin) {
+    public void create(Plugin plugin) {
         plugin.setId(cnt++);
         plugins.add(plugin);
-        var pl = new PluginLight();
-        pl.setId(plugin.getId());
-        pl.setName(plugin.getName());
-        pl.setDescription(plugin.getDescription());
-        pl.setMark(plugin.getMark());
-        pluginsLight.add(pl);
     }
     @Override
     public void deleteById(long id){
-        PluginLight pl = pluginsLight.stream().filter(p -> p.getId() == id).findFirst().orElse(new PluginLight());
-        pluginsLight.remove(pl);
-
-        Plugin plugin = plugins.stream().filter(p -> p.getId() == id).findFirst().orElse(new Plugin());
-        plugins.remove(plugin);
+        plugins = plugins.stream().filter(p -> p.getId() != id).collect(Collectors.toList());
     }
     @Override
-    public void changeById(Plugin plugin, long id){
-        deleteById(id);
-        add(plugin);
+    public void updateById(Plugin plugin, long id){
+        var oldPlugin = getById(id);
+        if(oldPlugin == nullPlugin) return;
+        oldPlugin.setName(plugin.getName());
+        oldPlugin.setDescription(plugin.getDescription());
+        oldPlugin.setPrice(plugin.getPrice());
+        oldPlugin.setPictures(plugin.getPictures());
     }
 }

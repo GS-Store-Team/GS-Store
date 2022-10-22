@@ -20,17 +20,23 @@ public class LandingPage {
     }
 
     @GetMapping("/all")
-    public String plugins(Model model){
-        model.addAttribute("plugins", pluginService.getPage(1));
+    public String plugins(@RequestParam(name = "page", required = false) String pageId,
+                          Model model){
+        long id = 0;
+        if(pageId != null)
+            try {
+                id = Long.parseLong(pageId)-1;
+            } catch (NumberFormatException ignored){}
 
-        return "ShowAllPlugins";
+        model.addAttribute("plugins", pluginService.getPage(id));
+        return "AllPlugins";
     }
 
     @GetMapping("/all/{id}")
     public String plugin(@PathVariable("id") long id,
                          Model model){
         model.addAttribute("plugin", pluginService.getById(id));
-        return "ShowPlugin";
+        return "Plugin";
     }
 
     @GetMapping("/all/new")
@@ -57,6 +63,12 @@ public class LandingPage {
                                @ModelAttribute("plugin") Plugin plugin){
         pluginService.changeById(plugin, id);
         return "redirect:/all/" + id;
+    }
+
+    @DeleteMapping("/all/{id}")
+    public String deletePlugin(@PathVariable("id") long id){
+        pluginService.deleteById(id);
+        return "redirect:/all";
     }
 }
 
