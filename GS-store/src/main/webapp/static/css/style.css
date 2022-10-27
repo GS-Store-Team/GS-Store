@@ -1,0 +1,10 @@
+.error {
+    box-sizing: border-box;
+    position: absolute;
+    bottom: 60px;
+    left: 5%;
+    width: 90%;
+    background-color: #d14b4b;
+    color: #fff;
+    padding: 7px;
+}

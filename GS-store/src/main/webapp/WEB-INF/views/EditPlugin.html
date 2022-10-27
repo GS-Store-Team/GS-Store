@@ -2,6 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="/static/css/style.css" />
     <title>Edit plugin</title>
 </head>
 <body>
@@ -10,7 +11,8 @@
   <form th:method="patch" th:action="@{/all/{id}(id = ${plugin.getId()})}" th:object="${plugin}">
     <hr />
     <p>Name: <input type="text" th:field="*{name}" /></p>
-    <p>Description: <input type="text" th:field="*{description}" /></p>
+    <p>Short description: <input type="text" th:field="*{shortDescription}" /></p>
+    <p>Full description: <input type="text" th:field="*{fullDescription}" /></p>
     <p>Price: <input type="text" th:field="*{price}" /></p>
     <p>Mark: <input type="text" th:field="*{mark}" /></p>
     <p><input type="submit" value="Submit" /> </p>
@@ -18,6 +20,11 @@
   </form>
 
   <form th:action="@{/all/{id}(id = ${plugin.getId()})}"><input type="submit" value="exit"/></form>
+
+
+  <div th:if="${errors != null}" class="error">
+      <span class="error__text" th:text="${errors}" />
+  </div>
 
 </body>
 </html>

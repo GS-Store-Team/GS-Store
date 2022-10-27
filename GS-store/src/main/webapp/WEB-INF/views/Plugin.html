@@ -9,10 +9,11 @@
   <h1>Current Plugin:</h1>
   <section th:object="${plugin}">
     <hr />
-    <p th:text = "*{name}" id="name"/>
-    <p th:text = "*{description}">description</p>
-    <p th:text = "*{price}">price</p>
-    <p th:text = "*{mark}">mark</p>
+    <p><label>Name: <span th:text = "*{name}"/></label></p>
+    <p><label>Short description: <span th:text = "*{shortDescription}"/></label></p>
+    <p><label>Full description: <span th:text = "*{fullDescription}"/></label></p>
+    <p><label>Price: <span th:text = "*{price}"/></label></p>
+    <p><label>Mark: <span th:text = "*{mark}"/></label></p>
     <hr />
   </section>
 
