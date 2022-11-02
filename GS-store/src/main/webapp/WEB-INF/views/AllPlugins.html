@@ -5,6 +5,11 @@
     <title>All plugins</title>
 </head>
 <body>
+
+    <h1 align="right" th:text="${user.getName()}">password</h1>
+    <h3 align="right" th:text="${user.getUsername()}">login</h3>
+    <p align="right"><a href="/logout"><button>logout</button></a></p>
+
     <h1>Plugins list:</h1>
 
     <hr />
@@ -18,5 +23,6 @@
     <a href="/all/new">
         <button>New plugin</button>
     </a>
+
 </body>
 </html>

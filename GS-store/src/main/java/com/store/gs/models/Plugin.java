@@ -6,11 +6,8 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
-
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.math.BigDecimal;
 
 @Setter @Getter
 @ToString
@@ -18,7 +15,6 @@ import java.math.BigDecimal;
 public class Plugin {
     @Id
     private long id;
-    @NotBlank
     @Size(min = 4, max = 64, message = "\"Name\" length should be in range [4 - 64] characters!")
     private String name;
     @Size(min = 20, max = 512, message = "\"Short description\" length should be in range [20 - 512] characters!")

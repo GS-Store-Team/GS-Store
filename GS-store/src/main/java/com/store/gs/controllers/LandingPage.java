@@ -1,30 +1,30 @@
 package com.store.gs.controllers;
 
 import com.store.gs.models.Plugin;
+import com.store.gs.security.SecurityUser;
 import com.store.gs.services.PluginService;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import com.store.gs.utils.ControllersUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
-import java.util.stream.Collectors;
 
 @Controller
+@RequiredArgsConstructor
 public class LandingPage {
     private final PluginService pluginService;
 
-    public LandingPage(PluginService pluginService) {
-        this.pluginService = pluginService;
-    }
-
     @GetMapping()
     public String helloWorld(){
-        return "hello";
+        return "GreetingPage";
     }
 
     @GetMapping("/all")
-    public String plugins(@RequestParam(name = "page", required = false) String pageId,
+    public String plugins(@AuthenticationPrincipal SecurityUser securityUser,
+                          @RequestParam(name = "page", required = false) String pageId,
                           Model model){
         int id = 0;
         if(pageId != null)
@@ -33,7 +33,7 @@ public class LandingPage {
             } catch (NumberFormatException ignored){}
 
         model.addAttribute("plugins", pluginService.getPage(id));
-        //model.addAttribute("pageCnt", pluginService.get);
+        model.addAttribute("user", securityUser);
         return "AllPlugins";
     }
 
@@ -90,4 +90,3 @@ public class LandingPage {
         return "redirect:/all";
     }
 }
-
