@@ -1,5 +1,6 @@
 package com.store.gs.configuration;
 
+import com.store.gs.enums.Permission;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -45,6 +46,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers(HttpMethod.GET, "/", "/registration", "/login", "/logout").permitAll()
                     .antMatchers(HttpMethod.POST, "/registration").permitAll()
+                    //.antMatchers(HttpMethod.GET, "/**").hasAuthority(Permission.READ.getPermission())
                     //.antMatchers(HttpMethod.POST, "/**").hasAuthority(Permission.WRITE.getPermission())
                     //.antMatchers(HttpMethod.DELETE, "/**").hasAuthority(Permission.WRITE.getPermission())
                     .anyRequest().authenticated()
@@ -62,3 +64,5 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .deleteCookies("JSESSIONID");
     }
 }
+
+

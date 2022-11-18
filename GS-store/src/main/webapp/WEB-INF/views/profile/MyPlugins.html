@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="/me"><button>Profile</button></a>
+    <a href="/me/reviews"><button>My reviews</button></a>
+    <p align="right"><a href="/all"><button>Back to shop</button></a></p>
+    <hr />
+
+    <form th:each="plugin: ${plugins}">
+        <a th:href="@{/all/{id}(id =${plugin.getId()})}" th:text="${plugin.name}" />
+    </form>
+
+    <hr />
+    <a href="/all/new"><button align="center">Add new plugin</button></a>
+
+</body>
+</html>

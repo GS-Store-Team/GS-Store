@@ -1,9 +1,13 @@
 package com.store.gs.services;
 
 import com.store.gs.enums.Role;
+import com.store.gs.models.Plugin;
 import com.store.gs.models.User;
+import com.store.gs.repositories.PluginRepository;
 import com.store.gs.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +15,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final PluginRepository pluginRepository;
     private final PasswordEncoder passwordEncoder;
 
     public boolean register(User user){
@@ -26,5 +31,9 @@ public class UserService {
                 true);
 
         return true;
+    }
+
+    public Page<Plugin> getUserPluginsByUserEmail(String email, int pageId){
+        return pluginRepository.getByDeveloperEmail(email, PageRequest.of(pageId, 10));
     }
 }

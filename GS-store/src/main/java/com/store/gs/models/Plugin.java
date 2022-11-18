@@ -15,6 +15,9 @@ import javax.validation.constraints.Size;
 public class Plugin {
     @Id
     private long id;
+
+    @Column("developeremail")
+    private String developerEmail;
     @Size(min = 4, max = 64, message = "\"Name\" length should be in range [4 - 64] characters!")
     private String name;
     @Size(min = 20, max = 512, message = "\"Short description\" length should be in range [20 - 512] characters!")

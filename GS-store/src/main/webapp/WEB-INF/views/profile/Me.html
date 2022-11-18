@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <a href="/me/plugins"><button>My plugins</button></a>
+    <a href="/me/reviews"><button>My reviews</button></a>
+    <p align="right"><a href="/all"><button>Back to shop</button></a></p>
+    <hr />
+
+    <form th:object="${user}">
+        <p th:text="${user.getName()}" />
+        <p th:text="${user.getUsername()}" />
+    </form>
+</body>
+</html>

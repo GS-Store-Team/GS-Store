@@ -5,7 +5,9 @@ import com.store.gs.security.SecurityUser;
 import com.store.gs.services.PluginService;
 import com.store.gs.utils.ControllersUtils;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,18 +15,15 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@Scope("session")
+@RequestMapping("/all")
 @RequiredArgsConstructor
 public class LandingPage {
+    private final SecurityUser securityUser = (SecurityUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     private final PluginService pluginService;
 
-    @GetMapping()
-    public String helloWorld(){
-        return "GreetingPage";
-    }
-
-    @GetMapping("/all")
-    public String plugins(@AuthenticationPrincipal SecurityUser securityUser,
-                          @RequestParam(name = "page", required = false) String pageId,
+    @GetMapping
+    public String plugins(@RequestParam(name = "page", required = false) String pageId,
                           Model model){
         int id = 0;
         if(pageId != null)
@@ -37,20 +36,23 @@ public class LandingPage {
         return "AllPlugins";
     }
 
-    @GetMapping("/all/{id}")
+    @GetMapping("/{id}")
     public String plugin(@PathVariable("id") long id,
                          Model model){
         model.addAttribute("plugin", pluginService.getById(id));
+        model.addAttribute("user", securityUser);
         return "Plugin";
     }
 
-    @GetMapping("/all/new")
+    @GetMapping("/new")
     public String newPlugin(Model model){
-        model.addAttribute(new Plugin());
+        Plugin plugin = new Plugin();
+
+        model.addAttribute(plugin);
         return "NewPlugin";
     }
 
-    @PostMapping("/all")
+    @PostMapping
     public String addNewPlugin(@ModelAttribute("plugin") @Valid Plugin plugin,
                                BindingResult bindingResult,
                                Model model){
@@ -59,18 +61,19 @@ public class LandingPage {
             model.addAttribute("errors", ControllersUtils.errors(bindingResult));
             return "NewPlugin";
         }
+        plugin.setDeveloperEmail(securityUser.getUsername());
         pluginService.add(plugin);
         return "redirect:/all";
     }
 
-    @GetMapping("/all/{id}/edit")
+    @GetMapping("/{id}/edit")
     public String addNewPlugin(@PathVariable("id") long id,
                                Model model){
         model.addAttribute("plugin", pluginService.getById(id));
         return "EditPlugin";
     }
 
-    @PatchMapping("/all/{id}")
+    @PatchMapping("/{id}")
     public String changePlugin(@PathVariable("id") long id,
                                @Valid @ModelAttribute("plugin") Plugin plugin,
                                BindingResult bindingResult,
@@ -80,11 +83,12 @@ public class LandingPage {
             model.addAttribute("errors", ControllersUtils.errors(bindingResult));
             return "EditPlugin";
         }
+        plugin.setDeveloperEmail(securityUser.getUsername());
         pluginService.changeById(plugin, id);
         return "redirect:/all/" + id;
     }
 
-    @DeleteMapping("/all/{id}")
+    @DeleteMapping("/{id}")
     public String deletePlugin(@PathVariable("id") long id){
         pluginService.deleteById(id);
         return "redirect:/all";
