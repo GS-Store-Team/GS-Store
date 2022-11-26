@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/static/css/style.css" />
     <title>GS-Store sign in!</title>
 </head>
 <body>
@@ -16,7 +15,7 @@
   <div><a href="/registration"><button>Registration</button></a></div>
 
 
-  <div th:if="${reg != null}" class="error" >
+  <div th:if="${reg != null}" >
       <span th:text="${reg}" />
   </div>
 

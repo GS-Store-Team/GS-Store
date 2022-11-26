@@ -1,0 +1,10 @@
+.my__plugin{
+    border-radius: 20px;
+    border: 1px solid teal;
+}
+
+.my__col {
+    flex: 0 0 auto;
+    width: 33.33333333%;
+    margin: 20px;
+}

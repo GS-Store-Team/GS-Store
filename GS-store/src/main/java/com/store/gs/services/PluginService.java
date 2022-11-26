@@ -1,13 +1,10 @@
 package com.store.gs.services;
 
 import com.store.gs.models.Plugin;
-import com.store.gs.models.PluginLight;
 import com.store.gs.repositories.PluginRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PluginService {
@@ -18,28 +15,20 @@ public class PluginService {
         this.pluginRepository = pluginRepository;
     }
 
-    public List<PluginLight> getPage(int pageNumber){
+    public Page<Plugin> getPage(int pageNumber){
         if(pageNumber < 0) pageNumber = 0;
-        Page<Plugin> plugins = pluginRepository.findAll(PageRequest.of(pageNumber,cnt));
-        return plugins.getContent().stream().map(plugin -> {
-            var pl = new PluginLight();
-            pl.setId(plugin.getId());
-            pl.setName(plugin.getName());
-            pl.setMark(plugin.getMark());
-            pl.setDescription(plugin.getShortDescription());
-            return pl;
-        }).collect(Collectors.toList());
+        return pluginRepository.findAll(PageRequest.of(pageNumber,cnt));
     }
 
     public Plugin getById(long id){
-        return pluginRepository.findById(id).orElse(new Plugin());
+        return pluginRepository.findById(id).orElse(null);
     }
 
     public void add(Plugin plugin) {
         pluginRepository.save(plugin);
     }
 
-    public void changeById(Plugin plugin, long id){
+    public void changeById(Plugin plugin){
         pluginRepository.save(plugin);
     }
 

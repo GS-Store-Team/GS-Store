@@ -1,7 +1,6 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<html xmlns:th="https://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" href="/static/css/style.css" />
     <title>Registration</title>
 </head>
 <body>
@@ -18,8 +17,8 @@
 </form>
 <div><a href="/"><button>exit</button></a></div>
 
-<div th:if="${errors != null}" class="error">
-    <span class="error__text" th:text="${errors}" />
+<div th:if="${errors != null}">
+    <span th:text="${errors}" />
 </div>
 </body>
 </html>

@@ -3,15 +3,16 @@ package com.store.gs.models;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
-@Setter @Getter
-public class PluginLight {
+@Getter@Setter
+public class PluginLight{
+    public  PluginLight(Plugin plugin){
+        this.id = plugin.getId();
+        this.name = plugin.getName();
+        this.shortDescription = plugin.getShortDescription();
+        this.mark = plugin.getMark();
+    }
     private long id;
     private String name;
-    private String description;
-    private List<String> pictures;
+    private String shortDescription;
     private double mark;
-
-    public PluginLight(){}
 }
