@@ -12,7 +12,7 @@ const PluginList = ({list}) => {
 
     return (
         <div className="container">
-            {arr.map(subList => <PluginSublist list={subList}/>)}
+            {arr.map((subList, index) => <PluginSublist list={subList} key={index}/>)}
         </div>
     );
 };
