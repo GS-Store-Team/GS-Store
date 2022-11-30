@@ -1,5 +1,6 @@
 import React, {Component, useState} from 'react';
 import classes from './pluginform.module.css';
+import PluginService from "../../API/PluginService";
 
 const PluginForm = (props) => {
 
@@ -12,12 +13,17 @@ const PluginForm = (props) => {
 
     const[plugin, setPlugin] = useState( {...emptyPlugin})
 
+    const fetchPluginToServer = async (plugin) => {
+        await PluginService.sendNewPlugin(plugin.id, plugin);
+    }
+
     const clicked = (e) =>{
         e.preventDefault();
 
         const pl = plugin;
         pl.id = Date.now();
-
+        
+        //fetchPluginToServer(pl);
         props.add(pl);
 
         setPlugin({...emptyPlugin});
@@ -36,7 +42,6 @@ const PluginForm = (props) => {
             />
             <textarea
                     className={classes.my__textarea}
-                    type="text"
                     placeholder={"Enter short description"}
                     value = {plugin.shortDescription}
                     onChange={event => setPlugin({...plugin, shortDescription: event.target.value})}

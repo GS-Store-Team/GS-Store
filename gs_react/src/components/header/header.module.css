@@ -1,8 +1,32 @@
 .my__header{
     background-color: #eed7c1;
     height: 100px;
+    overflow: hidden;
+
 }
 
 .my__img{
-    height: 50px;
+    margin-top: 1px;
+    height: 36px;
+}
+
+.my__logo{
+    padding-left: calc(var(--bs-gutter-x) * .3);
+    padding-right: calc(var(--bs-gutter-x) * .0);
+    margin-top: 30px;
+    margin-bottom: 0px;
+    width: 150px;
+    background-color: #E3E0DA;
+    height: 40px;
+    border: 1px solid darkgray;
+    border-radius: 40px;
+    vertical-align: middle;
+    display: flex;
+}
+
+.my__title{
+    margin: auto 3%;
+
+    font-size: 20px;
+    display: inline-block;
 }
