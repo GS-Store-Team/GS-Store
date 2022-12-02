@@ -13,6 +13,11 @@ export default class PluginService{
         return response;
     }
 
+    static async getPluginById(id){
+        const response = await axios.get("http://localhost:8080/plugins/" + id);
+        return response;
+    }
+
     static async sendNewPlugin(plugin){
         const config = {
             headers: {

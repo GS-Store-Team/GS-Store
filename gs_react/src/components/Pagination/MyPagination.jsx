@@ -2,7 +2,7 @@ import React from 'react';
 import {arrayFromNum} from "../../utils/Utils";
 import classes from "./pagination.module.css";
 
-const Pagination = ({page, current, change}) => {
+const MyPagination = ({page, current, change}) => {
     const arr = arrayFromNum(page);
     return (
         <div
@@ -17,4 +17,4 @@ const Pagination = ({page, current, change}) => {
     );
 };
 
-export default Pagination;
+export default MyPagination;
