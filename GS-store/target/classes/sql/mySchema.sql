@@ -37,7 +37,7 @@ CREATE TABLE plugin_category(
                                 PRIMARY KEY (plugin_id, category_id),
                                 constraint fk_plugin
                                     foreign key (plugin_id)
-                                        references plugins (id),
+                                        references plugin (id),
                                 constraint fk_category
                                     foreign key (category_id)
                                         references category (id)
@@ -54,8 +54,15 @@ CREATE TABLE plugin_tag(
                            PRIMARY KEY (plugin_id, tag_id),
                            constraint fk_plugin
                                foreign key (plugin_id)
-                                   references plugins (id),
+                                   references plugin (id),
                            constraint fk_tag
                                foreign key (tag_id)
                                    references tag (id)
+);
+
+CREATE TABLE image(
+                      id serial primary key,
+                      plugin_Id int references plugin,
+                      is_preview bool,
+                      data bytea
 );

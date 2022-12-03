@@ -1,9 +1,6 @@
 package com.store.gs.models;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -46,14 +43,14 @@ public class Plugin {
 }
 
 @Table("plugin_category")
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 class CategoryRef {
     private Long categoryId;
 }
 
 @Table("plugin_tag")
-@AllArgsConstructor
+@NoArgsConstructor
 @Getter @Setter
 class TagRef {
     private Long tagId;
