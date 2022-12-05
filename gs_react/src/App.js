@@ -1,14 +1,23 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import AppRouter from "./components/AppRouter";
+import AppRouter from "./routes/AppRouter";
 import Header from "./components/header/Header";
+import {AuthContext} from "./context/context";
 
 const App = () => {
+    const [isAuth, setAuth] = useState(false);
+    const [isLoading, setLoading] = useState(true);
 
-  return <div>
+    useEffect(() =>{
+        if(localStorage.getItem('auth'))
+            setAuth(true);
+        setLoading(false);
+    }, []);
+
+  return <AuthContext.Provider value={{isAuth, setAuth, isLoading}}>
             <Header />
             <AppRouter />
-         </div>;
+         </AuthContext.Provider>;
 }
 
 export default App;
