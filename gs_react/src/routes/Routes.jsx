@@ -1,7 +1,7 @@
 import React from 'react';
-import Main from "../pages/Main";
-import PluginPage from "../pages/plaginpage/PluginPage";
-import Login from "../security/Login";
+import Main from "../pages/main/Main";
+import PluginPage from "../pages/pluginview/PluginPage";
+import Login from "../pages/login/Login";
 import NoMatch from "./NoMatch";
 
 export const privateRoutes = [

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppRouter from "./routes/AppRouter";
-import Header from "./components/header/Header";
 import {AuthContext} from "./context/context";
 
 const App = () => {
@@ -15,7 +14,6 @@ const App = () => {
     }, []);
 
   return <AuthContext.Provider value={{isAuth, setAuth, isLoading}}>
-            <Header />
             <AppRouter />
          </AuthContext.Provider>;
 }

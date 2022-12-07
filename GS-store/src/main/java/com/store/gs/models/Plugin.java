@@ -13,6 +13,7 @@ import java.util.Set;
 @Setter @Getter
 @ToString
 @Table("plugin")
+@NoArgsConstructor
 public class Plugin {
     @Id
     private long id;
@@ -39,7 +40,6 @@ public class Plugin {
 
     @Column("isdeleted")
     private boolean isDeleted;
-    public Plugin() {}
 }
 
 @Table("plugin_category")

@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react';
 import classes from './pluginform.module.css';
-import PluginService from "../../API/PluginService";
+import Api from "../../API/Api";
 
 const PluginForm = (props) => {
 
@@ -13,20 +13,9 @@ const PluginForm = (props) => {
 
     const[plugin, setPlugin] = useState( {...emptyPlugin})
 
-    const fetchPluginToServer = async (plugin) => {
-        await PluginService.sendNewPlugin(plugin.id, plugin);
-    }
-
     const clicked = (e) =>{
         e.preventDefault();
-
-        const pl = plugin;
-        pl.id = Date.now();
-        
-        //fetchPluginToServer(pl);
-        props.add(pl);
-
-        setPlugin({...emptyPlugin});
+        Api.sendNewPlugin(plugin).then(() => setPlugin({...emptyPlugin}));
     }
 
     return (

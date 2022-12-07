@@ -1,12 +1,14 @@
 package com.store.gs.security;
 
 import com.store.gs.models.User;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.Set;
 
+@ToString
 public class SecurityUser implements UserDetails {
     private final String name;
     private final String email;

@@ -43,7 +43,7 @@ public class PluginsController {
                                                           BindingResult bindingResult){
 
         if(bindingResult.hasErrors())
-            return ResponseEntity.internalServerError().build();
+            return ResponseEntity.badRequest().build();
 
         pluginService.add(plugin);
 

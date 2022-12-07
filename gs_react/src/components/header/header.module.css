@@ -2,7 +2,7 @@
     background-color: #eed7c1;
     height: 100px;
     overflow: hidden;
-
+    text-align: right;
 }
 
 .my__img{
@@ -29,4 +29,17 @@
 
     font-size: 20px;
     display: inline-block;
+}
+
+.my__button{
+    font-size: 11px;
+    margin: 0 auto;
+    border: 1px solid darkgray;
+    border-radius: 15px;
+    background-color: #E3E0DA;
+}
+
+.my__button:hover{
+    border: 1px solid gray;
+    background-color: #E3E0DA;
 }

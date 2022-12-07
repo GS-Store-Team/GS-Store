@@ -1,0 +1,54 @@
+.my_login__form{
+    border: 1px solid black;
+    border-radius: 30px;
+    width: 400px;
+    height: 240px;
+    margin: 200px auto;
+    text-align: center;
+}
+
+.my__input{
+    border: 1px solid black;
+    width: 60%;
+    display: inline-block;
+    margin-top: 5px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.my__title{
+    font-size: 20px;
+    width: 50px;
+    margin: 25px auto 8px;
+
+}
+
+.my__label1{
+    font-size: 14px;
+    width: 100px;
+    text-align: right;
+    padding: 18px;
+}
+.my__label2{
+    font-size: 14px;
+    width: 100px;
+}
+
+.my__button{
+    font-size: 12px;
+    width: 60px;
+    margin: 30px auto 0 0px;
+    height: 28px;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.my__button:hover{
+    background-color:rgba(0, 0, 0, 0.1);
+    border: 1px solid coral;
+}
+
+
+
