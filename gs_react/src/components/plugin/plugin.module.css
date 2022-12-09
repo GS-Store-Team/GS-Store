@@ -3,6 +3,10 @@
     margin-top: 60px;
 }
 
+.inner__picture:hover{
+    background-color: rgba(0,0,0,0.5);
+}
+
 .my__col {
     flex: 0 0 auto;
     width: 33%;

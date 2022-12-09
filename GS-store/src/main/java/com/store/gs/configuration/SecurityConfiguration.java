@@ -3,6 +3,7 @@ package com.store.gs.configuration;
 import com.store.gs.security.jwt.JwtConfigurer;
 import com.store.gs.security.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/login";
-    private final JwtTokenProvider jwtTokenProvider;
+    private static final String SIGNUP_ENDPOINT = "/signup";
+    private final JwtConfigurer jwtConfigurer;
 
     @Bean
     @Override
@@ -41,8 +43,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
+                    .antMatchers(SIGNUP_ENDPOINT).permitAll()
                     .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
+                .apply(jwtConfigurer);
     }
 }

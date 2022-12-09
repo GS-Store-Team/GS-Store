@@ -2,7 +2,7 @@
     border: 1px solid black;
     border-radius: 30px;
     width: 400px;
-    height: 250px;
+    height: 270px;
     margin: 200px auto;
     text-align: center;
 }
@@ -19,7 +19,7 @@
 
 .my__title{
     font-size: 20px;
-    width: 50px;
+    width: 100px;
     margin: 25px auto 8px;
 
 }
@@ -28,19 +28,27 @@
     font-size: 14px;
     width: 100px;
     text-align: right;
-    padding: 18px;
+    padding: 10px;
 }
 .my__label2{
     font-size: 14px;
     width: 100px;
+    text-align: right;
+    padding: 10px;
+}
+
+.my__label3{
+    font-size: 14px;
+    width: 95px;
+    padding: 10px 10px 10px 0;
+    margin-left: 5px;
 }
 
 .my__button{
     font-size: 12px;
     width: 60px;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-bottom: 8px;
-    /*margin: 20px auto;*/
     height: 28px;
     border: 1px solid black;
     border-radius: 8px;

@@ -26,9 +26,13 @@
 
 .my__title{
     margin: auto 3%;
-
     font-size: 20px;
     display: inline-block;
+    color: black;
+}
+
+.my__title:hover{
+    color: coral;
 }
 
 .my__button{

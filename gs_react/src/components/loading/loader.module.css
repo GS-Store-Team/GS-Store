@@ -1,8 +1,9 @@
 .my__outer__block{
     width: 100%;
-    height: 700px;
+    height: 100%;
+    display: flex;
 }
 .my__loader{
     width: 100px;
-    margin: 250px auto;
+    margin: auto;
 }

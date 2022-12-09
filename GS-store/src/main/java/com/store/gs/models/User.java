@@ -12,12 +12,12 @@ import javax.validation.constraints.Size;
 @Table("usr")
 public class User {
     @Id
-    @Size(min = 4, max = 64, message = "\"Name\" length should be in range [4 - 64] characters!")
+    @Size(min = 4, max = 64, message = "Name length should be in range [4 - 64] characters!")
     private String name;
-    @NotBlank(message = "\"Email\" can not be blank!")
-    @Email(message = "\"Email\" incorrect!")
+    @NotBlank(message = "Email can not be blank!")
+    @Email(message = "Email incorrect!")
     private String email;
-    @Size(min = 8, max = 64, message = "\"Password\" length should be more or equal 8 characters!")
+    @Size(min = 8, max = 64, message = "Password length should be more or equal 8 characters!")
     private String password;
     private boolean active;
     private Role role;

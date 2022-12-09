@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/plugins")
@@ -17,11 +18,16 @@ public class PluginsController {
     private final PluginService pluginService;
 
     @GetMapping
-    public ResponseEntity<Page<Plugin>> plugins(@RequestParam(name = "page", required = false) String pageId,
-                                                @RequestParam(name = "_limit", required = false) String pageSize){
+    public ResponseEntity<Page<Plugin>> plugins(@RequestParam(name = "_page", required = false) String pageId,
+                                                @RequestParam(name = "_limit", required = false) String pageSize,
+                                                @RequestParam(name = "_cat", required = false) String[] categories,
+                                                @RequestParam(name = "_tag", required = false) String[] tags){
+
         Page<Plugin> page = pluginService.getPage(
                         ControllersUtils.parseIntParam(pageId),
-                        ControllersUtils.parseIntParam(pageSize)
+                        ControllersUtils.parseIntParam(pageSize),
+                        ControllersUtils.checkStringArray(categories),
+                        ControllersUtils.checkStringArray(tags)
                     );
 
         return page.getTotalElements() == 0?

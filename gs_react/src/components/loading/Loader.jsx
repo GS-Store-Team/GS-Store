@@ -10,7 +10,7 @@ const Loader = () => {
                 width="100"
                 color="#eed7c1"
                 secondaryColor= '#eed7c1'
-                radius='12'
+                radius = "12"
                 ariaLabel="mutating-dots-loading"
                 wrapperStyle={{}}
                 wrapperClass={classes.my__loader}

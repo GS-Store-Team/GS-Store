@@ -2,22 +2,18 @@ package com.store.gs.utils;
 
 import com.store.gs.models.MyImage;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 public class ControllersUtils {
-    public static String errors(BindingResult bindingResult){
-        List<String> errors = bindingResult.getFieldErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.toList());
-        StringBuilder stringBuilder = new StringBuilder();
-        errors.forEach(e -> stringBuilder.append(e).append(' '));
-        return stringBuilder.toString();
-    }
 
     public static int parseIntParam(String param){
         if(param != null)
@@ -31,5 +27,20 @@ public class ControllersUtils {
         response.setContentType("image/jpeg");
         InputStream in = new ByteArrayInputStream(image.getData());
         IOUtils.copy(in, response.getOutputStream());
+    }
+
+    public static Map<String, String> extractErrors(BindingResult bindingResult){
+        Map<String, String> map  =new HashMap<>();
+
+        List<FieldError> errors = bindingResult.getFieldErrors();
+        errors.forEach(e -> map.put(e.getField(), e.getDefaultMessage()));
+
+        return map;
+    }
+
+    public static String[] checkStringArray(String[] arr){
+        return arr == null?
+                new String[]{}:
+                arr;
     }
 }

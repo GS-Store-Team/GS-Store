@@ -3,8 +3,9 @@ import {AuthContext} from "../../context/context";
 import Api from "../../API/Api";
 import classes from "./login.module.css";
 import {BareHeader} from "../../components/header/BareHeader";
+import {Link} from "react-router-dom";
 
-const Login = () => {
+export const Login = () => {
 
     const [request, setRequest] = useState({
             username:"",
@@ -46,11 +47,15 @@ const Login = () => {
                        value={request.password}
                        onChange={event => {setRequest({...request, password: event.target.value})}}
                 />
+                <div className={classes.my__div}>
                 <button className={classes.my__button}
                         onClick={login}>Sign in</button>
+                <Link   to={"/signup"}
+                        style={{textDecoration: "none"}}
+                        className={classes.my__button1}>
+                        Sign up</Link>
+                </div>
             </div>
         </div>
     );
 };
-
-export default Login;

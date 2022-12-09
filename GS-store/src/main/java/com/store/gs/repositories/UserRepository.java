@@ -10,6 +10,8 @@ import java.util.Optional;
 public interface UserRepository extends CrudRepository<User, String> {
     Optional<User> getUserByEmail(String email);
 
+    boolean existsUserByEmail(String email);
+
     @Modifying
     @Query("insert into usr (email, name, password, role, active)" +
             "values (:email, :name, :password, :role, :active)")

@@ -5,12 +5,11 @@ import com.store.gs.repositories.ImageRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.utils.ControllersUtils;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -21,14 +20,17 @@ public class ImageController {
     private final ImageRepository imageRepository;
     private final PluginRepository pluginRepository;
 
-    @GetMapping("/{id}")
-    public void getImageById(@PathVariable("id") String imageId,
-                             HttpServletResponse response) throws IOException {
+    private final String PREFIX = "data:image/jpeg;base64,";
 
+    @GetMapping("/{id}")
+    public ResponseEntity<String> getImageById(@PathVariable("id") String imageId) {
         long id = ControllersUtils.parseIntParam(imageId);
+
         MyImage myImage = imageRepository.findById(id).orElseThrow();
 
-        ControllersUtils.setImageToResponse(myImage, response);
+        String encodedImage = Base64.encodeBase64String(myImage.getData());
+
+        return ResponseEntity.ok(PREFIX + encodedImage);
     }
 
     @GetMapping("/plugin/{id}")
@@ -41,14 +43,17 @@ public class ImageController {
     }
 
     @GetMapping("/plugin/{id}/preview")
-    public void getPreviewByPluginId(@PathVariable("id") String pluginId,
-                                                  HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> getPreviewByPluginId(@PathVariable("id") String pluginId) {
         long id = ControllersUtils.parseIntParam(pluginId);
 
         MyImage myImage = imageRepository.getPreviewByPluginId(id).orElseThrow();
 
-        ControllersUtils.setImageToResponse(myImage, response);
+        String encodedImage = Base64.encodeBase64String(myImage.getData());
+
+        return ResponseEntity.ok(PREFIX + encodedImage);
     }
+
+
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> setPreviewImage(@RequestParam(name = "plugin_id") String pluginId,

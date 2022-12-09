@@ -20,6 +20,7 @@ export const Header = () => {
             <div className="container">
                 <div className={"row"}>
                     <Link to={"/main"}
+                          style={{textDecoration: "none"}}
                           className={[classes.my__logo, "col-1"].join(' ')}>
                         <img
                             className={classes.my__img}

@@ -3,6 +3,7 @@ import axios from "axios";
 
 const httpHeaders ={
         "Content-Type": "application/json",
+        "responseType": "arraybuffer",
         "Authorization": `Bearer_${localStorage.getItem('token')}`
     }
 
@@ -11,7 +12,7 @@ export default class Api {
         const response = await axios.get("http://localhost:8080/plugins", {
             headers: httpHeaders,
             params: {
-                page: page,
+                _page: page,
                 _limit: limit
             }
         })
@@ -32,5 +33,15 @@ export default class Api {
 
     static async login(authRequest){
         return await axios.post("http://localhost:8080/login", authRequest);
+    }
+
+    static async signUp(authRequest){
+        return await axios.post("http://localhost:8080/signup", authRequest);
+    }
+
+    static async previewByPluginId(id){
+        return await axios.get(`http://localhost:8080/image/plugin/${id}/preview`, {
+                headers:httpHeaders,
+            });
     }
 }
