@@ -30,7 +30,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        try {
+//        try {
             String token = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);
 
             if (token != null && jwtTokenProvider.validateToken(token)) {
@@ -40,8 +40,8 @@ public class JwtTokenFilter extends GenericFilterBean {
                     SecurityContextHolder.getContext().setAuthentication(authentication);
             }
             filterChain.doFilter(servletRequest, servletResponse);
-        }catch (Exception e){
-            resolver.resolveException((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, null, e);
-        }
+//        }catch (Exception e){
+//            resolver.resolveException((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, null, e);
+//        }
     }
 }

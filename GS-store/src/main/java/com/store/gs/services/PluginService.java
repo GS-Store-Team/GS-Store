@@ -4,10 +4,12 @@ import com.store.gs.models.Plugin;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 
 @Service
@@ -20,13 +22,35 @@ public class PluginService {
 
     public Page<Plugin> getPage(int pageNumber,
                                 int limit,
-                                String[] categories,
+                                String filter,
+                                long category,
                                 String[] tags){
         if(pageNumber < 1) pageNumber = 1;
         if(limit <= 5) limit = 5;
 
-        if((categories.length == 0) && (tags.length==0))
-            return pluginRepository.findAll(PageRequest.of(pageNumber-1,limit));
+        if(tags.length==0)
+            if(category==-1)
+                if(filter == null)
+                    return pluginRepository.findAll(PageRequest.of(pageNumber - 1, limit));
+                else
+                    return pluginRepository.findAllByNameContainingIgnoreCase(filter, PageRequest.of(pageNumber-1, limit));
+            else
+                if(filter == null) {
+                    List<Plugin> plugins = pluginRepository.findAllByCategoryId(category, limit, (long) (pageNumber - 1) * limit);
+
+                    int totalElem = pluginRepository.findCountOfAllByCategoryId(category);
+
+                    Page<Plugin> p = new PageImpl<>(plugins, PageRequest.of((pageNumber-1), limit), totalElem);
+                    return p;
+                }
+                else {
+                    List<Plugin> plugins = pluginRepository.findAllByCategoryIdAndFilter(filter, category, limit, (long) (pageNumber - 1) * limit);
+
+                    int totalElem = pluginRepository.findCountOfAllByCategoryIdAndFilter(filter, category);
+
+                    Page<Plugin> p = new PageImpl<>(plugins, PageRequest.of((pageNumber-1), limit), totalElem);
+                    return p;
+                }
 
         return pluginRepository.findAll(PageRequest.of(pageNumber-1,limit));
     }

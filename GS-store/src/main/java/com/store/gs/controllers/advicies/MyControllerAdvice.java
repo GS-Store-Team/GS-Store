@@ -32,8 +32,8 @@ public class MyControllerAdvice {
         return new ResponseEntity<>(HttpStatus.LOCKED);
     }
 
-    @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<?> processRuntimeException(RuntimeException e) {
-        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
-    }
+//    @ExceptionHandler(RuntimeException.class)
+//    public ResponseEntity<?> processRuntimeException(RuntimeException e) {
+//        return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+//    }
 }

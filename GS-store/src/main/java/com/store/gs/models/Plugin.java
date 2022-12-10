@@ -1,5 +1,7 @@
 package com.store.gs.models;
 
+import com.store.gs.models.supportclasses.CategoryRef;
+import com.store.gs.models.supportclasses.TagRef;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -40,18 +42,4 @@ public class Plugin {
 
     @Column("isdeleted")
     private boolean isDeleted;
-}
-
-@Table("plugin_category")
-@NoArgsConstructor
-@Getter @Setter
-class CategoryRef {
-    private Long categoryId;
-}
-
-@Table("plugin_tag")
-@NoArgsConstructor
-@Getter @Setter
-class TagRef {
-    private Long tagId;
 }

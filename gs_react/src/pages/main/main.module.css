@@ -3,3 +3,8 @@
     background: cadetblue;
     margin: auto 10px;
 }
+
+.my__background{
+    background-color: rgba(227, 224, 218, 0.65);
+    height: 80rem;
+}

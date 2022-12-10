@@ -1,0 +1,53 @@
+.my__logo{
+    /*padding-left: calc(var(--bs-gutter-x) * .3);*/
+    /*padding-right: calc(var(--bs-gutter-x) * .0);*/
+    /*margin-top: 30px;*/
+    margin-bottom: 0px;
+    width: 160px;
+    background-color: #E3E0DA;
+    height: 40px;
+    border: 1px solid darkgray;
+    border-radius: 40px;
+    vertical-align: middle;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.my__img1{
+    margin-left: 5%;
+    height: 22px;
+    width: 22px;
+    opacity: 70%;
+}
+
+.my__img1:hover{
+    opacity: 100%;
+    scale: 1.15;
+}
+
+.my__img2{
+    margin-right: 5%;
+    height: 22px;
+    width: 22px;
+    opacity: 70%;
+}
+
+.my__img2:hover{
+    opacity: 100%;
+    scale: 1.15;
+}
+
+.my__name{
+    margin-top: 7px;
+    text-align: center;
+    font-size: 14px;
+    height: 28px;
+    width: 50%;
+}
+
+.my__img3{
+    height: 25px;
+    width: 1px;
+    opacity: 70%;
+}

@@ -4,7 +4,6 @@ import com.store.gs.models.MyImage;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;

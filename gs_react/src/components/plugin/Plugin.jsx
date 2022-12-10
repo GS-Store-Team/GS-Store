@@ -12,6 +12,9 @@ const Plugin = ({plugin}) => {
         navigate('/main/' + plugin.id);
     }
 
+    const [previewImage, setPreviewImage] = useState(<ImgComponent func={Api.previewByPluginId(plugin.id)}/>);
+
+
     return(
         <div
             onClick={myNavigate}
@@ -22,7 +25,7 @@ const Plugin = ({plugin}) => {
                  className={classes.inner__picture}>
                 {
                     shown?
-                        <ImgComponent func={Api.previewByPluginId(plugin.id)}/>:
+                        previewImage:
                         <div style={{color: "white", textAlign: "center", margin: "auto", padding: "0"}}>
                             {plugin.shortDescription}
                         </div>

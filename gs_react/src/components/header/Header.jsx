@@ -3,33 +3,38 @@ import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
 import {AuthContext} from "../../context/context";
 import {Link} from "react-router-dom";
+import {Search} from "../search/Search";
+import {Profiletab} from "../profiletab/Profiletab";
 
-export const Header = () => {
-    const {isAuth, setAuth} = useContext(AuthContext);
-
-    const logout = (e) => {
-        e.preventDefault();
-        setAuth(false);
-        localStorage.removeItem('auth');
-        localStorage.removeItem('token');
-    }
-
+export const Header = ({setFilter}) => {
     return (
         <header
             className={classes.my__header}>
-            <div className="container">
-                <div className={"row"}>
+            <div className="container" style={{height: "100%"}}>
+                <div className={classes.my__container}>
+
                     <Link to={"/main"}
                           style={{textDecoration: "none"}}
-                          className={[classes.my__logo, "col-1"].join(' ')}>
+                          className={[classes.my__logo, "col-6"].join(' ')}>
                         <img
                             className={classes.my__img}
                             src={image}  alt={":("}/>
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
                     </Link>
+
+                    <div className={classes.my__categories}>
+                        Categories
+                    </div>
+
+                    <Search className={["col-6"].join(' ')}
+                            setFilterFunc={setFilter}/>
+
+                    <div className={classes.my__tags}>
+                        #tags
+                    </div>
+
+                    <Profiletab />
                 </div>
-                <button className={classes.my__button}
-                        onClick={logout}>Logout</button>
             </div>
         </header>
     );

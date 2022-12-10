@@ -3,49 +3,57 @@ import PluginList from "../../components/pluginList/PluginList";
 import Api from "../../API/Api";
 import MyPagination from "../../components/Pagination/MyPagination";
 import Loader from "../../components/loading/Loader";
-import classes from "./main.module.css";
 import {Header} from "../../components/header/Header";
+import classes from "./main.module.css";
+import {MyFooter} from "../../components/footer/MyFooter";
 
 const Main = () => {
     const [plugins, setPlugins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(0);
     const [load, setLoad] = useState(false);
-
+    const [filter, setFilter] = useState("");
+    const [noContent, setNoContent] = useState(false);
 
     useEffect(() =>{
-        fetchPlugins(currentPage, 9);
-    }, [currentPage])
-
-    async function fetchPlugins(page, limit) {
         setLoad(true);
-        const response = await Api.getPluginsPage(page, limit);
-        setPlugins(response.data.content);
-        setLoad(false);
-        setPageCnt(response.data.totalPages);
-    }
+        Api.getPluginsPage(currentPage, 9, filter).then((response) =>{
+            if(response.status !== 204) {
+                setPlugins(response.data.content);
+                setPageCnt(response.data.totalPages);
+                setNoContent(false);
+            }
+            else setNoContent(true);
 
-    const addPlugin = (plugin) => {
-        setPlugins([...plugins ,plugin])
-    }
+            setLoad(false);
+        })
+    }, [currentPage, filter])
 
     const changePage = (page) => {
         setCurrentPage(page);
     }
 
-    return <div>
+    return <div style={{minHeight: "100vh"}}>
         {load?
             <div>
                 <Header />
                 <Loader />
             </div>
-            : <div>
-                <Header />
-                <PluginList list={plugins}/>
-                <MyPagination page={pageCnt}
-                              current={currentPage}
-                              change={changePage}
-                />
+            :
+            <div style={{minHeight: "100vh"}}>
+                <Header setFilter={setFilter}/>
+                {noContent ?
+                    <div>
+                        No content for current request.
+                    </div>
+                    :<div className={classes.my__background}>
+                        <PluginList list={plugins}/>
+                        <MyPagination page={pageCnt}
+                                      current={currentPage}
+                                      change={changePage}
+                        />
+                    </div>
+                }
             </div>
         }
     </div>;

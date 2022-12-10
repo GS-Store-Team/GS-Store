@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from "axios";
 
 const httpHeaders ={
@@ -8,12 +7,13 @@ const httpHeaders ={
     }
 
 export default class Api {
-    static async getPluginsPage(page = 1, limit = 10){
+    static async getPluginsPage(page = 1, limit = 10, filter){
         const response = await axios.get("http://localhost:8080/plugins", {
             headers: httpHeaders,
             params: {
                 _page: page,
-                _limit: limit
+                _limit: limit,
+                _filter: filter,
             }
         })
         return response;

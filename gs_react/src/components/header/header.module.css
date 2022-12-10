@@ -6,16 +6,17 @@
 }
 
 .my__img{
-    margin-top: 1px;
+    margin-top: 2px;
+    margin-left: 7px;
     height: 36px;
 }
 
 .my__logo{
-    padding-left: calc(var(--bs-gutter-x) * .3);
-    padding-right: calc(var(--bs-gutter-x) * .0);
-    margin-top: 30px;
+    /*padding-left: calc(var(--bs-gutter-x) * .3);*/
+    /*padding-right: calc(var(--bs-gutter-x) * .0);*/
+    /*margin-top: 30px;*/
     margin-bottom: 0px;
-    width: 150px;
+    width: 143px;
     background-color: #E3E0DA;
     height: 40px;
     border: 1px solid darkgray;
@@ -37,7 +38,7 @@
 
 .my__button{
     font-size: 11px;
-    margin: 0 auto;
+    margin: 0;
     border: 1px solid darkgray;
     border-radius: 15px;
     background-color: #E3E0DA;
@@ -46,4 +47,28 @@
 .my__button:hover{
     border: 1px solid gray;
     background-color: #E3E0DA;
+}
+
+.my__container{
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    /*vertical-align: middle;*/
+}
+
+.my__categories{
+    font-size: 18px;
+    text-align: center;
+    width: 120px;
+}
+
+.my__tags{
+    font-size: 18px;
+    text-align: center;
+    width: 100px;
+}
+
+.my__profile{
+    width: 143px;
 }
