@@ -12,6 +12,7 @@ export const Category = ({setCurrentCat}) => {
         }
     }
 
+
     useEffect(()=>{
         Api.getCategories().then((response) =>{
             setCategoryList(response.data);
