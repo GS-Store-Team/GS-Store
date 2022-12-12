@@ -1,24 +1,38 @@
 .my__pagination{
-    margin: 30px auto;
-    display: table;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position:absolute;
+    bottom: 180px;
 }
 
 .my__pagination__el{
-    width: 40px;
-    height: 30px;
+    margin-left: 1px;
+    margin-right: 1px;
+    width: 25px;
+    height: 25px;
     border: 1px solid gray;
     border-radius: 3px;
     background-color: #eed7c1;
     opacity: 80%;
-    display: table-cell;
+    text-align: center;
+}
+
+.my__pagination__el:hover{
+    scale: 1.1;
+    border: 1px solid black;
+    opacity: 100%;
 }
 
 .my__pagination__chosen__el{
-    width: 40px;
-    height: 30px;
+    margin-left: 3px;
+    margin-right: 3px;
+    scale: 1.1;
+    width: 25px;
+    height: 25px;
     border: 1px solid black;
     border-radius: 3px;
     background-color: #eed7c1;
-    display: table-cell;
+    text-align: center;
+    opacity: 100%;
 }

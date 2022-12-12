@@ -13,13 +13,20 @@ export const Search = ({setFilterFunc}) => {
         setFilterFunc(filter);
     }
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            search(e);
+        }
+    }
+
     return (
         <div className={classes.my__div}>
             <input className={classes.my__input}
                    placeholder={"Search"}
                    value={filter}
                    onChange={(e) => setFilter(e.target.value)}
-                type={"text"} />
+                   type={"text"}
+                   onKeyDown={handleKeyDown}/>
             <img
                     onClick={(e) => search(e)}
                  className={classes.my__shovel}

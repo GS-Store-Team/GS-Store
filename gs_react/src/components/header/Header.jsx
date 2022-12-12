@@ -5,8 +5,9 @@ import {AuthContext} from "../../context/context";
 import {Link} from "react-router-dom";
 import {Search} from "../search/Search";
 import {Profiletab} from "../profiletab/Profiletab";
+import {Category} from "../category/Category";
 
-export const Header = ({setFilter}) => {
+export const Header = ({setFilter, setCurrentCat}) => {
     return (
         <header
             className={classes.my__header}>
@@ -22,9 +23,7 @@ export const Header = ({setFilter}) => {
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
                     </Link>
 
-                    <div className={classes.my__categories}>
-                        Categories
-                    </div>
+                    <Category setCurrentCat={setCurrentCat}/>
 
                     <Search className={["col-6"].join(' ')}
                             setFilterFunc={setFilter}/>

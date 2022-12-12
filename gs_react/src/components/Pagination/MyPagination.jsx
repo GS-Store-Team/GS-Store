@@ -11,7 +11,7 @@ const MyPagination = ({page, current, change}) => {
                 <div className={el===current? classes.my__pagination__chosen__el: classes.my__pagination__el}
                       onClick={ () => change(el)}
                       key={el}>
-                    {el}
+                      {el}
                 </div>)}
         </div>
     );

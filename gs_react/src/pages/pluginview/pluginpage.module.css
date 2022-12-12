@@ -1,9 +1,6 @@
 .my__plugin{
-    border: 1px solid gray;
-    border-radius: 10px;
-    width: 80%;
-    height: 500px;
-    margin: 0 auto;
+
+
 }
 
 .my__cell{
@@ -15,17 +12,95 @@
     text-align: center;
 }
 
-.my__title{
+.my__title_section{
+    border: 1px solid red;
+    height:600px;
+}
+.my_title{
+    font-size: 28px;
+    text-align: center;
+    margin-top: 20%;
+    margin-bottom: 20px;
+}
+.main_image{
+    aspect-ratio: 1/1;
+    width: 100%;
+    object-fit: cover;
+    margin: auto;
+    border-radius: 20px;
+    border: 1px solid orange;
 }
 
 .my__short__desc{
 }
 
-.my__full__desc{
+
+.reviews{
+    background-color: rgba(245, 243, 243, 0.85);
+    height: 100vh;
 }
 
 .my__price{
 }
 
 .my__rate{
+    text-align: center;
+    margin-top: 10px;
+}
+
+.rate_image{
+    height: 30px;
+    width:30px;
+    margin-top: -10px;
+    margin-left:5px;
+}
+
+.purchase_button{
+    width: 40%;
+    display: block;
+    border: 1px solid grey;
+    border-radius: 15px;
+    margin: auto;
+    margin-top: 20px;
+    font-size: 20px;
+    background-color: #EED6C1;
+}
+
+.my__full__desc{
+
+}
+
+.my_desc_title{
+    font-size: 26px;
+    display: inline-block;
+}
+
+.my_desc_text{
+    font-size: 16px;
+    text-align: justify;
+}
+
+.my_desc{
+    margin-top: 20%;
+    position:relative;
+}
+
+.bug_report_button{
+    bottom: 3px;
+    padding: 0;
+    width: 60px;
+    border-radius: 15px;
+    position:absolute;
+    right: 0;
+    font-size: 12px;
+}
+
+.bug_report_image{
+    width:10px;
+    margin-right: 3px;
+}
+
+.my__review__title{
+    font-size: 26px;
+    margin-top: 15%;
 }

@@ -12,9 +12,6 @@
 }
 
 .my__logo{
-    /*padding-left: calc(var(--bs-gutter-x) * .3);*/
-    /*padding-right: calc(var(--bs-gutter-x) * .0);*/
-    /*margin-top: 30px;*/
     margin-bottom: 0px;
     width: 143px;
     background-color: #E3E0DA;
@@ -54,7 +51,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    /*vertical-align: middle;*/
 }
 
 .my__categories{

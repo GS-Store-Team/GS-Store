@@ -7,13 +7,14 @@ const httpHeaders ={
     }
 
 export default class Api {
-    static async getPluginsPage(page = 1, limit = 10, filter){
+    static async getPluginsPage(page = 1, limit = 10, filter, currentCat){
         const response = await axios.get("http://localhost:8080/plugins", {
             headers: httpHeaders,
             params: {
                 _page: page,
                 _limit: limit,
                 _filter: filter,
+                _cat: currentCat,
             }
         })
         return response;
@@ -43,5 +44,11 @@ export default class Api {
         return await axios.get(`http://localhost:8080/image/plugin/${id}/preview`, {
                 headers:httpHeaders,
             });
+    }
+
+    static async getCategories(){
+        return await axios.get(`http://localhost:8080/categories`, {
+            headers:httpHeaders,
+        });
     }
 }

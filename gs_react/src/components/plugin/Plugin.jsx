@@ -3,6 +3,7 @@ import classes from './plugin.module.css'
 import {useNavigate} from "react-router-dom"
 import Api from "../../API/Api";
 import {ImgComponent} from "../ImgComponent/ImgComponent";
+import star from './../../UI/img/star.png'
 
 const Plugin = ({plugin}) => {
     const [shown, setShown] = useState(true);
@@ -12,7 +13,7 @@ const Plugin = ({plugin}) => {
         navigate('/main/' + plugin.id);
     }
 
-    const [previewImage, setPreviewImage] = useState(<ImgComponent func={Api.previewByPluginId(plugin.id)}/>);
+    const [previewImage] = useState(<ImgComponent func={Api.previewByPluginId(plugin.id)}/>);
 
 
     return(
@@ -26,7 +27,7 @@ const Plugin = ({plugin}) => {
                 {
                     shown?
                         previewImage:
-                        <div style={{color: "white", textAlign: "center", margin: "auto", padding: "0"}}>
+                        <div className={classes.my__description}>
                             {plugin.shortDescription}
                         </div>
                 }
@@ -36,6 +37,9 @@ const Plugin = ({plugin}) => {
             </div>
             <div style={{textAlign: "center "}}>
                 {plugin.mark}
+                <img className={classes.my__star}
+                     src={star}
+                     alt={".."}/>
             </div>
         </div>
     )

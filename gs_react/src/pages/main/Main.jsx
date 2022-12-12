@@ -13,11 +13,12 @@ const Main = () => {
     const [pageCnt, setPageCnt] = useState(0);
     const [load, setLoad] = useState(false);
     const [filter, setFilter] = useState("");
+    const [currentCat, setCurrentCat] = useState(-1);
     const [noContent, setNoContent] = useState(false);
 
     useEffect(() =>{
         setLoad(true);
-        Api.getPluginsPage(currentPage, 9, filter).then((response) =>{
+        Api.getPluginsPage(currentPage, 6, filter, currentCat).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -27,7 +28,7 @@ const Main = () => {
 
             setLoad(false);
         })
-    }, [currentPage, filter])
+    }, [currentPage, filter, currentCat])
 
     const changePage = (page) => {
         setCurrentPage(page);
@@ -38,22 +39,27 @@ const Main = () => {
             <div>
                 <Header />
                 <Loader />
+                <MyFooter />
             </div>
             :
             <div style={{minHeight: "100vh"}}>
-                <Header setFilter={setFilter}/>
+                <Header setFilter={setFilter} setCurrentCat={setCurrentCat}/>
                 {noContent ?
-                    <div>
-                        No content for current request.
+                    <div className={classes.my__background}>
+                        <div className={classes.my__no__content}>
+                            No content for current request.
+                        </div>
                     </div>
-                    :<div className={classes.my__background}>
+                    :
+                    <div className={classes.my__background}>
                         <PluginList list={plugins}/>
-                        <MyPagination page={pageCnt}
-                                      current={currentPage}
-                                      change={changePage}
-                        />
+                        <MyPagination
+                        page={pageCnt}
+                        current={currentPage}
+                        change={changePage}/>
                     </div>
                 }
+                <MyFooter />
             </div>
         }
     </div>;

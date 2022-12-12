@@ -2,16 +2,32 @@
     position: fixed;
     left:0;
     bottom: 0;
-    height: 100px;
+    height: 70px;
     background-color: #BEBBB6;
     width: 100%;
 }
 
 .footer_text{
-    display: inline-block;
+    font-size: 12px;
+    width: 100px;
+    text-align: center;
 }
 
-.footer_block{
-    margin-top:20px
+.my__hr{
+    width: 250px;
+    font-size: 20px;
+    margin: 8px auto 8px;
+}
+
+.my__footer__title{
+    font-size: 12px;
+    text-align: center;
+}
+
+.my__container{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 

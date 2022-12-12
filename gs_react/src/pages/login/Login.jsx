@@ -4,6 +4,8 @@ import Api from "../../API/Api";
 import classes from "./login.module.css";
 import {BareHeader} from "../../components/header/BareHeader";
 import {Link} from "react-router-dom";
+import {MyFooter} from "../../components/footer/MyFooter";
+import {LoginFooter} from "../../components/footer/LoginFooter";
 
 export const Login = () => {
 
@@ -56,6 +58,7 @@ export const Login = () => {
                         Sign up</Link>
                 </div>
             </div>
+            <LoginFooter />
         </div>
     );
 };

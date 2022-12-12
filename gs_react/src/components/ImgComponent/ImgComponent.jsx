@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import defaultImg from "../../UI/img/default.png";
 import Loader from "../loading/Loader";
+import classes from "./img.module.css";
 
 export const ImgComponent = ({func}) => {
 
@@ -19,7 +20,12 @@ export const ImgComponent = ({func}) => {
     });
     return (
         fail?
-            <img src={defaultImg} alt={"..."}/>
-            : imageLoad === null? <Loader size={6}/>: <img src={imageLoad} alt={"..."}/>
+            <img className={classes.my__image}
+                 src={defaultImg}
+                 alt={"..."}/>
+            : imageLoad === null? <Loader size={6}/>:
+                <img className={classes.my__image}
+                     src={imageLoad}
+                     alt={"..."}/>
     );
 };
