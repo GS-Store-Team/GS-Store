@@ -40,6 +40,10 @@ export default class Api {
         return await axios.post("http://localhost:8080/signup", authRequest);
     }
 
+    static async sendReview(review){
+        return await axios.post("http://localhost:8080/", review);
+    }
+
     static async previewByPluginId(id){
         return await axios.get(`http://localhost:8080/image/plugin/${id}/preview`, {
                 headers:httpHeaders,

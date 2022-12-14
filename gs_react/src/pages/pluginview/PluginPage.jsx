@@ -8,6 +8,8 @@ import defaultImg from './../../UI/img/default.png'
 import {Header} from "../../components/header/Header";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
+import {MyReview} from "../../components/review/MyReview";
+import {Review} from "../../components/review/Review";
 
 const PluginPage = () => {
 
@@ -67,6 +69,14 @@ const PluginPage = () => {
 
                     <div className={["col-4", classes.reviews].join(' ')}>
                         <div className={classes.my__review__title}>Reviews</div>
+
+                        <Review review={"My first review"}/>
+                        <Review review={"My second review"}/>
+                        <Review review={"My third review"}/>
+{/*                        {reviewList.map((c, index) => <div value={c.id}>{c.title}</div>)}*/}
+
+
+                        <MyReview/>
                     </div>
                 </div>
             </div>
