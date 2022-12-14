@@ -9,7 +9,7 @@ import {Header} from "../../components/header/Header";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {MyReview} from "../../components/review/MyReview";
-import {Review} from "../../components/review/Review";
+import {ReviewList} from "../../components/review/ReviewList";
 
 const PluginPage = () => {
 
@@ -70,12 +70,8 @@ const PluginPage = () => {
                     <div className={["col-4", classes.reviews].join(' ')}>
                         <div className={classes.my__review__title}>Reviews</div>
 
-                        <Review review={"My first review"}/>
-                        <Review review={"My second review"}/>
-                        <Review review={"My third review"}/>
-{/*                        {reviewList.map((c, index) => <div value={c.id}>{c.title}</div>)}*/}
-
-
+                        <ReviewList func={Api.getReviews(plugin.id)}/>
+                        <hr className={classes.my__line}/>
                         <MyReview/>
                     </div>
                 </div>

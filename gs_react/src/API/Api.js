@@ -44,6 +44,10 @@ export default class Api {
         return await axios.post("http://localhost:8080/", review);
     }
 
+    static async getReviews(id){
+        return await axios.get("http://localhost:8080/", {headers:httpHeaders, params:{pluginId: id}});
+    }
+
     static async previewByPluginId(id){
         return await axios.get(`http://localhost:8080/image/plugin/${id}/preview`, {
                 headers:httpHeaders,

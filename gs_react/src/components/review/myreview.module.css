@@ -1,11 +1,13 @@
 .my__div{
+    position: relative;
     width: 100%;
-    display: inline-block;
+    bottom: 0;
 }
 
-.my__form{
-    position: relative;
-    display: block;
+.my__mark{
+    height: 40px;
+    display: flex;
+    justify-content: left;
 }
 
 .my__button{
@@ -14,8 +16,8 @@
     right: 0;
     border: none;
     width: 20%;
-    margin-right: 3%;
-    margin-top: 2%;
+    margin-top: 8px;
+    font-size: 13px;
     border-radius: 10px;
 }
 
@@ -24,6 +26,7 @@
 }
 
 .my__textarea{
+    font-size: 13px;
     padding-left: 3%;
     display: block;
     position: relative;
@@ -49,7 +52,7 @@
 }
 
 .my__rating {
-    padding-left: 3%;
+    padding-left: 7px;
     display: block;
     position: absolute;
     overflow: hidden;
@@ -62,10 +65,10 @@
 }
 .my__rating:not(:checked) > label {
     float: right;
-    width: 42px;
+    width: auto;
     padding: 0;
     cursor: pointer;
-    font-size: 32px;
+    font-size: 150%;
     line-height: 32px;
     color: lightgrey;
 }
