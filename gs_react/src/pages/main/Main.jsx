@@ -6,6 +6,7 @@ import Loader from "../../components/loading/Loader";
 import {Header} from "../../components/header/Header";
 import classes from "./main.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
+import {SelectedTags} from "../../components/tag/SelectedTags";
 
 const Main = () => {
     const [plugins, setPlugins] = useState([]);
@@ -15,6 +16,9 @@ const Main = () => {
     const [filter, setFilter] = useState("");
     const [currentCat, setCurrentCat] = useState(-1);
     const [noContent, setNoContent] = useState(false);
+    const [tags, setTags] = useState(["tag1","adsaddkdsfj31","tag2","tag3", "tagsadasdasd343", "tagsadasdasdasasdadas123", "tagsadasddasdasdssad", "tag22","tag32", "tagsadasdasd3", "tagsadasdsdaasdasasdadas", "tagsadacesddasdasds","lsmfskfmdsfksfdkssdkfkdfdsmfdssfdsfmdsfdskfskl"]);
+    const [selectedTags, setSelectedTags] = useState([])
+
 
     useEffect(() =>{
         setLoad(true);
@@ -34,24 +38,42 @@ const Main = () => {
         setCurrentPage(page);
     }
 
+    const removeSelectedTag = (tag) =>{
+        setSelectedTags(selectedTags.filter(t => t !== tag))
+    }
+
+    const selectedTag = (tag) =>{
+        if(selectedTags.includes(tag)) removeSelectedTag(tag)
+        else setSelectedTags([...selectedTags, tag])
+    }
+
+    function setDefaultFilters() {
+        setFilter('');
+        setCurrentCat(-1);
+    }
+
     return <div style={{minHeight: "100vh"}}>
         {load?
             <div>
-                <Header />
-                <Loader />
                 <MyFooter />
+                <Header setDefaultFilters={setDefaultFilters} addTag={selectedTag} tags={tags} selectedTags={selectedTags}/>
+                <SelectedTags list={selectedTags} remove={removeSelectedTag}/>
+                <Loader />
             </div>
             :
             <div style={{minHeight: "100vh"}}>
-                <Header setFilter={setFilter} setCurrentCat={setCurrentCat}/>
+                <MyFooter />
+                <Header setFilter={setFilter} setCurrentCat={setCurrentCat} setDefaultFilters={setDefaultFilters} addTag={selectedTag} tags={tags} selectedTags={selectedTags}/>
                 {noContent ?
                     <div className={classes.my__background}>
+                        <SelectedTags list={selectedTags} remove={removeSelectedTag}/>
                         <div className={classes.my__no__content}>
                             No content for current request.
                         </div>
                     </div>
                     :
                     <div className={classes.my__background}>
+                        <SelectedTags list={selectedTags} remove={removeSelectedTag}/>
                         <PluginList list={plugins}/>
                         <MyPagination
                         page={pageCnt}
@@ -59,7 +81,7 @@ const Main = () => {
                         change={changePage}/>
                     </div>
                 }
-                <MyFooter />
+
             </div>
         }
     </div>;

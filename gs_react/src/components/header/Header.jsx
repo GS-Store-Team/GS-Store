@@ -1,40 +1,54 @@
-import React, {useContext} from 'react';
+import React, {useState} from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
-import {AuthContext} from "../../context/context";
-import {Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {Search} from "../search/Search";
 import {Profiletab} from "../profiletab/Profiletab";
 import {Category} from "../category/Category";
+import {TagsCloud} from "../tag/TagsCloud";
 
-export const Header = ({setFilter, setCurrentCat}) => {
+export const Header = (props) => {
+
+    const navigate = useNavigate();
+    const [tagsWindowVisible, setTagsWindowVisible] = useState(false);
+
+    const myNavigate = () =>{
+        //setDefaultFilters();
+        navigate('/main');
+    }
+
     return (
         <header
             className={classes.my__header}>
             <div className="container" style={{height: "100%"}}>
                 <div className={classes.my__container}>
 
-                    <Link to={"/main"}
+                    <div onClick={myNavigate}
                           style={{textDecoration: "none"}}
                           className={[classes.my__logo, "col-6"].join(' ')}>
                         <img
                             className={classes.my__img}
                             src={image}  alt={":("}/>
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
-                    </Link>
+                    </div>
 
-                    <Category setCurrentCat={setCurrentCat}/>
+                    <Category setCurrentCat={props.setCurrentCat}/>
 
                     <Search className={["col-6"].join(' ')}
-                            setFilterFunc={setFilter}/>
+                            setFilterFunc={props.setFilter}/>
 
-                    <div className={classes.my__tags}>
+                    <div className={classes.my__tags}
+                         onClick={() => setTagsWindowVisible(true)}>
                         #tags
                     </div>
 
                     <Profiletab />
                 </div>
             </div>
+            {tagsWindowVisible?
+                <TagsCloud list={props.tags} selectedTags={props.selectedTags} add={props.addTag} close={setTagsWindowVisible}/>
+                :<div />
+            }
         </header>
     );
 };

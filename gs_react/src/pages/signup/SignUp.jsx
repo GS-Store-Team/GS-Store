@@ -3,6 +3,7 @@ import Api from "../../API/Api";
 import {BareHeader} from "../../components/header/BareHeader";
 import classes from "./signup.module.css";
 import {Link, useNavigate} from "react-router-dom";
+import {LoginFooter} from "../../components/footer/LoginFooter";
 
 export const SignUp = () => {
 
@@ -64,6 +65,7 @@ export const SignUp = () => {
                             Sign in</Link>
                 </div>
             </div>
+            <LoginFooter />
         </div>
     );
 };
