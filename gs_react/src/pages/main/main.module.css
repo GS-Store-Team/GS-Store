@@ -11,9 +11,16 @@
 }
 
 .my__background{
-    position: fixed;
-    /*background-color: rgba(227, 224, 218, 0.65); */
+    position: relative;
+    padding-top: 100px;
+    padding-bottom: 140px;
+    min-height: 900px;
     background-color: rgba(227, 224, 218, 0.25);
-    width: 100%;
-    height: 100%;
+}
+
+.loader{
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    height: 80vh;
 }

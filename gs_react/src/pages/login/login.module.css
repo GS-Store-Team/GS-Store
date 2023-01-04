@@ -1,9 +1,15 @@
+.my__form{
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+    padding-top: 320px;
+}
+
 .my_login__form{
     border: 1px solid black;
     border-radius: 30px;
     width: 400px;
     height: 250px;
-    margin: 200px auto;
     text-align: center;
 }
 

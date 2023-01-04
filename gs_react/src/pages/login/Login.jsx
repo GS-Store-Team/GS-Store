@@ -31,31 +31,33 @@ export const Login = () => {
     return (
         <div>
             <BareHeader />
-            <div className={classes.my_login__form}>
-               <div className={classes.my__title}>Login</div>
-                <label className={classes.my__label1}
-                       htmlFor={"email"}>Email</label>
-                <input id={"email"}
-                       className={classes.my__input}
-                       type={"text"}
-                       value={request.username}
-                       onChange={event => {setRequest({...request, username: event.target.value})}}
-                />
-                <label className={classes.my__label2}
-                       htmlFor={"password"}>Password</label>
-                <input id={"password"}
-                       className={classes.my__input}
-                       type={"password"}
-                       value={request.password}
-                       onChange={event => {setRequest({...request, password: event.target.value})}}
-                />
-                <div className={classes.my__div}>
-                <button className={classes.my__button}
-                        onClick={login}>Sign in</button>
-                <Link   to={"/signup"}
-                        style={{textDecoration: "none"}}
-                        className={classes.my__button1}>
-                        Sign up</Link>
+            <div className={classes.my__form}>
+                <div className={classes.my_login__form}>
+                   <div className={classes.my__title}>Login</div>
+                    <label className={classes.my__label1}
+                           htmlFor={"email"}>Email</label>
+                    <input id={"email"}
+                           className={classes.my__input}
+                           type={"text"}
+                           value={request.username}
+                           onChange={event => {setRequest({...request, username: event.target.value})}}
+                    />
+                    <label className={classes.my__label2}
+                           htmlFor={"password"}>Password</label>
+                    <input id={"password"}
+                           className={classes.my__input}
+                           type={"password"}
+                           value={request.password}
+                           onChange={event => {setRequest({...request, password: event.target.value})}}
+                    />
+                    <div className={classes.my__div}>
+                    <button className={classes.my__button}
+                            onClick={login}>Sign in</button>
+                    <Link   to={"/signup"}
+                            style={{textDecoration: "none"}}
+                            className={classes.my__button1}>
+                            Sign up</Link>
+                    </div>
                 </div>
             </div>
             <LoginFooter />

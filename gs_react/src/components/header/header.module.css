@@ -1,8 +1,10 @@
 .my__header{
+    position: fixed;
+    width: 100%;
     background-color: #eed7c1;
     height: 100px;
-    overflow: hidden;
     text-align: right;
+    z-index: 50;
 }
 
 .my__img{
@@ -20,6 +22,11 @@
     border-radius: 40px;
     vertical-align: middle;
     display: flex;
+    cursor: pointer;
+}
+
+.my__logo:hover{
+    scale: 1.05;
 }
 
 .my__title{
@@ -63,11 +70,12 @@
     font-size: 18px;
     text-align: center;
     width: 100px;
+    cursor: pointer;
 }
 
 .my__tags:hover{
     opacity: 0.8;
-    cursor: pointer;
+    scale: 1.05;
 }
 
 .my__profile{

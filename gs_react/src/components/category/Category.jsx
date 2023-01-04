@@ -2,16 +2,20 @@ import React, {useEffect, useState} from 'react';
 import classes from "./category.module.css";
 import Api from "../../API/Api";
 
-export const Category = ({setCurrentCat}) => {
+export const Category = ({setCurrentCat, currentCategory}) => {
     const [categoryList, setCategoryList] = useState([]);
+    const [visible, setVisible] = useState(false);
+    const [currentTitle, setCurrentTitle] = useState("Categories")
 
-    const mySelect = (e) =>{
-        const id = e.target.value;
-        if(id !== -1){
-            setCurrentCat(id);
-        }
+    useEffect(() => {
+        if(currentCategory === -1) setCurrentTitle("Categories");
+    },[currentCategory])
+
+    const mySelect = (c) =>{
+        setVisible(false);
+        setCurrentCat(c.id);
+        setCurrentTitle(c.title)
     }
-
 
     useEffect(()=>{
         Api.getCategories().then((response) =>{
@@ -20,9 +24,25 @@ export const Category = ({setCurrentCat}) => {
     }, []);
 
     return (
-        <select onClick={(e) => mySelect(e)} className={classes.my__select}>
-            <option value={-1}>Categories</option>
-            {categoryList.map((c, index) => <option value={c.id}>{c.title}</option>)}
-        </select>
+        <div className={classes.my__select}
+             onMouseLeave={() => setVisible(false)}
+        >
+            <button onMouseEnter={() => setVisible(true)}
+                    onClick={() => setVisible(true)}
+                    className={classes.my__select__button}
+            >{currentTitle}</button>
+            <ul className={visible ? classes.my__dropped__list : classes.my__dropped__list__hidden}>
+                <li onClick={() => mySelect({id:-1,title:'Categories'})}
+                    className={currentTitle === "Categories" ? classes.my__dropped__list__el__current : classes.my__dropped__list__el}
+                >none</li>
+                {
+                    categoryList.map(c =>
+                        <li onClick={() => mySelect(c)}
+                            className={currentTitle === c.title ? classes.my__dropped__list__el__current : classes.my__dropped__list__el}
+                        >{c.title}</li>
+                    )
+                }
+            </ul>
+        </div>
     );
 };

@@ -11,6 +11,10 @@
     font-size: 18px;
 }
 
+.my__input:hover{
+    scale: 1.05;
+}
+
 .my__input:focus{
     outline: none;
 }

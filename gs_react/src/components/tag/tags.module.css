@@ -1,6 +1,7 @@
 .selected__tags__area{
+    position: fixed;
+    margin-top: 2px;
     width: 100%;
-    background-color: #D9D9D9;
 }
 
 .selected__tag{
@@ -8,7 +9,7 @@
     height: 22px;
     border-radius: 15px;
     background-color: rgba(0,0,0,0.2);
-    margin: auto 3px;
+    margin: 2px 2px;
     padding: 0 7px;
     text-align: center;
     display: inline-block;
@@ -35,19 +36,22 @@
     padding: 10px;
     top: 105px;
     position: absolute;
-    background-color: rgba(0,0,0, 0.4);
+    background-color: rgba(0,0,0, 0.6);
     margin: auto;
     width: 40%;
     text-align: center;
     left: 50%;
     transform: translate(-50%);
+    z-index: 100;
+    overflow: hidden;
 }
 
 .full__area{
     top: 0;
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    z-index: 90;
 }
 
 .tag__viz{
@@ -57,7 +61,7 @@
     text-align: center;
     margin: 2px 2px;
     display: inline-table;
-    background-color: rgba(255,255,255, 0.5);
+    background-color: rgba(255,255,255, 0.6);
     height: 20px;
     cursor: pointer;
 }

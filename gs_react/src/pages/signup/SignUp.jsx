@@ -30,39 +30,41 @@ export const SignUp = () => {
     return (
         <div>
             <BareHeader />
-            <div className={classes.my_login__form}>
-                <div className={classes.my__title}>Sign Up</div>
-                <label className={classes.my__label1}
-                       htmlFor={"email"}>Email</label>
-                <input id={"email"}
-                       className={classes.my__input}
-                       type={"text"}
-                       value={request.username}
-                       onChange={event => {setRequest({...request, username: event.target.value})}}
-                />
-                <label className={classes.my__label2}
-                       htmlFor={"password"}>Password</label>
-                <input id={"password"}
-                       className={classes.my__input}
-                       type={"password"}
-                       value={request.password}
-                       onChange={event => {setRequest({...request, password: event.target.value})}}
-                />
-                <label className={classes.my__label3}
-                       htmlFor={"confirm_password"}>Confirm pass</label>
-                <input id={"confirm_password"}
-                       className={classes.my__input}
-                       type={"password"}
-                       value={request.confirmPassword}
-                       onChange={event => {setRequest({...request, confirmPassword: event.target.value})}}
-                />
-                <div className={classes.my__div}>
-                    <button className={classes.my__button}
-                            onClick={(e) => signUp(e)}>Sign up</button>
-                    <Link to={"/login"}
-                          style={{textDecoration: "none"}}
-                          className={classes.my__button1}>
-                            Sign in</Link>
+            <div className={classes.my__form}>
+                <div className={classes.my_login__form}>
+                    <div className={classes.my__title}>Sign Up</div>
+                    <label className={classes.my__label1}
+                           htmlFor={"email"}>Email</label>
+                    <input id={"email"}
+                           className={classes.my__input}
+                           type={"text"}
+                           value={request.username}
+                           onChange={event => {setRequest({...request, username: event.target.value})}}
+                    />
+                    <label className={classes.my__label2}
+                           htmlFor={"password"}>Password</label>
+                    <input id={"password"}
+                           className={classes.my__input}
+                           type={"password"}
+                           value={request.password}
+                           onChange={event => {setRequest({...request, password: event.target.value})}}
+                    />
+                    <label className={classes.my__label3}
+                           htmlFor={"confirm_password"}>Confirm pass</label>
+                    <input id={"confirm_password"}
+                           className={classes.my__input}
+                           type={"password"}
+                           value={request.confirmPassword}
+                           onChange={event => {setRequest({...request, confirmPassword: event.target.value})}}
+                    />
+                    <div className={classes.my__div}>
+                        <button className={classes.my__button}
+                                onClick={(e) => signUp(e)}>Sign up</button>
+                        <Link to={"/login"}
+                              style={{textDecoration: "none"}}
+                              className={classes.my__button1}>
+                                Sign in</Link>
+                    </div>
                 </div>
             </div>
             <LoginFooter />

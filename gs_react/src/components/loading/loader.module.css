@@ -1,9 +1,11 @@
 .my__outer__block{
+    background: transparent;
     width: 100%;
     height: 100%;
     display: flex;
 }
 .my__loader{
+    background: transparent;
     width: 100px;
     margin: auto;
 }

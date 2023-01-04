@@ -8,12 +8,11 @@ import {Category} from "../category/Category";
 import {TagsCloud} from "../tag/TagsCloud";
 
 export const Header = (props) => {
-
     const navigate = useNavigate();
     const [tagsWindowVisible, setTagsWindowVisible] = useState(false);
 
     const myNavigate = () =>{
-        //setDefaultFilters();
+        props.setDefaultFilters();
         navigate('/main');
     }
 
@@ -32,10 +31,11 @@ export const Header = (props) => {
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
                     </div>
 
-                    <Category setCurrentCat={props.setCurrentCat}/>
+                    <Category setCurrentCat={props.setCurrentCat} currentCategory={props.currentCategory}/>
 
                     <Search className={["col-6"].join(' ')}
-                            setFilterFunc={props.setFilter}/>
+                            setFilterFunc={props.setFilter}
+                            currentFilter={props.currentFilter}/>
 
                     <div className={classes.my__tags}
                          onClick={() => setTagsWindowVisible(true)}>

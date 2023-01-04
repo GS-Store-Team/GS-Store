@@ -1,30 +1,68 @@
 .my__select{
+    position: relative;
     border: none;
     background: transparent;
-    -moz-appearance: none;
-    -webkit-appearance: none;
-    outline: none;
-}
-
-.my__select:enabled{
-    text-align: center;
+    height: 50px;
     width: 100px;
+}
+
+.my__select__button{
+    margin-top: 8px;
+    width: 100px;
+    height: 30px;
     border: none;
+    background: transparent;
 }
 
-.my__select:focus{
-    background-color: rgba(0,0,0,0);
+.my__select__button::after{
+    margin: 10px 4px;
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+    opacity: 0.5;
+    border-width: 8px 4px 0 4px;
 }
 
-/*.my__select:after{*/
-/*    background-color: rgba(53, 52, 51, 0.4);*/
-/*    content: "";*/
-/*    display: block;*/
-/*    position: absolute;*/
-/*    right: 5px;*/
-/*    top: 5px;*/
-/*}*/
+.my__dropped__list{
+    top: 40px;
+    transform: translateX(-25%);
+    position: absolute;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    text-align: center;
+    z-index: 90;
+}
 
-/*.my__select:before{*/
-/*    background-color: orange;*/
-/*}*/
+.my__dropped__list__hidden{
+    position: absolute;
+    visibility: hidden;
+}
+
+.my__dropped__list__el{
+    height: 40px;
+    background-color: rgba(0,0,0,0.4);
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 2px auto ;
+    color: white;
+    padding-top: 5px;
+}
+
+.my__dropped__list__el__current{
+    height: 40px;
+    background-color: rgba(0,0,0,0.7);
+    border: 1px solid black;
+    border-radius: 4px;
+    margin: 2px auto ;
+    color: white;
+    padding-top: 5px;
+}
+
+.my__dropped__list__el:hover{
+    background-color: rgba(0,0,0,0.7);;
+}

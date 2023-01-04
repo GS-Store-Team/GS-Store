@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import classes from "./search.module.css";
 import image from "../../UI/img/shovel.png";
 
-export const Search = ({setFilterFunc}) => {
+export const Search = ({setFilterFunc, currentFilter}) => {
     const [filter, setFilter] = useState("");
+
+    useEffect(() =>{
+        if(currentFilter === '') setFilter('');
+    },[currentFilter])
 
     const search = (e) => {
         e.preventDefault();
