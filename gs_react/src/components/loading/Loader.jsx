@@ -2,7 +2,7 @@ import React from 'react';
 import {MutatingDots} from 'react-loader-spinner'
 import classes from "./loader.module.css";
 
-const Loader = () => {
+const Loader = ({radius}) => {
     return (
         <div className={classes.my__outer__block}>
             <MutatingDots
@@ -10,7 +10,7 @@ const Loader = () => {
                 width="100"
                 color="#eed7c1"
                 secondaryColor= '#eed7c1'
-                radius = "12"
+                radius ={radius}
                 ariaLabel="mutating-dots-loading"
                 wrapperStyle={{}}
                 wrapperClass={classes.my__loader}

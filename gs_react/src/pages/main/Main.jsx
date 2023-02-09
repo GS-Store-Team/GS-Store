@@ -18,8 +18,15 @@ const Main = () => {
     const [filter, setFilter] = useState("");
     const [currentCat, setCurrentCat] = useState(-1);
     const [noContent, setNoContent] = useState(false);
-    const [tags, setTags] = useState(["tag1","adsaddkdsfj31","tag2","tag3", "tagsadasdasd343", "tagsadasdasdasasdadas123", "tagsadasddasdasdssad", "tag22","tag32", "tagsadasdasd3", "tagsadasdsdaasdasasdadas", "tagsadacesddasdasds","lsmfskfmdsfksfdkssdkfkdfdsmfdssfdsfmdsfdskfskl"]);
+    const [tags, setTags] = useState([]);
     const [selectedTags, setSelectedTags] = useState([])
+
+    useEffect(() => {
+        Api.getTags().then((response) => {
+            if(response.status === 200)
+                setTags(response.data)
+        })
+    }, [])
 
 
     useEffect(() =>{
@@ -86,7 +93,7 @@ const Main = () => {
                 <SelectedTags list={selectedTags} remove={removeSelectedTag}/>
                     {load?
                         <div className={classes.loader}>
-                            <Loader />
+                            <Loader radius={12} />
                         </div>
                         :
                         noContent ?

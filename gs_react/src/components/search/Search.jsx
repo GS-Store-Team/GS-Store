@@ -11,9 +11,6 @@ export const Search = ({setFilterFunc, currentFilter}) => {
 
     const search = (e) => {
         e.preventDefault();
-
-        console.log("HERE");
-
         setFilterFunc(filter);
     }
 

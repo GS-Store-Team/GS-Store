@@ -1,11 +1,11 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {AuthContext} from "../../context/context";
 import Api from "../../API/Api";
 import classes from "./login.module.css";
 import {BareHeader} from "../../components/header/BareHeader";
-import {Link} from "react-router-dom";
-import {MyFooter} from "../../components/footer/MyFooter";
+import {Link, useNavigate} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
+import * as Utils from "../../utils/Utils";
 
 export const Login = () => {
 
@@ -16,14 +16,65 @@ export const Login = () => {
 
     const {isAuth, setAuth} = useContext(AuthContext);
 
-    const login = (e) => {
+    const [badEmail, setBadEmail] = useState(false);
+    const [emailDoNotExists, setEmailDoNotExists] = useState(false);
+    const [emailList, setEmailList] = useState([]);
+    const [badPassword, setBadPassword] = useState(false);
+    const [passwordList, setPasswordList] = useState([])
+    const [invalidPassword, setInvalidPassword] = useState(false);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if(passwordList.includes(request.password)) setInvalidPassword(true);
+        else setInvalidPassword(false);
+
+        if(emailList.includes(request.username)) setEmailDoNotExists(true);
+        else setEmailDoNotExists(false);
+
+        if(request.password.length<8 && request.password.length !== 0 || request.password.length>32) setBadPassword(true)
+        else setBadPassword(false);
+
+        if(request.username.length !== 0 && !Utils.validateEmail(request.username)) setBadEmail(true)
+        else setBadEmail(false);
+
+    }, [request])
+
+    useEffect(() => {
+        setPasswordList([]);
+        setInvalidPassword(false)
+    }, [request.username])
+
+    const tryLogin = (e) => {
         e.preventDefault();
 
+        if(!badEmail &&
+            !badPassword &&
+            !passwordList.includes(request.password) &&
+            !emailList.includes(request.username) &&
+            request.password.length>0 &&
+            request.username.length>0) {
+            console.log("request");
+            login();
+        }
+    }
+
+    const login = () => {
         Api.login(request).then((response)=>{
+            console.log(response)
             if(response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setAuth(true);
                 localStorage.setItem('auth', 'true');
+            }
+            if(response.status === 204){
+                setEmailDoNotExists(true);
+                setEmailList([...emailList, request.username])
+            }
+        }).catch((error) => {
+            if(error.response.status === 403){
+                setInvalidPassword(true);
+                setPasswordList([...passwordList, request.password])
             }
         });
     }
@@ -37,22 +88,28 @@ export const Login = () => {
                     <label className={classes.my__label1}
                            htmlFor={"email"}>Email</label>
                     <input id={"email"}
-                           className={classes.my__input}
+                           className={badEmail?classes.my__input__bad :classes.my__input}
                            type={"text"}
                            value={request.username}
                            onChange={event => {setRequest({...request, username: event.target.value})}}
                     />
+                    {request.username.length === 0 ?<div className={classes.my__alert__message}>Email cannot be empty</div>:null}
+                    {badEmail?<div className={classes.my__alert__message}>Bad email</div>:null}
+                    {emailDoNotExists?<div className={classes.my__alert__message}>User with such email do not exists!</div>:null}
                     <label className={classes.my__label2}
                            htmlFor={"password"}>Password</label>
                     <input id={"password"}
-                           className={classes.my__input}
+                           className={badPassword? classes.my__input__bad:classes.my__input}
                            type={"password"}
                            value={request.password}
                            onChange={event => {setRequest({...request, password: event.target.value})}}
                     />
+                    {invalidPassword?<div className={classes.my__alert__message}>Invalid password for current username!</div>:null}
+                    {request.password.length < 8?<div className={classes.my__alert__message}>Password length at least 8 characters</div>:null}
+                    {request.password.length > 32?<div className={classes.my__alert__message}>Password length can not be more than 32 chars</div>:null}
                     <div className={classes.my__div}>
                     <button className={classes.my__button}
-                            onClick={login}>Sign in</button>
+                            onClick={(e) => tryLogin(e)}>Sign in</button>
                     <Link   to={"/signup"}
                             style={{textDecoration: "none"}}
                             className={classes.my__button1}>

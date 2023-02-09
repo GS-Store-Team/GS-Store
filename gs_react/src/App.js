@@ -2,7 +2,6 @@ import React, {useEffect, useState} from "react";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import AppRouter from "./routes/AppRouter";
 import {AuthContext} from "./context/context";
-
 export const App = () => {
     const [isAuth, setAuth] = useState(true);
     //const [isAuth, setAuth] = useState(false);

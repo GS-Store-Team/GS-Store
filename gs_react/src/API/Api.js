@@ -54,8 +54,26 @@ export default class Api {
             });
     }
 
+    static async getImageById(id){
+        return await axios.get(`http://localhost:8080/image/${id}`, {
+            headers:httpHeaders,
+        });
+    }
+
+    static async imageListByPluginId(id){
+        return await axios.get(`http://localhost:8080/image/plugin/${id}`, {
+            headers:httpHeaders,
+        });
+    }
+
     static async getCategories(){
         return await axios.get(`http://localhost:8080/categories`, {
+            headers:httpHeaders,
+        });
+    }
+
+    static async getTags(){
+        return await axios.get(`http://localhost:8080/tags`, {
             headers:httpHeaders,
         });
     }

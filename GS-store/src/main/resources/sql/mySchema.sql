@@ -20,7 +20,7 @@ CREATE TABLE plugin (
 CREATE TABLE review (
                         id serial2 primary key,
                         plugin_id int references plugin,
-                        reviewer VARCHAR(256) references usr,
+                        reviewer int references usr,
                         mark float not null,
                         text varchar(2048) NOT NULL
 );
