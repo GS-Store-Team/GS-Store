@@ -1,6 +1,5 @@
 .my__plugin{
-
-
+    padding-top: 100px;
 }
 
 .my__cell{
@@ -10,6 +9,34 @@
     margin: 10px auto;
     height: 10%;
     text-align: center;
+}
+
+.images__block{
+    padding: 5px;
+    border: 2px solid #BEBBB6;
+    border-radius: 10px;
+}
+
+.my__main__img{
+    border-radius: 10px;
+    overflow: hidden;
+}
+.my__supportive__img__block{
+    margin-top: 10px;
+    border-left: 2px solid #BEBBB6;
+    border-right: 2px solid #BEBBB6;
+    border-radius: 10px;
+    padding: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.my__supportive__img{
+    border-radius: 5px;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
 }
 
 .my__title_section{
@@ -45,25 +72,30 @@
 
 .my__rate{
     text-align: center;
+    font-size: 20px;
     margin-top: 10px;
 }
 
 .rate_image{
-    height: 30px;
-    width:30px;
-    margin-top: -10px;
+    height: 20px;
+    width: 20px;
+    margin-top: -5px;
     margin-left:5px;
 }
 
 .purchase_button{
-    width: 40%;
+    padding: 0 10px;
     display: block;
     border: 1px solid grey;
     border-radius: 15px;
     margin: auto;
     margin-top: 20px;
-    font-size: 20px;
+    font-size: 16px;
     background-color: #EED6C1;
+}
+
+.purchase_button:hover{
+    scale: 1.1;
 }
 
 .my__full__desc{
@@ -87,17 +119,20 @@
 
 .bug_report_button{
     bottom: 3px;
-    padding: 0;
-    width: 60px;
+    padding: 0 7px;
     border-radius: 15px;
     position:absolute;
     right: 0;
     font-size: 12px;
 }
 
+.bug_report_button:hover{
+    scale: 1.05;
+}
+
 .bug_report_image{
     width:10px;
-    margin-right: 3px;
+    margin-right: 5px;
 }
 
 .my__review__title{

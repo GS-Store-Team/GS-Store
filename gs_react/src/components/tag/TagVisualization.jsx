@@ -1,12 +1,12 @@
 import React from 'react';
 import classes from "./tags.module.css";
 
-export const TagVisualization = ({title, add, selected}) => {
+export const TagVisualization = ({tag, add, selected}) => {
     return (
         <div className={selected? classes.tag__viz__selected : classes.tag__viz}
-             onClick={() => add(title)}
+             onClick={() => add(tag)}
         >
-            #{title}
+            #{tag.title}
         </div>
     );
 };

@@ -2,16 +2,13 @@
     border: 1px solid black;
     border-radius: 30px;
     width: 400px;
-    height: 270px;
-    margin: 200px auto;
     text-align: center;
 }
 
 .my__form{
     display: flex;
     justify-content: center;
-    height: 100vh;
-    padding-top: 120px;
+    padding-top: 320px;
 }
 
 .my__input{
@@ -23,12 +20,36 @@
     border-radius: 10px;
     padding: 0 10px;
 }
+.my__input:focus{
+    outline: none;
+    border: 1px solid greenyellow;
+}
+
+.my__input__bad{
+    border: 1px solid red;
+    width: 60%;
+    display: inline-block;
+    margin-top: 5px;
+    height: 30px;
+    border-radius: 10px;
+    padding: 0 10px;
+}
+
+.my__input__bad:focus{
+    outline: none;
+}
 
 .my__title{
     font-size: 20px;
     width: 100px;
     margin: 25px auto 8px;
+}
 
+.my__alert__message{
+    font-size: 12px;
+    color: red;
+    text-align: left;
+    margin-left: 135px;
 }
 
 .my__label1{

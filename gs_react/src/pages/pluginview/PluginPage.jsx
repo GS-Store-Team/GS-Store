@@ -5,13 +5,15 @@ import classes from "./pluginpage.module.css";
 import bug from './../../UI/img/bug.png'
 import star from './../../UI/img/star.png'
 import defaultImg from './../../UI/img/default.png'
-import {Header} from "../../components/header/Header";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {MyReview} from "../../components/review/MyReview";
 import {ReviewList} from "../../components/review/ReviewList";
+import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 
 const PluginPage = () => {
+
+    const [imgList, setImgList] = useState([])
 
     const [plugin, setPlugin] = useState({
         id: 0,
@@ -25,13 +27,16 @@ const PluginPage = () => {
 
     const params = useParams();
 
-    const [preview, setPreview] = useState(defaultImg);
-
     useEffect(() =>{
         Api.getPluginById(params.id).then((response) => {
                 if (response.status === 200) {
                     setPlugin(response.data);
-                    setPreview(<ImgComponent func={Api.previewByPluginId(response.data.id)}/>);
+
+                    Api.imageListByPluginId(response.data.id).then((response) =>{
+                        console.log(response.data)
+                        if(response.status === 200)
+                            setImgList(response.data.map((e) => <ImgComponent func={Api.getImageById(e)}/>));
+                    })
                 }
             }
         )
@@ -39,13 +44,26 @@ const PluginPage = () => {
 
     return (
         <div>
-            <Header />
+            <PluginViewHeader />
             <div className={[classes.my__plugin, "container"].join(' ')}>
                 <div className={"row"}>
 
                     <div className={["col-3", classes.my__full__desc].join(' ')}>
                         <div className={classes.my_title}>{plugin.name}</div>
-                        {preview}
+
+                        <div className={classes.images__block}>
+                            <div className={classes.my__main__img}>
+                                {imgList.length === 0? <ImgComponent /> : imgList.at(0)}
+                            </div>
+                            <div className={classes.my__supportive__img__block}>
+                                {imgList.slice(1,imgList.length).map((e) =>
+                                    <div className={classes.my__supportive__img}>
+                                        {e}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
                         <h2 className={classes.my__rate}>{plugin.mark}/5
                             <img className={classes.rate_image}
                                  src={star}

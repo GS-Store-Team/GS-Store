@@ -6,7 +6,7 @@ export const SelectedTags = ({list, remove}) => {
     return (
         list.length >0?
             <div className={classes.selected__tags__area}>
-                {list.map((e) => <SelectedTag name={e} remove={remove}/>)}
+                {list.map((e) => <SelectedTag tag={e} remove={remove}/>)}
             </div>
             :<div />
     );

@@ -9,21 +9,23 @@ export const ImgComponent = ({func}) => {
     const [fail, setFail] = useState(false);
 
     useEffect(()=>{
-        func.then((response) => {
-            if(response.status === 200)
-                setImageLoad(response.data);
-            else
+        if(func !== undefined)
+            func.then((response) => {
+                if(response.status === 200)
+                    setImageLoad(response.data);
+                else
+                    setFail(true);
+            }).catch((e) =>{
                 setFail(true);
-        }).catch((e) =>{
-            setFail(true);
-        })
+            })
+        else setFail(true);
     });
     return (
         fail?
             <img className={classes.my__image}
                  src={defaultImg}
                  alt={"..."}/>
-            : imageLoad === null? <Loader size={6}/>:
+            : imageLoad === null? <Loader radius={8}/>:
                 <img className={classes.my__image}
                      src={imageLoad}
                      alt={"..."}/>

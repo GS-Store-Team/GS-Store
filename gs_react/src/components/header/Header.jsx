@@ -1,19 +1,16 @@
 import React, {useState} from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
-import {useNavigate} from "react-router-dom";
 import {Search} from "../search/Search";
 import {Profiletab} from "../profiletab/Profiletab";
 import {Category} from "../category/Category";
 import {TagsCloud} from "../tag/TagsCloud";
 
 export const Header = (props) => {
-    const navigate = useNavigate();
     const [tagsWindowVisible, setTagsWindowVisible] = useState(false);
 
     const myNavigate = () =>{
         props.setDefaultFilters();
-        navigate('/main');
     }
 
     return (

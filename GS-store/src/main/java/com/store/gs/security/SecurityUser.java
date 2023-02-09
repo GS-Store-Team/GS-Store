@@ -10,14 +10,14 @@ import java.util.Set;
 
 @ToString
 public class SecurityUser implements UserDetails {
-    private final String name;
+    private final long id;
     private final String email;
     private final String password;
     private final boolean active;
     private final Set<SimpleGrantedAuthority> authorities;
 
     public SecurityUser(User user) {
-        this.name = user.getName();
+        this.id = user.getId();
         this.email = user.getEmail();
         this.password = user.getPassword();
         this.active = user.isActive();
@@ -57,9 +57,5 @@ public class SecurityUser implements UserDetails {
     @Override
     public boolean isEnabled() {
         return active;
-    }
-
-    public String getName(){
-        return name;
     }
 }
