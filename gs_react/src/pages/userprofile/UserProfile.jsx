@@ -5,7 +5,6 @@ import {Header} from "../../components/header/Header";
 import {MyFooter} from "../../components/footer/MyFooter";
 import defaultImg from "../../UI/img/default.png";
 
-
 const UserProfile = () => {
 
     const [profile] = useState({
@@ -35,39 +34,40 @@ const UserProfile = () => {
             <div className={[classes.my__profile, "container"].join(' ')}>
                 <div className={"row"}>
 
-                    <div className={["col-2", classes.my__menu].join(' ')}>
-                        <div>dwdwd</div>
+                    <div className={["col-1", classes.my__menu].join(' ')}>
+                        <button type={"button"} className={classes.my__profileButton}>
+                            Profile
+                        </button>
+                        <button type={"button"} className={classes.my__pluginsButton}>
+                            Plugins
+                        </button>
                     </div>
 
-                    <div className={["col-4", classes.my__photo].join(' ')}>
-                        {defaultImg}
+                    <div className={["col-5", classes.my__photo].join(' ')}>
+                        <img className={classes.my__img}
+                             src={defaultImg}
+                             alt={".."}/>
                     </div>
 
                     <div className={["col-6", classes.my__info].join(' ')}>
                         <form id="the_form">
-                                <input type="text" className={classes.my__name} value={name}
+                                <textarea className={classes.my__name} value={name}
                                        disabled={disable} onChange={event => setName(event.target.value)}/>
 
-                                <input type="text" className={classes.my__mail} value={email}
+                                <textarea className={classes.my__mail} value={email}
                                        disabled={disable} onChange={event => setEmail(event.target.value)}/>
 
-                                <input type="text" className={classes.my__contacts} value={contacts}
+                                <textarea className={classes.my__contacts} value={contacts}
                                        disabled={disable} onChange={event => setContacts(event.target.value)}/>
 
-                                <input type="text" className={classes.my__location} value={location}
+                                <textarea className={classes.my__location} value={location}
                                        disabled={disable} onChange={event => setLocation(event.target.value)}/>
 
-                                <input type="text" className={classes.my__description} value={description}
-                                       disabled={disable} onChange={event => setDescription(event.target.value)}/>
+                                <textarea className={classes.my__description} value={description}
+                                          disabled={disable} onChange={event => setDescription(event.target.value)}/>
 
-{/*
-                            <input type="text" className={classes.my__mail} defaultValue={'E-mail'} value={profile.email} readOnly/>
-                            <input type="text" className={classes.my__Contacts} defaultValue={'Contacts'} value={profile.contacts} readOnly/>
-                            <input type="text" className={classes.my__Location} defaultValue={'Location'} value={profile.location} readOnly/>
-                            <input type="text" className={classes.my__Description} defaultValue={'Description'} value={profile.description} readOnly/>
-*/}
-
-                            <button type={"button"} onClick={_ => setDisable(disable !== null ? null : "disable")}  className={classes.my__button}>
+                            <button type={"button"} className={classes.my__button}
+                                    onClick={_ => setDisable(disable !== null ? null : "disable")}>
                                 {disable !== null ? "edit" : "apply"}
                             </button>
                         </form>
