@@ -1,0 +1,30 @@
+version: "3.0"
+services:
+  frontend:
+    build: ../frontend
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    depends_on:
+      - server
+
+  server:
+    build: ../server
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://psql:5432/gsstore
+      SPRING_DATASOURCE_USERNAME: "admin"
+      SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - postgres
+
+  postgres:
+    build: ../database
+    container_name: psql
+    environment:
+      POSTGRES_DB: "gsstore"
+      POSTGRES_USER: "admin"
+      POSTGRES_PASSWORD: "1234"
+    ports:
+      - "5432:5432"

@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Created-By: Apache Maven 3.6.3
+Start-Class: com.store.gs.Application
