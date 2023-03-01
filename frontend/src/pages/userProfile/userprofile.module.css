@@ -26,13 +26,19 @@
 }
 
 .my__photo{
+    justify-content: center;
+    display: flex;
     margin-top: 120px;
     width: 40%;
     position:relative;
 }
 
 .my__img{
-    width: 100%;
+    margin: auto;
+    margin-top: 8px;
+    border-radius: 30px;
+    width: 300px;
+    aspect-ratio: 1/1;
 }
 
 .my__info{
