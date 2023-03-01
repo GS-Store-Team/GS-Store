@@ -1,6 +1,4 @@
 import axios from "axios";
-import Qs, {parse, stringify} from "qs";
-import qs from "qs";
 
 const httpHeaders ={
         "Content-Type": "application/json",
@@ -9,18 +7,17 @@ const httpHeaders ={
     }
 
 export default class Api {
-    static async getPluginsPage(page = 1, limit = 10, filter, currentCat, tags){
-
-        return  await axios.get("http://localhost:8080/plugins", {
-            headers:httpHeaders,
+    static async getPluginsPage(page = 1, limit = 10, filter, currentCat){
+        const response = await axios.get("http://localhost:8080/plugins", {
+            headers: httpHeaders,
             params: {
                 _page: page,
                 _limit: limit,
                 _filter: filter,
                 _cat: currentCat,
-            },
-
+            }
         })
+        return response;
     }
 
     static async getPluginById(id){
@@ -43,12 +40,12 @@ export default class Api {
         return await axios.post("http://localhost:8080/signup", authRequest);
     }
 
-    static async sendReview(review, pluginId){
-        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {headers:httpHeaders});
+    static async sendReview(review){
+        return await axios.post("http://localhost:8080/", review);
     }
 
     static async getReviews(id){
-        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {headers:httpHeaders});
+        return await axios.get("http://localhost:8080/", {headers:httpHeaders, params:{pluginId: id}});
     }
 
     static async previewByPluginId(id){
@@ -83,12 +80,6 @@ export default class Api {
 
     static async getUser(){
         return await axios.get(`http://localhost:8080/users/me`, {
-            headers:httpHeaders,
-        });
-    }
-
-    static async getUserById(id){
-        return await axios.get(`http://localhost:8080/users/id`, {
             headers:httpHeaders,
         });
     }
