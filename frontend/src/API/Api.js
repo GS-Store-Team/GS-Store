@@ -77,4 +77,16 @@ export default class Api {
             headers:httpHeaders,
         });
     }
+
+    static async getUser(){
+        return await axios.get(`http://localhost:8080/users/me`, {
+            headers:httpHeaders,
+        });
+    }
+
+    static async changeUserData(userData){
+        return await axios.patch("http://localhost:8080/users/me", userData, {
+            headers:httpHeaders,
+        });
+    }
 }

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import Api from "../../API/Api";
 import classes from "./userprofile.module.css";
 import {Header} from "../../components/header/Header";
@@ -8,25 +8,31 @@ import {BareHeader} from "../../components/header/BareHeader";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 
 const UserProfile = () => {
-
-    const [profile] = useState({
-        id: 0,
-        name: 'name',
-        email: 'email',
-        contacts: 'contacts',
-        location: 'location',
-        description: 'description',
+    const [userData, setUserData] = useState({
+        active: true,
+        description: '',
+        email: '',
+        id: 1,
+        image: 'abab',
+        nickName: '',
+        phoneNumber: ''
     });
 
-    const [name, setName] = useState(profile.name);
-    const [email, setEmail] = useState(profile.email);
-    const [contacts, setContacts] = useState(profile.contacts);
-    const [location, setLocation] = useState(profile.location);
-    const [description, setDescription] = useState(profile.description);
-
     const [disable, setDisable] = useState("disable");
-    //const params = useParams();
-    //const [preview, setPreview] = useState(defaultImg);
+
+    useEffect(() => {
+        Api.getUser().then((response) => {setUserData(response.data)});
+    }, []);
+
+    useEffect(() => {
+        if (disable === "disable") {
+            Api.changeUserData(userData)
+                .then((response) => {console.log(response)})
+                .catch((response) => {console.log(response)});
+            console.log(userData);
+        }
+
+        },[disable]);
 
     return (
         <div>
@@ -47,28 +53,21 @@ const UserProfile = () => {
                         <div className={classes.my__img}>
                             <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
                         </div>
-                        {/*                        <img className={classes.my__img}
-                             draggable={false}
-                             src={defaultImg}
-                             alt={".."}/>*/}
                     </div>
 
                     <div className={["col-6", classes.my__info].join(' ')}>
                         <form id="the_form">
-                            <textarea className={classes.my__name} value={name}
-                                      disabled={disable} onChange={event => setName(event.target.value)}/>
+                            <textarea className={classes.my__name} value={userData.nickName}
+                                      disabled={disable} onChange={event => setUserData({...userData, nickName: event.target.value})}/>
 
-                            <textarea className={classes.my__mail} value={email}
-                                      disabled={disable} onChange={event => setEmail(event.target.value)}/>
+                            <textarea className={classes.my__mail} value={userData.email}
+                                      disabled={disable} onChange={event => setUserData({...userData, email: event.target.value})}/>
 
-                            <textarea className={classes.my__contacts} value={contacts}
-                                      disabled={disable} onChange={event => setContacts(event.target.value)}/>
+                            <textarea className={classes.my__contacts} value={userData.phoneNumber}
+                                      disabled={disable} onChange={event => setUserData({...userData, phoneNumber: event.target.value})}/>
 
-                            <textarea className={classes.my__location} value={location}
-                                      disabled={disable} onChange={event => setLocation(event.target.value)}/>
-
-                            <textarea className={classes.my__description} value={description}
-                                      disabled={disable} onChange={event => setDescription(event.target.value)}/>
+                            <textarea className={classes.my__description} value={userData.description}
+                                      disabled={disable} onChange={event => setUserData({...userData, description: event.target.value})}/>
 
                             <button type={"button"} className={classes.my__button}
                                     onClick={_ => setDisable(disable !== null ? null : "disable")}>
