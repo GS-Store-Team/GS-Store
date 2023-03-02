@@ -41,9 +41,14 @@
     aspect-ratio: 1/1;
 }
 
+/*.my__changeImg{
+    border-radius: 30px;
+    border: black;
+}*/
+
 .my__info{
     margin-top: 120px;
-    width: 50%;
+    width: 40%;
     position:relative;
     font-size: 20px;
     text-align: center;
@@ -51,61 +56,127 @@
 }
 
 .my__name{
-    margin-left: auto;
-    margin-right: auto;
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 32px;
+}
+
+.my__nameText{
+    display: block;
+    padding-left: 0;
+    margin-left: 0;
+    width: 20%;
+    font-size: 16px;
+}
+
+.my__nameArea{
+    background-color: white;
     padding-left: 3%;
     display: block;
     position: relative;
     resize: none;
     border-radius: 15px;
-    width: 100%;
+    width: 80%;
     height: 32px;
 }
+
+/*.my__nameArea:disabled{
+    border: none;
+}*/
 
 .my__mail{
     margin-top: 2%;
-    padding-left: 3%;
-    display: block;
+    display: flex;
     position: relative;
-    resize: none;
-    border-radius: 15px;
     width: 100%;
     height: 32px;
 }
 
-.my__contacts{
-    margin-top: 2%;
+.my__mailText{
+    display: block;
+    padding-left: 0;
+    margin-left: 0;
+    width: 20%;
+    font-size: 16px;
+}
+
+.my__mailArea{
     padding-left: 3%;
     display: block;
     position: relative;
     resize: none;
     border-radius: 15px;
+    width: 80%;
+    height: 32px;
+    background-color: white;
+}
+
+/*.my__mailArea:disabled{
+    border: none;
+}*/
+
+.my__contacts{
+    margin-top: 2%;
+    display: flex;
+    position: relative;
     width: 100%;
     aspect-ratio: 5/1;
 }
 
-.my__location{
-    margin-top: 2%;
+.my__contactsText{
+    display: block;
+    padding-left: 0;
+    margin-left: 0;
+    width: 20%;
+    font-size: 16px;
+}
+
+.my__contactsArea{
     padding-left: 3%;
     display: block;
     position: relative;
     resize: none;
     border-radius: 15px;
-    width: 100%;
+    width: 80%;
     aspect-ratio: 5/1;
+    background-color: white;
 }
+
+/*.my__contactsArea:disabled{
+    border: none;
+}*/
 
 .my__description{
     margin-top: 2%;
-    padding-left: 3%;
-    display: block;
+    display: flex;
     position: relative;
-    resize: none;
-    border-radius: 15px;
     width: 100%;
     aspect-ratio: 3/1;
 }
 
+.my__descriptionText{
+    display: block;
+    padding-left: 0;
+    margin-left: 0;
+    width: 20%;
+    font-size: 16px;
+}
+
+.my__descriptionArea{
+    padding-left: 3%;
+    display: block;
+    position: relative;
+    resize: none;
+    border-radius: 15px;
+    width: 80%;
+    aspect-ratio: 3/1;
+    background-color: white;
+}
+
+/*.my__descriptionArea:disabled{
+    border: none;
+}*/
 
 .my__button{
     border: none;
