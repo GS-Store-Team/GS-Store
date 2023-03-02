@@ -4,9 +4,11 @@ import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.NoSuchElementException;
@@ -40,6 +42,7 @@ public class MyControllerAdvice {
     }
 
     @ExceptionHandler(JwtException.class)
+    @ResponseStatus(HttpStatus.LOCKED)
     public void expiredOrWrongJWT(JwtException e) {
         log.warn(e.getMessage());
     }
