@@ -1,10 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import Api from "../../API/Api";
 import classes from "./userprofile.module.css";
-import {Header} from "../../components/header/Header";
+import {UserHeader} from "../../components/header/UserHeader"
 import {MyFooter} from "../../components/footer/MyFooter";
-import defaultImg from "../../UI/img/default.png";
-import {BareHeader} from "../../components/header/BareHeader";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 
 const UserProfile = () => {
@@ -36,10 +34,9 @@ const UserProfile = () => {
 
     return (
         <div>
-            <Header/>
+            <UserHeader/>
             <div className={[classes.my__profile, "container"].join(' ')}>
                 <div className={"row"}>
-
                     <div className={["col-1", classes.my__menu].join(' ')}>
                         <button type={"button"} className={classes.my__profileButton}>
                             Profile
@@ -53,21 +50,60 @@ const UserProfile = () => {
                         <div className={classes.my__img}>
                             <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
                         </div>
+{/*                        <div className={classes.my__changeImg}>
+                            change
+                        </div>*/}
                     </div>
 
                     <div className={["col-6", classes.my__info].join(' ')}>
                         <form id="the_form">
-                            <textarea className={classes.my__name} value={userData.nickName}
-                                      disabled={disable} onChange={event => setUserData({...userData, nickName: event.target.value})}/>
+                            <div className={classes.my__name}>
+                                {(disable === null) &&
+                                    <div className={classes.my__nameText}>
+                                        name
+                                    </div>
+                                }
+                                <textarea className={classes.my__nameArea} value={userData.nickName}
+                                          disabled={disable} onChange={event =>
+                                    setUserData({...userData, nickName: event.target.value})}/>
+                            </div>
 
-                            <textarea className={classes.my__mail} value={userData.email}
-                                      disabled={disable} onChange={event => setUserData({...userData, email: event.target.value})}/>
 
-                            <textarea className={classes.my__contacts} value={userData.phoneNumber}
-                                      disabled={disable} onChange={event => setUserData({...userData, phoneNumber: event.target.value})}/>
+                            <div className={classes.my__mail}>
+                                {(disable === null) &&
+                                    <div className={classes.my__mailText}>
+                                        mail
+                                    </div>
+                                }
+                                <textarea className={classes.my__mailArea} value={userData.email}
+                                          disabled={disable} onChange={event =>
+                                    setUserData({...userData, email: event.target.value})}/>
+                            </div>
 
-                            <textarea className={classes.my__description} value={userData.description}
-                                      disabled={disable} onChange={event => setUserData({...userData, description: event.target.value})}/>
+                            <div className={classes.my__contacts}>
+                                {(disable === null) &&
+                                    <div className={classes.my__contactsText}>
+                                        contacts
+                                    </div>
+                                }
+
+
+                                <textarea className={classes.my__contactsArea} value={userData.phoneNumber}
+                                          disabled={disable} onChange={event =>
+                                    setUserData({...userData, phoneNumber: event.target.value})}/>
+                            </div>
+
+                            <div className={classes.my__description}>
+                                {(disable === null) &&
+                                    <div className={classes.my__descriptionText}>
+                                        description
+                                    </div>
+                                }
+
+                                <textarea className={classes.my__descriptionArea} value={userData.description}
+                                          disabled={disable} onChange={event =>
+                                    setUserData({...userData, description: event.target.value})}/>
+                            </div>
 
                             <button type={"button"} className={classes.my__button}
                                     onClick={_ => setDisable(disable !== null ? null : "disable")}>
