@@ -84,6 +84,12 @@ export default class Api {
         });
     }
 
+    static async getUserById(id){
+        return await axios.get(`http://localhost:8080/users/id`, {
+            headers:httpHeaders,
+        });
+    }
+
     static async changeUserData(userData){
         return await axios.patch("http://localhost:8080/users/me", userData, {
             headers:httpHeaders,
