@@ -99,7 +99,7 @@
 }
 
 .my__full__desc{
-
+    word-wrap: break-word;
 }
 
 .my_desc_title{

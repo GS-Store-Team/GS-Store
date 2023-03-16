@@ -4,7 +4,6 @@ import Api from "../../API/Api";
 import classes from "./pluginpage.module.css";
 import bug from './../../UI/img/bug.png'
 import star from './../../UI/img/star.png'
-import defaultImg from './../../UI/img/default.png'
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {MyReview} from "../../components/review/MyReview";
@@ -44,7 +43,7 @@ const PluginPage = () => {
 
     return (
         <div>
-            <PluginViewHeader />
+            <PluginViewHeader/>
             <div className={[classes.my__plugin, "container"].join(' ')}>
                 <div className={"row"}>
 
