@@ -55,11 +55,11 @@ public class CommentService {
         Page<Comment> resultSet;
 
         switch (type){
-            case 1 -> resultSet = commentRepository.findAll(PageRequest.of(page-1,limit, Sort.by("time").descending()));
-            case 2 -> resultSet = commentRepository.findAll(PageRequest.of(page-1,limit, Sort.by("mark").descending()));
-            case 3 -> resultSet = commentRepository.findAll(PageRequest.of(page-1,limit, Sort.by("mark").ascending()));
+            case 1 -> resultSet = commentRepository.getAllByPluginId(PageRequest.of(page-1,limit, Sort.by("time").descending()), id);
+            case 2 -> resultSet = commentRepository.getAllByPluginId(PageRequest.of(page-1,limit, Sort.by("mark").descending()), id);
+            case 3 -> resultSet = commentRepository.getAllByPluginId(PageRequest.of(page-1,limit, Sort.by("mark").ascending()), id);
             case 4 -> resultSet = commentRepository.getAllByPluginIdAndReviewer(PageRequest.of(page-1,limit, Sort.by("time").ascending()), id, user.getId());
-            default -> resultSet = commentRepository.findAll(PageRequest.of(page-1,limit));
+            default -> resultSet = commentRepository.getAllByPluginId(PageRequest.of(page-1,limit), id);
         }
         return resultSet;
     }

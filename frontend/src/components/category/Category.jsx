@@ -24,7 +24,7 @@ export const Category = ({setCurrentCat, currentCategory}) => {
     }, []);
 
     return (
-        <div className={classes.my__select}
+        <div className={classes.my__select}categoryList
              onMouseLeave={() => setVisible(false)}
         >
             <button onMouseEnter={() => setVisible(true)}
@@ -36,8 +36,9 @@ export const Category = ({setCurrentCat, currentCategory}) => {
                     className={currentTitle === "Categories" ? classes.my__dropped__list__el__current : classes.my__dropped__list__el}
                 >none</li>
                 {
-                    categoryList.map(c =>
-                        <li onClick={() => mySelect(c)}
+                    categoryList.map((c, index) =>
+                        <li key={index}
+                            onClick={() => mySelect(c)}
                             className={currentTitle === c.title ? classes.my__dropped__list__el__current : classes.my__dropped__list__el}
                         >{c.title}</li>
                     )

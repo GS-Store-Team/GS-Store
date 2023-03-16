@@ -9,7 +9,7 @@ import UserProfile from "../pages/userprofile/UserProfile";
 export const privateRoutes = [
     {path:"/main", component: <Main/>},
     {path:"/main/:id", component: <PluginPage/>},
-    {path:"/user/:id", component: <UserProfile/>}, //check
+    {path:"/user/:id", component: <UserProfile/>},
     {path:"*", component: <NoMatch path={"/main"}/>},
 ]
 
