@@ -41,152 +41,84 @@
     aspect-ratio: 1/1;
 }
 
-/*.my__changeImg{
-    border-radius: 30px;
-    border: black;
-}*/
-
 .my__info{
-    margin-top: 120px;
+    margin-top: 150px;
     width: 40%;
     position:relative;
-    font-size: 20px;
+    font-size: 18px;
     text-align: center;
     margin-bottom: 20px;
 }
 
-.my__name{
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 32px;
-}
-
-.my__nameText{
+.my__nicknameInfo{
     display: block;
-    padding-left: 0;
-    margin-left: 0;
-    width: 20%;
-    font-size: 16px;
-}
-
-.my__nameArea{
-    background-color: white;
-    padding-left: 3%;
-    display: block;
-    position: relative;
-    resize: none;
-    border-radius: 15px;
-    width: 80%;
-    height: 32px;
-}
-
-/*.my__nameArea:disabled{
-    border: none;
-}*/
-
-.my__mail{
-    margin-top: 2%;
-    display: flex;
-    position: relative;
     width: 100%;
-    height: 32px;
+}
+
+.my__nicknameText{
+    font-weight: bold;
+    text-align: left;
+}
+
+.my__nickname{
+    text-align: right;
+}
+
+.my__mailInfo{
+    display: block;
+    width: 100%;
 }
 
 .my__mailText{
-    display: block;
-    padding-left: 0;
-    margin-left: 0;
-    width: 20%;
-    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
 }
 
-.my__mailArea{
-    padding-left: 3%;
-    display: block;
-    position: relative;
-    resize: none;
-    border-radius: 15px;
-    width: 80%;
-    height: 32px;
-    background-color: white;
+.my__mail{
+    text-align: right;
 }
 
-/*.my__mailArea:disabled{
-    border: none;
-}*/
 
-.my__contacts{
-    margin-top: 2%;
-    display: flex;
-    position: relative;
+.my__contactsInfo{
+    display: block;
     width: 100%;
-    aspect-ratio: 5/1;
 }
 
 .my__contactsText{
-    display: block;
-    padding-left: 0;
-    margin-left: 0;
-    width: 20%;
-    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
 }
 
-.my__contactsArea{
-    padding-left: 3%;
-    display: block;
-    position: relative;
-    resize: none;
-    border-radius: 15px;
-    width: 80%;
-    aspect-ratio: 5/1;
-    background-color: white;
+.my__contacts{
+    text-align: right;
 }
 
-/*.my__contactsArea:disabled{
-    border: none;
-}*/
-
-.my__description{
-    margin-top: 2%;
-    display: flex;
-    position: relative;
+.my__descriptionInfo{
+    display: block;
     width: 100%;
-    aspect-ratio: 3/1;
 }
 
 .my__descriptionText{
-    display: block;
-    padding-left: 0;
-    margin-left: 0;
-    width: 20%;
-    font-size: 16px;
+    font-weight: bold;
+    text-align: left;
 }
 
-.my__descriptionArea{
-    padding-left: 3%;
-    display: block;
-    position: relative;
-    resize: none;
-    border-radius: 15px;
-    width: 80%;
-    aspect-ratio: 3/1;
-    background-color: white;
+.my__description{
+    text-align: right;
 }
 
-/*.my__descriptionArea:disabled{
-    border: none;
-}*/
 
 .my__button{
-    border: none;
-    width: 20%;
-    margin-top: 8px;
-    font-size: 16px;
-    border-radius: 10px;
-    background-color: #D9D9D9;
+    margin-top: 120px;
+    width: 10%;
 }
 
-.my__button:hover{
-    background-color: rgb(0,0,0,0.2);
+.my__settingsButton{
+    opacity: 70%;
+    width: 30%;
+    aspect-ratio: auto;
+}
+
+.my__settingsButton:hover{
+    opacity: 100%;
 }
