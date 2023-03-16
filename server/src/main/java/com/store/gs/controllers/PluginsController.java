@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Arrays;
 
 @RestController
 @RequestMapping("/plugins")
@@ -88,7 +89,6 @@ public class PluginsController {
                                           @RequestBody @Valid CommentDTO commentDTO,
                                           BindingResult bindingResult,
                                           Authentication authentication){
-
         if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
         commentService.addComment(id, Comment.fromDTO(commentDTO), authentication);
