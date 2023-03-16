@@ -39,7 +39,7 @@ export const Header = (props) => {
                         #tags
                     </div>
 
-                    <Profiletab />
+                    <Profiletab/>
                 </div>
             </div>
             {tagsWindowVisible?

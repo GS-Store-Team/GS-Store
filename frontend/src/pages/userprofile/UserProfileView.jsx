@@ -1,16 +1,11 @@
 import React, {useState, useEffect} from 'react';
 import Api from "../../API/Api";
-import settingsButton from "./../../UI/img/settings.png"
 import classes from "./userprofile.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
-import ModalWindow from "../../components/modalWindow/ModalWindow";
 
-
-const UserProfile = () => {
-    const [visibleModal, setVisibleModal] = useState(false);
-
+const UserProfileView = (id) => {
     const [userData, setUserData] = useState({
         active: true,
         description: '',
@@ -21,33 +16,12 @@ const UserProfile = () => {
         phoneNumber: ''
     });
 
-    const [disable, setDisable] = useState("disable");
-
     useEffect(() => {
-        Api.getUser().then((response) => {setUserData(response.data)});
+        Api.getUserById(id).then((response) => {setUserData(response.data)});
     }, []);
-
-    useEffect(() => {
-        if (disable === "disable") {
-            Api.changeUserData(userData)
-                .then((response) => {console.log(response)})
-                .catch((response) => {console.log(response)});
-            console.log(userData);
-        }
-
-    },[disable]);
-
-    const sendData = () =>{
-        Api.changeUserData(userData)
-            .then((response) => {console.log(response)})
-            .catch((response) => {console.log(response)});
-        console.log(userData);
-        setVisibleModal(false);
-    }
 
     return (
         <div>
-
             <PluginViewHeader/>
             <div className={[classes.my__profile, "container"].join(' ')}>
                 <div className={"row"}>
@@ -103,22 +77,12 @@ const UserProfile = () => {
                             </div>
                         </div>
                     </div>
-
-                    <div onClick={() => setVisibleModal(true)} className={["col-1", classes.my__button].join(' ')}>
-                        <img className={classes.my__settingsButton}
-                             src={settingsButton}
-                             alt={".."}/>
-                    </div>
-                    {visibleModal ?
-                        <ModalWindow accept={() => {sendData()}} decline={() => {setVisibleModal(false)}}/>
-                            : <></>}
                 </div>
             </div>
             <MyFooter/>
         </div>
     );
 };
-
-export default UserProfile;
+export default UserProfileView;
 
 
