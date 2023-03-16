@@ -4,6 +4,7 @@ import com.store.gs.models.Category;
 import com.store.gs.models.Tag;
 import com.store.gs.repositories.CategoryRepository;
 import com.store.gs.repositories.TagRepository;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ public class CategoryTagController {
     private final CategoryRepository categoryRepository;
     private final TagRepository tagRepository;
 
+    @Operation(summary = "Get list of categories")
     @GetMapping("/categories")
     public ResponseEntity<List<Category>> getAllCategories(){
         List<Category> categories = new ArrayList<>();
@@ -27,6 +29,7 @@ public class CategoryTagController {
                 :ResponseEntity.noContent().build();
     }
 
+    @Operation(summary = "Get list of tags")
     @GetMapping("/tags")
     public ResponseEntity<List<Tag>> getAllategories(){
         List<Tag> tags = new ArrayList<>();

@@ -6,6 +6,7 @@ import com.store.gs.models.User;
 import com.store.gs.security.jwt.JwtTokenProvider;
 import com.store.gs.services.UserService;
 import com.store.gs.utils.ControllersUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ public class SecurityController {
     private final JwtTokenProvider jwtTokenProvider;
     private final AuthenticationManager authenticationManager;
 
+    @Operation(summary = "Login")
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequestDTO auth,
                                    BindingResult bindingResult) {
@@ -42,6 +44,7 @@ public class SecurityController {
         return ResponseEntity.ok(new AuthenticationResponseDTO(auth.getUsername(), token));
     }
 
+    @Operation(summary = "Signup")
     @PostMapping("/signup")
     public ResponseEntity<?> signUp(@RequestBody @Valid AuthenticationRequestDTO signUp,
                                     BindingResult bindingResult) {

@@ -20,6 +20,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String SIGNUP_ENDPOINT = "/signup";
     private final JwtConfigurer jwtConfigurer;
 
+    private static final String[] SWAGGER_ENDPOINTS = {
+            "/swagger",
+            "/v2/api-docs",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/swagger-resources/**",
+            "/swagger-ui/**",
+    };
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
@@ -42,6 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                     .antMatchers(LOGIN_ENDPOINT).permitAll()
                     .antMatchers(SIGNUP_ENDPOINT).permitAll()
+                    .antMatchers(SWAGGER_ENDPOINTS).permitAll()
                     .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
