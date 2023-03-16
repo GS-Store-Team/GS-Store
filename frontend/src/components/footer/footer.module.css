@@ -8,6 +8,7 @@
 }
 
 .footer_text{
+    cursor: pointer;
     font-size: 12px;
     width: 100px;
     text-align: center;
@@ -20,6 +21,7 @@
 }
 
 .my__footer__title{
+    cursor: pointer;
     font-size: 12px;
     text-align: center;
 }
@@ -30,4 +32,3 @@
     justify-content: center;
     align-items: center;
 }
-

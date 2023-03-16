@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
 import {useNavigate} from "react-router-dom";
@@ -25,7 +25,7 @@ export const PluginViewHeader = () => {
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
                     </div>
 
-                    <Profiletab />
+                    <Profiletab/>
                 </div>
             </div>
         </header>

@@ -15,7 +15,7 @@ export const ImgComponent = ({func}) => {
                     setImageLoad(response.data);
                 else
                     setFail(true);
-            }).catch((e) =>{
+            }).catch(() =>{
                 setFail(true);
             })
         else setFail(true);
@@ -28,6 +28,7 @@ export const ImgComponent = ({func}) => {
             : imageLoad === null? <Loader radius={8}/>:
                 <img className={classes.my__image}
                      src={imageLoad}
+                     draggable={false}
                      alt={"..."}/>
     );
 };
