@@ -42,4 +42,6 @@ public class Plugin {
 
     @Column("isdeleted")
     private boolean isDeleted;
+
+    private boolean checked;
 }
