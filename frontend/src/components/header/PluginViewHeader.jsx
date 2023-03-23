@@ -7,7 +7,7 @@ import {Profiletab} from "../profiletab/Profiletab";
 export const PluginViewHeader = () => {
     const navigate = useNavigate();
     const myNavigate = () =>{
-        navigate(-1);
+        navigate('/main');
     }
 
     return (

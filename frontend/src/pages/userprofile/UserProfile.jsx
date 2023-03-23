@@ -6,6 +6,7 @@ import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import ModalWindow from "../../components/modalWindow/ModalWindow";
+import {useNavigate} from "react-router-dom";
 
 
 const UserProfile = () => {
@@ -21,40 +22,37 @@ const UserProfile = () => {
         active: true
     });
 
-    const [disable, setDisable] = useState("disable");
-
     useEffect(() => {
         Api.getUser().then((response) => {setUserData(response.data)});
     }, []);
 
-    useEffect(() => {
-        if (disable === "disable") {
-            Api.changeUserData(userData)
-                .then((response) => {console.log(response)})
-                .catch((response) => {console.log(response)});
-            console.log(userData);
-        }
-
-    },[disable]);
-
     const sendData = (newUserData) =>{
         Api.changeUserData(newUserData)
-            .then((response) => {console.log(response)})
-            .catch((response) => {console.log(response)});
+            .then(() => {Api.getUser().then((response) =>
+            {
+                setUserData(response.data);
+                console.log(response.data)})})
         setVisibleModal(false);
+    }
+
+    const navigate = useNavigate();
+    const myProfile = () =>{
+        navigate('/user/' + userData.id);
+    }
+    const myPlugins = () =>{
+        navigate('/user/' + userData.id + '/plugins');
     }
 
     return (
         <div>
-
             <PluginViewHeader/>
             <div className={[classes.my__profile, "container"].join(' ')}>
                 <div className={"row"}>
                     <div className={["col-1", classes.my__menu].join(' ')}>
-                        <button type={"button"} className={classes.my__profileButton}>
+                        <button type={"button"} className={classes.my__profileButton} onClick={myProfile}>
                             Profile
                         </button>
-                        <button type={"button"} className={classes.my__pluginsButton}>
+                        <button type={"button"} className={classes.my__pluginsButton} onClick={myPlugins}>
                             Plugins
                         </button>
                     </div>
@@ -103,8 +101,8 @@ const UserProfile = () => {
                         </div>
                     </div>
 
-                    <div onClick={() => setVisibleModal(true)} className={["col-1", classes.my__button].join(' ')}>
-                        <img className={classes.my__settingsButton}
+                    <div className={["col-1", classes.my__button].join(' ')}>
+                        <img onClick={() => setVisibleModal(true)} className={classes.my__settingsButton}
                              src={settingsButton}
                              alt={".."}/>
                     </div>
