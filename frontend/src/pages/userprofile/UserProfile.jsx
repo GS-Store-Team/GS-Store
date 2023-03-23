@@ -12,13 +12,13 @@ const UserProfile = () => {
     const [visibleModal, setVisibleModal] = useState(false);
 
     const [userData, setUserData] = useState({
-        active: true,
-        description: '',
-        email: '',
-        id: 1,
-        image: 'abab',
         nickName: '',
-        phoneNumber: ''
+        email: '',
+        phoneNumber: '',
+        description: '',
+        image: 0,
+        id: 1,
+        active: true
     });
 
     const [disable, setDisable] = useState("disable");
@@ -37,11 +37,10 @@ const UserProfile = () => {
 
     },[disable]);
 
-    const sendData = () =>{
-        Api.changeUserData(userData)
+    const sendData = (newUserData) =>{
+        Api.changeUserData(newUserData)
             .then((response) => {console.log(response)})
             .catch((response) => {console.log(response)});
-        console.log(userData);
         setVisibleModal(false);
     }
 
@@ -110,7 +109,7 @@ const UserProfile = () => {
                              alt={".."}/>
                     </div>
                     {visibleModal ?
-                        <ModalWindow accept={() => {sendData()}} decline={() => {setVisibleModal(false)}}/>
+                        <ModalWindow accept={sendData} decline={() => {setVisibleModal(false)}}/>
                             : <></>}
                 </div>
             </div>

@@ -6,9 +6,10 @@
     height: 10%;
 }
 
-.review__aria{
+.review__area{
+    word-wrap: break-word;
     height: 450px;
-    overflow: hidden;
+    overflow: auto;
 }
 
 .wrapper:after {
@@ -158,6 +159,8 @@
 }
 
 .my__review__title{
+    word-wrap: break-word;
+    overflow: auto;
     font-size: 26px;
     margin-top: 15%;
 }

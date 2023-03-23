@@ -4,7 +4,7 @@ import {ReviewList} from "./ReviewList";
 import Api from "../../API/Api";
 import {MyReview} from "./MyReview";
 
-export const ReviewAria = ({pluginId}) => {
+export const ReviewArea = ({pluginId}) => {
     const [reviews, setReviews] = useState([])
     const [fetch, setFetch] = useState(false)
     const [currentPage, setCurrentPage] = useState(null)

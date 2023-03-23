@@ -5,15 +5,14 @@ import classes from "./modalwindow.module.css";
 
 const ModalWindow = ({accept, decline}) => {
     const [userData, setUserData] = useState({
-        active: true,
-        description: '',
-        email: '',
-        id: 1,
-        image: 'abab',
         nickName: '',
-        phoneNumber: ''
+        email: '',
+        phoneNumber: '',
+        description: '',
+        image: 0,
+        id: 1,
+        active: true
     });
-
 
     useEffect(() => {
         Api.getUser().then((response) => {setUserData(response.data)});
@@ -40,7 +39,7 @@ const ModalWindow = ({accept, decline}) => {
 
 
                     <div className={classes.my__buttons}>
-                        <button className={classes.my__accept} onClick={accept}>
+                        <button className={classes.my__accept} onClick={() => accept(userData)}>
                             accept
                         </button>
                         <button className={classes.my__decline} onClick={decline}>
