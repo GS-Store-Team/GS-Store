@@ -29,13 +29,12 @@ const Main = () => {
     }, [])
 
     const arrayFromTags = useCallback(() => {
-        const arr = selectedTags.map(tag => tag.id)
-        return arr;
+        return selectedTags.map(tag => tag.id)
     }, [selectedTags])
 
     useEffect(() =>{
         setLoad(true);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
+        Api.getPluginsPage(currentPage, limit, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -50,7 +49,7 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         setCurrentPage(1);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
+        Api.getPluginsPage(currentPage, limit, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -60,7 +59,7 @@ const Main = () => {
 
             setLoad(false);
         })
-    }, [filter, currentCat, limit, selectedTags])
+    }, [filter, currentCat, limit])
 
     const changePage = (page) => {
         setCurrentPage(page);
