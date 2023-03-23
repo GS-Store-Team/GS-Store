@@ -3,19 +3,23 @@ package com.store.gs.controllers;
 import com.store.gs.dto.CommentDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.Plugin;
+import com.store.gs.models.PluginFile;
 import com.store.gs.services.CommentService;
 import com.store.gs.services.PluginService;
 import com.store.gs.utils.ControllersUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Arrays;
 
 @RestController
@@ -130,5 +134,28 @@ public class PluginsController {
         pluginService.deleteById(id);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Get plugin file by plugin-id")
+    @GetMapping("/{id}/file")
+    public ResponseEntity<PluginFile> getPluginFile(@PathVariable("id") long id){
+
+        PluginFile pluginFile = pluginService.getPluginFile(id);
+
+        return pluginFile != null ?
+                ResponseEntity.ok(pluginFile)
+                :ResponseEntity.noContent().build();
+    }
+
+    @Operation(summary = "Upload plugin file with plugin-id")
+    @PostMapping("/{id}/file")
+    public ResponseEntity<?> uploadPluginFile(@PathVariable("id") long id,
+                                              @RequestParam("_file") MultipartFile file) throws Exception {
+
+        if(!file.isEmpty() && !file.getContentType().contains(".zip")) throw new FileUploadException();
+
+        pluginService.uploadPluginFile(id, file);
+
+        return ResponseEntity.ok().build();
     }
 }

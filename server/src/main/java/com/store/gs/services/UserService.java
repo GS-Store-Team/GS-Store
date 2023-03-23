@@ -50,6 +50,7 @@ public class UserService {
 
         userData.setId(user.getId());
         userData.setActive(user.isActive());
+        userData.setAvatar(user.getAvatar());
 
         return userData;
     }

@@ -1,6 +1,7 @@
 package com.store.gs.models;
 
 import com.store.gs.enums.Role;
+import com.store.gs.models.supportclasses.Avatar;
 import com.store.gs.models.supportclasses.UserData;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -24,4 +25,6 @@ public class User {
     private Role role;
     @Column("user_id")
     private UserData userData;
+    @Column("id")
+    private Avatar avatar;
 }
