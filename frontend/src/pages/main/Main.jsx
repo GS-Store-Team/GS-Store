@@ -9,7 +9,7 @@ import {MyFooter} from "../../components/footer/MyFooter";
 import {SelectedTags} from "../../components/tag/SelectedTags";
 
 const Main = () => {
-    const limit = 9;
+    const limit = 20;
 
     const [plugins, setPlugins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);

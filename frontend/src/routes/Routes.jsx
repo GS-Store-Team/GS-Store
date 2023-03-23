@@ -4,7 +4,7 @@ import PluginPage from "../pages/pluginview/PluginPage";
 import {Login} from "../pages/login/Login";
 import NoMatch from "./NoMatch";
 import {SignUp} from "../pages/signup/SignUp";
-import {UserProfile} from "../pages/userprofile/UserProfile";
+import UserProfile from "../pages/userprofile/UserProfile";
 import UserPlugin from "../pages/usersplugin/UserPlugin";
 import UploadPlugin from "../pages/uploadplugin/UploadPlugin";
 

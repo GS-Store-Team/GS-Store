@@ -19,7 +19,7 @@ const UserPlugin = () => {
     });
 
     useEffect(() => {
-        Api.getCurrentUser().then((response) => {setUserData(response.data)});
+        Api.getUser().then((response) => {setUserData(response.data)});
     }, []);
 
     const navigate = useNavigate();
