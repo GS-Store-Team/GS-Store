@@ -1,6 +1,8 @@
 package com.store.gs.services;
 
 import com.store.gs.models.Plugin;
+import com.store.gs.models.PluginFile;
+import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +12,10 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 import java.util.List;
 
 
@@ -18,6 +24,7 @@ import java.util.List;
 public class PluginService {
     private final PluginRepository pluginRepository;
     private final CommentService commentService;
+    private final PluginFileRepository pluginFileRepository;
 
 
     public Page<Plugin> getPage(int pageNumber,
@@ -75,5 +82,18 @@ public class PluginService {
     public void deleteById(long id){
         commentService.deleteAllCommentsForPlugin(id);
         pluginRepository.deleteById(id);
+    }
+
+    public PluginFile getPluginFile(long id){
+        return pluginFileRepository.findById(id).orElse(null);
+    }
+
+    public void uploadPluginFile(long id, MultipartFile file) throws IOException {
+        PluginFile pluginFile = new PluginFile();
+
+        pluginFile.setId(id);
+        pluginFile.setData(file.getBytes());
+
+        pluginFileRepository.save(pluginFile);
     }
 }

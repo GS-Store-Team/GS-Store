@@ -9,12 +9,11 @@ import Api from "../../API/Api";
 
 export const Profiletab = () => {
 
-    const {isAuth, setAuth} = useContext(AuthContext);
+    const {setAuth} = useContext(AuthContext);
 
     const logout = (e) => {
         e.preventDefault();
         setAuth(false);
-        localStorage.removeItem('auth');
         localStorage.removeItem('token');
     }
 
