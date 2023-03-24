@@ -24,7 +24,7 @@ export const Category = ({setCurrentCat, currentCategory}) => {
     }, []);
 
     return (
-        <div className={classes.my__select}categoryList
+        <div className={classes.my__select}
              onMouseLeave={() => setVisible(false)}
         >
             <button onMouseEnter={() => setVisible(true)}
