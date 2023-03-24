@@ -4,7 +4,7 @@ import classes from "./baremodalWindow.module.css";
 
 const BareModalWindow = ({accept, decline}) => {
     return (
-        <div className={classes.my__main}>
+        <div>
             <div onClick={decline} className={classes.my__modal}></div>
             <div className={classes.my__modalInput}>
 

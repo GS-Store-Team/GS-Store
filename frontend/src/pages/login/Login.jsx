@@ -3,7 +3,7 @@ import {AuthContext} from "../../context/context";
 import Api from "../../API/Api";
 import classes from "./login.module.css";
 import {BareHeader} from "../../components/header/BareHeader";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 
@@ -14,7 +14,7 @@ export const Login = () => {
             password:"",
         });
 
-    const {isAuth, setAuth} = useContext(AuthContext);
+    const {setAuth} = useContext(AuthContext);
 
     const [badEmail, setBadEmail] = useState(false);
     const [emailDoNotExists, setEmailDoNotExists] = useState(false);
@@ -22,7 +22,6 @@ export const Login = () => {
     const [badPassword, setBadPassword] = useState(false);
     const [passwordList, setPasswordList] = useState([])
     const [invalidPassword, setInvalidPassword] = useState(false);
-    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -32,13 +31,13 @@ export const Login = () => {
         if(emailList.includes(request.username)) setEmailDoNotExists(true);
         else setEmailDoNotExists(false);
 
-        if(request.password.length<8 && request.password.length !== 0 || request.password.length>32) setBadPassword(true)
+        if((request.password.length < 8 && request.password.length !== 0) || request.password.length > 32) setBadPassword(true)
         else setBadPassword(false);
 
         if(request.username.length !== 0 && !Utils.validateEmail(request.username)) setBadEmail(true)
         else setBadEmail(false);
 
-    }, [request])
+    }, [request, emailList, passwordList])
 
     useEffect(() => {
         setPasswordList([]);
@@ -54,18 +53,15 @@ export const Login = () => {
             !emailList.includes(request.username) &&
             request.password.length>0 &&
             request.username.length>0) {
-            console.log("request");
             login();
         }
     }
 
     const login = () => {
         Api.login(request).then((response)=>{
-            console.log(response)
             if(response.status === 200) {
                 localStorage.setItem('token', response.data.token);
                 setAuth(true);
-                localStorage.setItem('auth', 'true');
             }
             if(response.status === 204){
                 setEmailDoNotExists(true);

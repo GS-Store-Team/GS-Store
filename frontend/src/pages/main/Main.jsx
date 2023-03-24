@@ -8,9 +8,9 @@ import classes from "./main.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {SelectedTags} from "../../components/tag/SelectedTags";
 
-const Main = () => {
-    const limit = 20;
+const LIMIT = 9
 
+const Main = () => {
     const [plugins, setPlugins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(0);
@@ -34,7 +34,7 @@ const Main = () => {
 
     useEffect(() =>{
         setLoad(true);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, null).then((response) =>{
+        Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -49,7 +49,7 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         setCurrentPage(1);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, null).then((response) =>{
+        Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -59,7 +59,7 @@ const Main = () => {
 
             setLoad(false);
         })
-    }, [filter, currentCat, limit])
+    }, [filter, currentCat])
 
     const changePage = (page) => {
         setCurrentPage(page);
