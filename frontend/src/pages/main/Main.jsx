@@ -107,7 +107,7 @@ const Main = () => {
                             <div className={classes.my__no__content}>No content for current request.</div>
                             :
                             <div>
-                                <PluginList list={plugins}/>
+                                <PluginList list={plugins} perLine={3}/>
                                 <MyPagination
                                     page={pageCnt}
                                     current={currentPage}
