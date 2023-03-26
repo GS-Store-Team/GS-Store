@@ -3,32 +3,34 @@ import defaultImg from "../../UI/img/default.png";
 import Loader from "../loading/Loader";
 import classes from "./img.module.css";
 
-export const ImgComponent = ({func}) => {
 
-    const [imageLoad, setImageLoad] = useState(null);
+export const ImgComponent = React.memo(({func}) => {
+
     const [fail, setFail] = useState(false);
+    const [image, setImage] = useState(null)
 
-    useEffect(()=>{
-        if(func !== undefined)
+    useEffect(() => {
+        if(func !== undefined) {
             func.then((response) => {
-                if(response.status === 200)
-                    setImageLoad(response.data);
-                else
-                    setFail(true);
-            }).catch(() =>{
-                setFail(true);
+                if (response.status === 200) {
+                    setFail(false)
+                    setImage(response.data)
+                }
             })
-        else setFail(true);
-    });
+        }
+        setFail(true)
+    }, [])
+
     return (
         fail?
             <img className={classes.my__image}
                  src={defaultImg}
                  alt={"..."}/>
-            : imageLoad === null? <Loader radius={8}/>:
-                <img className={classes.my__image}
-                     src={imageLoad}
+            : image === null?
+                <Loader radius={8}/>
+                : <img className={classes.my__image}
+                     src={image}
                      draggable={false}
                      alt={"..."}/>
     );
-};
+});

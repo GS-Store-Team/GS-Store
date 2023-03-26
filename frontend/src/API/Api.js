@@ -1,6 +1,4 @@
 import axios from "axios";
-import Qs, {parse, stringify} from "qs";
-import qs from "qs";
 
 const httpHeaders ={
         "Content-Type": "application/json",

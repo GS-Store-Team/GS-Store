@@ -3,7 +3,7 @@ import Api from "../../API/Api";
 
 import classes from "./modalwindow.module.css";
 
-const ModalWindow = ({accept, decline}) => {
+const ChangeProfileModal = ({accept, decline}) => {
     const [userData, setUserData] = useState({
         nickName: '',
         email: '',
@@ -56,4 +56,4 @@ const ModalWindow = ({accept, decline}) => {
         </div>
     )
 }
-export default ModalWindow;
+export default ChangeProfileModal;

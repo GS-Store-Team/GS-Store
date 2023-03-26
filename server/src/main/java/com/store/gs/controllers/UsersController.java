@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/users")
 public class UsersController {
@@ -39,9 +40,9 @@ public class UsersController {
                                      Authentication authentication) throws UserPrincipalNotFoundException {
 
         if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
-        userService.updateUserdataForCurrentUser(authentication, userData);
+        UserData updatedUserData = userService.updateUserdataForCurrentUser(authentication, userData);
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(updatedUserData);
     }
 
     @Operation(summary = "Change password for current authenticated user")

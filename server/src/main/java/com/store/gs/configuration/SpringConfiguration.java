@@ -24,14 +24,4 @@ public class SpringConfiguration implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**");
     }
-
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-//        dataSource.setDriverClassName("org.postgresql.Driver");
-//        dataSource.setUrl("jdbc:postgresql://localhost:5432/gsstore");
-//        dataSource.setUsername("admin");
-//        dataSource.setPassword("1234");
-//        return dataSource;
-//    }
 }
