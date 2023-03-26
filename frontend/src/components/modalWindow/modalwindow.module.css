@@ -137,3 +137,8 @@
     border: 5px solid #BEBBB6;
     background-color: #BEBBB6;
 }
+
+.my__label{
+    margin-top: 20px;
+    margin-bottom: 5px;
+}

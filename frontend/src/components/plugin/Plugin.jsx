@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import classes from './plugin.module.css'
 import {useNavigate} from "react-router-dom"
 import Api from "../../API/Api";
@@ -6,40 +6,52 @@ import {ImgComponent} from "../ImgComponent/ImgComponent";
 import star from './../../UI/img/star.png'
 
 const Plugin = ({plugin}) => {
-    const [shown, setShown] = useState(true);
     const navigate = useNavigate();
 
-    const myNavigate = () =>{
+    const [shown, setShown] = useState(true);
+
+    const [previewImage] = useState(() => {
+        return <ImgComponent func={Api.previewByPluginId(plugin.id)}/>
+    })
+
+    const myNavigate = useCallback(() =>{
         navigate('/main/' + plugin.id);
-    }
+    }, [plugin])
 
-    const [previewImage] = useState(<ImgComponent func={Api.previewByPluginId(plugin.id)}/>);
+    const handleEnter = useCallback(() => {
+        setShown(false)
+    }, [setShown])
 
+    const handleLeave = useCallback(() => {
+        setShown(true)
+    }, [setShown])
 
     return(
         <div
             onClick={myNavigate}
-            style={{padding: 0}} className={["col-3", "g-3", classes.my__plugin].join(' ')}>
-            <div style={{display: "flex" }}
-                 onMouseEnter={() => setShown(false)}
-                 onMouseLeave={() => setShown(true)}
-                 className={classes.inner__picture}>
+            style={{padding: 0}}
+            className={classes.my__plugin}>
+
+            <div
+                onMouseEnter={handleEnter}
+                onMouseLeave={handleLeave}
+                className={classes.inner__picture}>
+                {previewImage}
                 {
-                    shown?
-                        previewImage:
-                        <div className={classes.my__description}>
-                            {plugin.shortDescription}
-                        </div>
+                    !shown &&
+                    <div className={classes.my__description}>
+                        <div style={{margin: "auto"}}>{plugin.shortDescription}</div>
+                    </div>
                 }
             </div>
-            <div style={{textAlign: "center", marginBottom: "0px", marginTop: "15px"}}>
-                {plugin.name}
-            </div>
-            <div style={{textAlign: "center "}}>
-                {plugin.mark}
-                <img className={classes.my__star}
-                     src={star}
-                     alt={".."}/>
+            <div className={classes.info}>
+                <div className={classes.title}>{plugin.name}</div>
+                <div className={classes.mark}>
+                    {plugin.mark}
+                    <img className={classes.my__star}
+                         src={star}
+                         alt={".."}/>
+                </div>
             </div>
         </div>
     )

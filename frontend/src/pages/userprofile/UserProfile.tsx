@@ -1,39 +1,33 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Api from "../../API/Api";
 import settingsButton from "./../../UI/img/settings.png"
 import classes from "./userprofile.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
-import ModalWindow from "../../components/modalWindow/ModalWindow";
+import ChangeProfileModal from "../../components/modalWindow/ChangeProfileModal";
 import {useNavigate} from "react-router-dom";
+import {Btn} from "../../components/default/Btn";
+import {Modal} from "../../components/default/Modal";
+import {UserData} from "../../interfaces/Types";
+import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
 
 
 const UserProfile = () => {
-    const [visibleModal, setVisibleModal] = useState(false);
+    const [userDataModal, setUserDataModal] = useState(false);
 
-    const [userData, setUserData] = useState({
+    const [userData, setUserData] = useState<UserData>({
         nickName: '',
         email: '',
         phoneNumber: '',
         description: '',
         image: 0,
-        id: 1,
-        active: true
+        id: 0
     });
 
     useEffect(() => {
         Api.getUser().then((response) => {setUserData(response.data)});
     }, []);
-
-    const sendData = (newUserData) =>{
-        Api.changeUserData(newUserData)
-            .then(() => {Api.getUser().then((response) =>
-            {
-                setUserData(response.data);
-                console.log(response.data)})})
-        setVisibleModal(false);
-    }
 
     const navigate = useNavigate();
     const myProfile = () =>{
@@ -59,7 +53,7 @@ const UserProfile = () => {
 
                     <div className={["col-5", classes.my__photo].join(' ')}>
                         <div className={classes.my__img}>
-                            <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
+                            {/*<ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>*/}
                         </div>
                     </div>
 
@@ -102,13 +96,18 @@ const UserProfile = () => {
                     </div>
 
                     <div className={["col-1", classes.my__button].join(' ')}>
-                        <img onClick={() => setVisibleModal(true)} className={classes.my__settingsButton}
+                        <img onClick={() => setUserDataModal(true)} className={classes.my__settingsButton}
                              src={settingsButton}
                              alt={".."}/>
                     </div>
-                    {visibleModal ?
-                        <ModalWindow accept={sendData} decline={() => {setVisibleModal(false)}}/>
-                            : <></>}
+                    {userDataModal ?
+                        <ChangeUserDataModal
+                            userData={userData}
+                            onChangeUserData={setUserData}
+                            opened={userDataModal}
+                            setOpened={setUserDataModal}
+                        /> : <></>
+                    }
                 </div>
             </div>
             <MyFooter/>
