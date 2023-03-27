@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import PluginList from "../../components/pluginList/PluginList";
 import Api from "../../API/Api";
 import MyPagination from "../../components/Pagination/MyPagination";
@@ -28,10 +28,14 @@ const Main = () => {
         })
     }, [])
 
+    const arrayFromTags = useCallback(() => {
+        const arr = selectedTags.map(tag => tag.id)
+        return arr;
+    }, [selectedTags])
 
     useEffect(() =>{
         setLoad(true);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat).then((response) =>{
+        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -46,7 +50,7 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         setCurrentPage(1);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat).then((response) =>{
+        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -56,7 +60,7 @@ const Main = () => {
 
             setLoad(false);
         })
-    }, [filter, currentCat])
+    }, [filter, currentCat, limit, selectedTags])
 
     const changePage = (page) => {
         setCurrentPage(page);
@@ -71,6 +75,10 @@ const Main = () => {
         else setSelectedTags([...selectedTags, tag])
     }
 
+    const removeAllTags = () => {
+        setSelectedTags([])
+    }
+
     const setDefaultFilters = () => {
         setFilter('');
         setCurrentPage(1);
@@ -79,7 +87,7 @@ const Main = () => {
     }
 
     return (
-        <div>
+        <div className={classes.my__background}>
             <Header setFilter={setFilter}
                     currentFilter={filter}
                     setCurrentCat={setCurrentCat}
@@ -89,8 +97,8 @@ const Main = () => {
                     tags={tags}
                     selectedTags={selectedTags}
             />
-            <div className={classes.my__background}>
-                <SelectedTags list={selectedTags} remove={removeSelectedTag}/>
+            <div className={classes.main__content}>
+                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
                     {load?
                         <div className={classes.loader}>
                             <Loader radius={12} />

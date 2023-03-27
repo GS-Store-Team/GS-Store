@@ -4,6 +4,7 @@ import com.store.gs.models.MyImage;
 import com.store.gs.repositories.ImageRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.utils.ControllersUtils;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -22,6 +23,7 @@ public class ImageController {
 
     private final String PREFIX = "data:image/jpeg;base64,";
 
+    @Operation(summary = "Get image by image-id")
     @GetMapping("/{id}")
     public ResponseEntity<String> getImageById(@PathVariable("id") String imageId) {
         long id = ControllersUtils.parseIntParam(imageId);
@@ -33,6 +35,7 @@ public class ImageController {
         return ResponseEntity.ok(PREFIX + encodedImage);
     }
 
+    @Operation(summary = "Get list of image-ids (List<Long>) by plugin-id")
     @GetMapping("/plugin/{id}")
     public ResponseEntity<?> getImagesByPluginId(@PathVariable("id") String pluginId) {
         long id = ControllersUtils.parseIntParam(pluginId);
@@ -42,6 +45,7 @@ public class ImageController {
         return ResponseEntity.ok(list);
     }
 
+    @Operation(summary = "Get preview image for current plugin")
     @GetMapping("/plugin/{id}/preview")
     public ResponseEntity<String> getPreviewByPluginId(@PathVariable("id") String pluginId) {
         long id = ControllersUtils.parseIntParam(pluginId);
@@ -54,9 +58,9 @@ public class ImageController {
     }
 
 
-
+    @Operation(summary = "Set new preview image for plugin. Example: \"/image/{image-id}?_plugin_id={plugin-id}\"")
     @PatchMapping("/{id}")
-    public ResponseEntity<?> setPreviewImage(@RequestParam(name = "plugin_id") String pluginId,
+    public ResponseEntity<?> setPreviewImage(@RequestParam(name = "_plugin_id") String pluginId,
                                              @PathVariable("id") String imageId){
         long imgId = ControllersUtils.parseIntParam(imageId);
         long plgId = ControllersUtils.parseIntParam(pluginId);
@@ -67,9 +71,10 @@ public class ImageController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "Upload new image for plugin. Example: \"/image?_plugin_id={plugin-id}&_file={binary-file}\"")
     @PostMapping
     public ResponseEntity<?> newImageForPluginId(@RequestParam(name ="_plugin_id") String pluginId,
-                                                 @RequestParam("file") MultipartFile file) throws Exception {
+                                                 @RequestParam("_file") MultipartFile file) throws Exception {
 
         if(!file.isEmpty() && !file.getContentType().contains("image")) throw new FileUploadException();
 

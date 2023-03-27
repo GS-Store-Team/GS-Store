@@ -1,5 +1,26 @@
+.my__preview__page{
+    height: 100vh;
+}
+
+.wrapper{
+    height: 10%;
+}
+
+.review__aria{
+    height: 450px;
+    overflow: hidden;
+}
+
+.wrapper:after {
+    content: '';
+    display: inline-block;
+    height: 100%;
+    vertical-align: bottom;
+}
+
 .my__plugin{
-    padding-top: 100px;
+    padding-top: 50px;
+    height: 100%;
 }
 
 .my__cell{
@@ -64,7 +85,8 @@
 
 .reviews{
     background-color: rgba(245, 243, 243, 0.85);
-    height: 100vh;
+    /*height: 100%;*/
+    bottom: 0;
 }
 
 .my__price{
@@ -99,7 +121,7 @@
 }
 
 .my__full__desc{
-
+    word-wrap: break-word;
 }
 
 .my_desc_title{
@@ -138,9 +160,4 @@
 .my__review__title{
     font-size: 26px;
     margin-top: 15%;
-}
-
-.my__line{
-    margin-top: 5%;
-    margin-bottom: 5%;
 }
