@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import {Property} from "csstype";
-import {hover} from "@testing-library/user-event/dist/hover";
 
 const LeftMenu = styled.div`
   width: 200px;
@@ -27,24 +26,6 @@ const PhotoBlock = styled.div`
   display: block;
   min-width: 350px;
 `
-
-/*
-.my__photo{
-    justify-content: center;
-    display: flex;
-    margin-top: 120px;
-    width: 40%;
-    position:relative;
-}
-
-.my__img{
-    margin: auto;
-    margin-top: 8px;
-    border-radius: 30px;
-    width: 300px;
-    aspect-ratio: 1/1;
-}
-*/
 
 export const Styled = {
     LeftMenu,
