@@ -1,9 +1,8 @@
 import styled from 'styled-components';
 import { Property } from 'csstype';
-import React, {InputHTMLAttributes} from "react";
-import {type} from "os";
 
-export const FlexColumn = styled.div<{ gap?: Property.Gap }>`
+export const FlexColumn = styled.div<{ gap?: Property.Gap, width?: Property.Width }>`
+    width: ${({ width }) => width};
     display: flex;
     flex-direction: column;
     gap: ${({ gap }) => gap || '1em'};
