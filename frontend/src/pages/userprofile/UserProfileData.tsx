@@ -1,15 +1,24 @@
 import React, {FC} from 'react';
 import PropTypes from 'prop-types';
 import {UserData} from "../../types/Types";
-import {FlexColumn} from "../../components/default/Flex.styled";
+import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
 import classes from "./userprofile.module.css";
+import settingsButton from "../../UI/img/settings.png";
 
 interface IUserProfileData{
     userData : UserData;
+    onOpenModal: () => void;
 }
-export const UserProfileData : FC<IUserProfileData> = ({userData}) => {
+
+export const UserProfileData : FC<IUserProfileData> = ({userData, onOpenModal}) => {
     return (
         <FlexColumn width={"500px"}>
+            <FlexRow margin={"10px 0 20px"}>
+                <img style={{width: "24px", aspectRatio: "1/1", marginLeft: "auto"}}
+                     onClick={onOpenModal} className={classes.my__settingsButton}
+                     src={settingsButton}
+                     alt={".."}/>
+            </FlexRow>
             <div className={classes.my__nicknameInfo}>
                 <div className={classes.my__nicknameText}>
                     Nickname:

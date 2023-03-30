@@ -56,7 +56,6 @@
 }
 
 .my__nicknameText{
-    font-weight: bold;
     text-align: left;
 }
 
@@ -104,7 +103,10 @@
 }
 
 .my__description{
+    height: 200px;
+    overflow-y: scroll;
     text-align: right;
+    word-break: break-word;
 }
 
 
