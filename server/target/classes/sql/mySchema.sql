@@ -1,3 +1,5 @@
+//pg_dump -h 127.0.0.1 -U admin gsstore -f dump
+
 CREATE TABLE usr (
                      email VARCHAR(256) NOT NULL unique primary key,
                      name VARCHAR(64) NOT NULL,

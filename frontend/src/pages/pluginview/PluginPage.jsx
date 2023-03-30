@@ -7,7 +7,7 @@ import star from './../../UI/img/star.png'
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
-import {ReviewAria} from "../../components/review/ReviewAria";
+import {ReviewArea} from "../../components/review/ReviewArea";
 
 const PluginPage = () => {
 
@@ -83,7 +83,7 @@ const PluginPage = () => {
                     </div>
 
                     <div className={["col-4", classes.reviews].join(' ')}>
-                        <ReviewAria pluginId={plugin.id}/>
+                        <ReviewArea pluginId={plugin.id}/>
                     </div>
                 </div>
             </div>

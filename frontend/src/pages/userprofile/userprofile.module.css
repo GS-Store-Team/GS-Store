@@ -111,12 +111,12 @@
 .my__button{
     margin-top: 120px;
     width: 10%;
+    height: 10%;
 }
 
 .my__settingsButton{
     opacity: 70%;
     width: 30%;
-    aspect-ratio: auto;
 }
 
 .my__settingsButton:hover{

@@ -5,17 +5,18 @@ import classes from "./loader.module.css";
 const Loader = ({radius}) => {
     return (
         <div className={classes.my__outer__block}>
-            <MutatingDots
-                height="100"
-                width="100"
-                color="#eed7c1"
-                secondaryColor= '#eed7c1'
-                radius ={radius}
-                ariaLabel="mutating-dots-loading"
-                wrapperStyle={{}}
-                wrapperClass={classes.my__loader}
-                visible={true}
-            />
+            <span style={{margin: "auto"}}>Loading...</span>
+            {/*<MutatingDots*/}
+            {/*    height="100"*/}
+            {/*    width="100"*/}
+            {/*    color="#eed7c1"*/}
+            {/*    secondaryColor= '#eed7c1'*/}
+            {/*    radius ={radius}*/}
+            {/*    ariaLabel="mutating-dots-loading"*/}
+            {/*    wrapperStyle={{}}*/}
+            {/*    wrapperClass={classes.my__loader}*/}
+            {/*    visible={true}*/}
+            {/*/>*/}
         </div>
     );
 };

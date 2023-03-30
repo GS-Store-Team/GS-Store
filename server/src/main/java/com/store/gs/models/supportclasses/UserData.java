@@ -29,6 +29,9 @@ public class UserData {
     @Transient
     private boolean active;
 
+    @Transient
+    private Avatar avatar;
+
     public static UserData defaultUser(String nickName){
         UserData userData = new UserData();
         userData.nickName = nickName;

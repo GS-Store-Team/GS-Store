@@ -50,6 +50,7 @@ public class UserService {
 
         userData.setId(user.getId());
         userData.setActive(user.isActive());
+        userData.setAvatar(user.getAvatar());
 
         return userData;
     }
@@ -79,12 +80,12 @@ public class UserService {
         }
     }
 
-    public void updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException{
+    public UserData updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException{
         try {
             User user = getUserByEmail(authentication.getName());
             user.setUserData(userData);
 
-            userRepository.save(user);
+            return userRepository.save(user).getUserData();
         }catch (NoSuchElementException e){
             throw new UserPrincipalNotFoundException("current user not found");
         }
