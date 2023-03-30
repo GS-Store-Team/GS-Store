@@ -28,9 +28,10 @@ const Main = () => {
         })
     }, [])
 
-    const arrayFromTags = useCallback(() => {
-        return selectedTags.map(tag => tag.id)
-    }, [selectedTags])
+
+    // const arrayFromTags = useCallback(() => {
+    //     return selectedTags.map(tag => tag.id)
+    // }, [selectedTags])
 
     useEffect(() =>{
         setLoad(true);
@@ -61,29 +62,29 @@ const Main = () => {
         })
     }, [filter, currentCat])
 
-    const changePage = (page) => {
+    const changePage = useCallback((page) => {
         setCurrentPage(page);
-    }
+    }, [setCurrentPage])
 
-    const removeSelectedTag = (tag) =>{
+    const removeSelectedTag = useCallback((tag) =>{
         setSelectedTags(selectedTags.filter(t => t !== tag))
-    }
+    },[setSelectedTags, selectedTags])
 
-    const selectedTag = (tag) =>{
+    const selectedTag = useCallback((tag) =>{
         if(selectedTags.includes(tag)) removeSelectedTag(tag)
         else setSelectedTags([...selectedTags, tag])
-    }
+    },[selectedTags, removeSelectedTag, setSelectedTags])
 
-    const removeAllTags = () => {
+    const removeAllTags = useCallback(() => {
         setSelectedTags([])
-    }
+    },[selectedTags])
 
-    const setDefaultFilters = () => {
+    const setDefaultFilters = useCallback(() => {
         setFilter('');
         setCurrentPage(1);
         setCurrentCat(-1);
         setSelectedTags([]);
-    }
+    },[setFilter, setCurrentCat, setCurrentPage, setSelectedTags])
 
     return (
         <div className={classes.my__background}>

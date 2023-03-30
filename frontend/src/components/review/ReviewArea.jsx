@@ -7,12 +7,7 @@ import {MyReview} from "./MyReview";
 export const ReviewArea = ({pluginId}) => {
     const [reviews, setReviews] = useState([])
     const [fetch, setFetch] = useState(false)
-    const [currentPage, setCurrentPage] = useState(null)
-
-    useEffect(() => {
-        console.log("ASDsDKMKDS")
-        console.log(reviews)
-    }, [reviews])
+    const [, setCurrentPage] = useState(null)
 
     useEffect(() => {
         if(!pluginId) return;

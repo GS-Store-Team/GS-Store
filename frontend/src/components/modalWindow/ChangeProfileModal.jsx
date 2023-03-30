@@ -15,7 +15,7 @@ const ChangeProfileModal = ({accept, decline}) => {
     });
 
     useEffect(() => {
-        Api.getUser().then((response) => {setUserData(response.data)});
+        Api.getCurrentUser().then((response) => {setUserData(response.data)});
     }, []);
 
     return (

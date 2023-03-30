@@ -1,4 +1,6 @@
-import {ElementRef, RefObject, useEffect, useLayoutEffect, useRef} from "react";
+import {RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
+import {UserData} from "../types/Types";
+import Api from "../API/Api";
 
 export function useOutsideClick(ref : RefObject<any>, handler : () => void, attached : boolean = true){
     const latestHandler = useLatest(handler);
@@ -11,11 +13,52 @@ export function useOutsideClick(ref : RefObject<any>, handler : () => void, atta
                 latestHandler.current();
             }
         }
-        document.addEventListener("click", clickHandler)
+        document.addEventListener("mousedown", clickHandler)
         return () => {
-            document.removeEventListener("click", clickHandler);
+            document.removeEventListener("mousedown", clickHandler);
         }
     },[ref, latestHandler, attached])
+}
+
+// export function useSessionState<T>() : [T, (key : string, newValue : T) => void]{
+//
+//     const getValue = () : T => {
+//         sessionStorage.getItem("")
+//
+//         return
+//     }
+//
+//     return
+// }
+
+// export const [useUserCredentials,] = useState<UserData>(() => {
+//     return {
+//         nickName: 'null',
+//         email: 'null',
+//         phoneNumber: 'null',
+//         description: 'null',
+//         image: -1,
+//         id: -1,}
+//
+//     // Api.getUser().then((response) => {
+//     //         ref.current = response.data as UserData
+//     //     }
+//     // )
+//
+// })
+
+export const useUserCredentials = async (): Promise<UserData> => {
+    let userData = sessionStorage.getItem("userData");
+
+    if (userData) return JSON.parse(userData);
+
+    const response = await Api.getCurrentUser();
+
+    userData = response.data
+
+    sessionStorage.setItem("userData", JSON.stringify(userData))
+
+    return new Promise<UserData>(JSON.parse(userData ? userData : ""))
 }
 
 export function useLatest(value : any){

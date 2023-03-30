@@ -1,40 +1,45 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom"
 import classes from "./profiletab.module.css";
 import {AuthContext} from "../../context/context";
 import man from "../../UI/img/man.png";
 import exit from "../../UI/img/exit.png";
 import line from "../../UI/img/line.png";
+import {useUserCredentials} from "../../hooks/Hooks";
 import Api from "../../API/Api";
 
-export const Profiletab = () => {
+export const ProfileTab = () => {
 
-    const {setAuth} = useContext(AuthContext);
-
-    const logout = (e) => {
-        e.preventDefault();
-        setAuth(false);
-        localStorage.removeItem('token');
-    }
+    const navigate = useNavigate();
 
     const [userData, setUserData] = useState({
         active: true,
         description: '',
         email: '',
         id: 1,
-        image: 'abab',
-        nickName: 'name1',
+        image: '',
+        nickName: '',
         phoneNumber: ''
-    });
+    })
+
 
     useEffect(() => {
-        Api.getUser().then((response) => {setUserData(response.data)});
-    }, []);
+        Api.getCurrentUser().then((response) => {
+            setUserData(response.data)
+        })
+    }, [])
 
-    const navigate = useNavigate();
-    const myProfile = () =>{
-        navigate('/user/' + userData.id);
+    const {setAuth} = useContext(AuthContext);
+    const logout = (e) => {
+        e.preventDefault();
+        setAuth(false);
+        sessionStorage.removeItem('token');
     }
+
+
+    const myProfile = useCallback( () =>{
+        navigate('/user/' + userData.id);
+    },[navigate])
 
     return (
         <div className={classes.my__logo}>
@@ -58,4 +63,3 @@ export const Profiletab = () => {
         </div>
     );
 };
-

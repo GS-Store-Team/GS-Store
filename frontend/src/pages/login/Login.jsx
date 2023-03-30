@@ -60,7 +60,8 @@ export const Login = () => {
     const login = () => {
         Api.login(request).then((response)=>{
             if(response.status === 200) {
-                localStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('token', response.data.token);
+                Api.getCurrentUser().then((response) => sessionStorage.setItem("userData", JSON.stringify(response.data)))
                 setAuth(true);
             }
             if(response.status === 204){

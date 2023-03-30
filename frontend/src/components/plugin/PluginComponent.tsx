@@ -1,11 +1,15 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {FC, useCallback, useState} from 'react';
 import classes from './plugin.module.css'
 import {useNavigate} from "react-router-dom"
 import Api from "../../API/Api";
 import {ImgComponent} from "../ImgComponent/ImgComponent";
 import star from './../../UI/img/star.png'
+import {Plugin} from "../../types/Types";
 
-const Plugin = ({plugin}) => {
+interface IPluginComponent{
+    plugin: Plugin;
+}
+export const PluginComponent : FC<IPluginComponent> = ({plugin}) => {
     const navigate = useNavigate();
 
     const [shown, setShown] = useState(true);
@@ -56,5 +60,3 @@ const Plugin = ({plugin}) => {
         </div>
     )
 };
-
-export default Plugin;
