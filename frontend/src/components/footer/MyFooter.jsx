@@ -20,7 +20,7 @@ export const MyFooter = () => {
     });
 
     useEffect(() => {
-        Api.getUser().then((response) => {setUserData(response.data)});
+        Api.getCurrentUser().then((response) => {setUserData(response.data)});
     }, []);
 
     const myProfile = () =>{

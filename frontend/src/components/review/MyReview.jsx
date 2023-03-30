@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import classes from "./myreview.module.css";
 import Api from "../../API/Api";
 

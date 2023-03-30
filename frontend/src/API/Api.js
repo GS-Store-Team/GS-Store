@@ -3,7 +3,7 @@ import axios from "axios";
 const httpHeaders ={
         "Content-Type": "application/json",
         "responseType": "arraybuffer",
-        "Authorization": `Bearer_${localStorage.getItem('token')}`
+        "Authorization": `Bearer_${sessionStorage.getItem('token')}`
     }
 
 export default class Api {
@@ -79,7 +79,7 @@ export default class Api {
         });
     }
 
-    static async getUser(){
+    static async getCurrentUser(){
         return await axios.get(`http://localhost:8080/users/me`, {
             headers:httpHeaders,
         });

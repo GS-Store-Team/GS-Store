@@ -1,10 +1,13 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import defaultImg from "../../UI/img/default.png";
 import Loader from "../loading/Loader";
 import classes from "./img.module.css";
 
+interface IImgComponent {
+    func: Promise<any>;
+}
 
-export const ImgComponent = React.memo(({func}) => {
+export const ImgComponent : FC<IImgComponent> = React.memo(({func}) => {
 
     const [fail, setFail] = useState(false);
     const [image, setImage] = useState(null)

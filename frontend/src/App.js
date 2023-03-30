@@ -6,7 +6,7 @@ export const App = () => {
     const [isAuth, setAuth] = useState(false);
 
     useEffect(() => {
-        if(localStorage.getItem('token') !== null)
+        if(sessionStorage.getItem('token') !== null)
             setAuth(true)
     }, [])
 

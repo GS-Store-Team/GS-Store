@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
 import {Search} from "../search/Search";
-import {Profiletab} from "../profiletab/Profiletab";
+import {ProfileTab} from "../profiletab/ProfileTab";
 import {Category} from "../category/Category";
 import {TagsCloud} from "../tag/TagsCloud";
 
@@ -39,11 +39,11 @@ export const Header = (props) => {
                         #tags
                     </div>
 
-                    <Profiletab/>
+                    <ProfileTab/>
                 </div>
             </div>
             {tagsWindowVisible?
-                <TagsCloud list={props.tags} selectedTags={props.selectedTags} add={props.addTag} close={setTagsWindowVisible}/>
+                <TagsCloud list={props.tags} selectedTags={props.selectedTags} add={props.addTag} setVisible={setTagsWindowVisible}/>
                 :<div />
             }
         </header>
