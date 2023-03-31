@@ -4,19 +4,17 @@ import Api from "../../API/Api";
 import classes from "./pluginpage.module.css";
 import bug from './../../UI/img/bug.png'
 import star from './../../UI/img/star.png'
-import defaultImg from './../../UI/img/default.png'
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
-import {MyReview} from "../../components/review/MyReview";
-import {ReviewList} from "../../components/review/ReviewList";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
+import {ReviewArea} from "../../components/review/ReviewArea";
 
 const PluginPage = () => {
 
     const [imgList, setImgList] = useState([])
 
     const [plugin, setPlugin] = useState({
-        id: 0,
+        id: null,
         name: 'none',
         shortDescription: 'none',
         fullDescription: '',
@@ -33,7 +31,6 @@ const PluginPage = () => {
                     setPlugin(response.data);
 
                     Api.imageListByPluginId(response.data.id).then((response) =>{
-                        console.log(response.data)
                         if(response.status === 200)
                             setImgList(response.data.map((e) => <ImgComponent func={Api.getImageById(e)}/>));
                     })
@@ -43,10 +40,10 @@ const PluginPage = () => {
     },[]);
 
     return (
-        <div>
+        <div className={classes.my__preview__page}>
             <PluginViewHeader />
             <div className={[classes.my__plugin, "container"].join(' ')}>
-                <div className={"row"}>
+                <div className={[classes.my__plugin, "row"].join(' ')}>
 
                     <div className={["col-3", classes.my__full__desc].join(' ')}>
                         <div className={classes.my_title}>{plugin.name}</div>
@@ -86,11 +83,7 @@ const PluginPage = () => {
                     </div>
 
                     <div className={["col-4", classes.reviews].join(' ')}>
-                        <div className={classes.my__review__title}>Reviews</div>
-
-                        <ReviewList func={Api.getReviews(plugin.id)}/>
-                        <hr className={classes.my__line}/>
-                        <MyReview/>
+                        <ReviewArea pluginId={plugin.id}/>
                     </div>
                 </div>
             </div>

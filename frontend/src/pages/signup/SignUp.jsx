@@ -42,7 +42,7 @@ export const SignUp = () => {
         else setBadEmail(false);
 
         if(request.password !== request.confirmPassword ||
-            request.password.length < 8 && request.password.length !== 0 ||
+            (request.password.length < 8 && request.password.length !== 0) ||
             request.password.length > 32) setBadConfirm(true)
         else setBadConfirm(false);
     }, [request])

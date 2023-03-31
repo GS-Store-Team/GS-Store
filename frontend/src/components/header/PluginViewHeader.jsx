@@ -1,13 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
 import {useNavigate} from "react-router-dom";
-import {Profiletab} from "../profiletab/Profiletab";
+import {ProfileTab} from "../profiletab/ProfileTab";
 
 export const PluginViewHeader = () => {
     const navigate = useNavigate();
     const myNavigate = () =>{
-        navigate(-1);
+        navigate('/main');
     }
 
     return (
@@ -25,7 +25,7 @@ export const PluginViewHeader = () => {
                         <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
                     </div>
 
-                    <Profiletab />
+                    <ProfileTab/>
                 </div>
             </div>
         </header>

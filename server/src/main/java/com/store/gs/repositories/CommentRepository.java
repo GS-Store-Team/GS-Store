@@ -9,4 +9,5 @@ public interface CommentRepository extends PagingAndSortingRepository<Comment, L
     void deleteAllByPluginId(long id);
 
     Page<Comment> getAllByPluginIdAndReviewer(Pageable pageable, long pluginId, long userId);
+    Page<Comment> getAllByPluginId(Pageable pageable, long pluginId);
 }
