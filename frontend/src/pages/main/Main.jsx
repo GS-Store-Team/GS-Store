@@ -8,9 +8,9 @@ import classes from "./main.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {SelectedTags} from "../../components/tag/SelectedTags";
 
-const Main = () => {
-    const limit = 9;
+const LIMIT = 9
 
+const Main = () => {
     const [plugins, setPlugins] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [pageCnt, setPageCnt] = useState(0);
@@ -28,14 +28,14 @@ const Main = () => {
         })
     }, [])
 
-    const arrayFromTags = useCallback(() => {
-        const arr = selectedTags.map(tag => tag.id)
-        return arr;
-    }, [selectedTags])
+
+    // const arrayFromTags = useCallback(() => {
+    //     return selectedTags.map(tag => tag.id)
+    // }, [selectedTags])
 
     useEffect(() =>{
         setLoad(true);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
+        Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -50,7 +50,7 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         setCurrentPage(1);
-        Api.getPluginsPage(currentPage, limit, filter, currentCat, arrayFromTags()).then((response) =>{
+        Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
@@ -60,31 +60,31 @@ const Main = () => {
 
             setLoad(false);
         })
-    }, [filter, currentCat, limit, selectedTags])
+    }, [filter, currentCat])
 
-    const changePage = (page) => {
+    const changePage = useCallback((page) => {
         setCurrentPage(page);
-    }
+    }, [setCurrentPage])
 
-    const removeSelectedTag = (tag) =>{
+    const removeSelectedTag = useCallback((tag) =>{
         setSelectedTags(selectedTags.filter(t => t !== tag))
-    }
+    },[setSelectedTags, selectedTags])
 
-    const selectedTag = (tag) =>{
+    const selectedTag = useCallback((tag) =>{
         if(selectedTags.includes(tag)) removeSelectedTag(tag)
         else setSelectedTags([...selectedTags, tag])
-    }
+    },[selectedTags, removeSelectedTag, setSelectedTags])
 
-    const removeAllTags = () => {
+    const removeAllTags = useCallback(() => {
         setSelectedTags([])
-    }
+    },[selectedTags])
 
-    const setDefaultFilters = () => {
+    const setDefaultFilters = useCallback(() => {
         setFilter('');
         setCurrentPage(1);
         setCurrentCat(-1);
         setSelectedTags([]);
-    }
+    },[setFilter, setCurrentCat, setCurrentPage, setSelectedTags])
 
     return (
         <div className={classes.my__background}>
@@ -108,7 +108,7 @@ const Main = () => {
                             <div className={classes.my__no__content}>No content for current request.</div>
                             :
                             <div>
-                                <PluginList list={plugins}/>
+                                <PluginList list={plugins} perLine={3}/>
                                 <MyPagination
                                     page={pageCnt}
                                     current={currentPage}

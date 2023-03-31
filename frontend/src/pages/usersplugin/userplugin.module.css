@@ -1,0 +1,46 @@
+.my__profile{
+}
+
+.my__menu{
+    margin-top: 120px;
+    width: 10%;
+    position:relative;
+}
+
+.my__profileButton{
+    width: 100%;
+    margin-top: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background: none;
+}
+
+.my__pluginsButton{
+    width: 100%;
+    margin-top: 8px;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+    background-color: #D9D9D9;
+}
+
+.my__plugins{
+    margin-top: 120px;
+    width: 80%;
+}
+
+.my__button{
+    margin-top: 120px;
+    width: 10%;
+}
+
+.my__plusButton{
+    opacity: 70%;
+    width: 30%;
+    aspect-ratio: auto;
+}
+
+.my__plusButton:hover{
+    opacity: 100%;
+}

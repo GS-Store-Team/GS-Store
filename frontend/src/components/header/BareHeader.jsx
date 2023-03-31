@@ -1,10 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import classes from './header.module.css'
 import image from './../../UI/img/logo.png'
-import {AuthContext} from "../../context/context";
 
 export const BareHeader = () => {
-    const {isAuth, setAuth} = useContext(AuthContext);
 
     return (
         <header
