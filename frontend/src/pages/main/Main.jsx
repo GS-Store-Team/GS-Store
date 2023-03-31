@@ -36,14 +36,17 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
-            if(response.status !== 204) {
+            setLoad(false)
+
+            if(response.status === 200) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
                 setNoContent(false);
             }
-            else setNoContent(true);
 
-            setLoad(false);
+            if(response.status === 204) {
+                setNoContent(true);
+            }
         })
     }, [currentPage])
 
@@ -51,14 +54,13 @@ const Main = () => {
         setLoad(true);
         setCurrentPage(1);
         Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
+            setLoad(false);
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
                 setNoContent(false);
             }
             else setNoContent(true);
-
-            setLoad(false);
         })
     }, [filter, currentCat])
 

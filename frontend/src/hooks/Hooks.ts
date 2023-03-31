@@ -20,47 +20,6 @@ export function useOutsideClick(ref : RefObject<any>, handler : () => void, atta
     },[ref, latestHandler, attached])
 }
 
-// export function useSessionState<T>() : [T, (key : string, newValue : T) => void]{
-//
-//     const getValue = () : T => {
-//         sessionStorage.getItem("")
-//
-//         return
-//     }
-//
-//     return
-// }
-
-// export const [useUserCredentials,] = useState<UserData>(() => {
-//     return {
-//         nickName: 'null',
-//         email: 'null',
-//         phoneNumber: 'null',
-//         description: 'null',
-//         image: -1,
-//         id: -1,}
-//
-//     // Api.getUser().then((response) => {
-//     //         ref.current = response.data as UserData
-//     //     }
-//     // )
-//
-// })
-
-export const useUserCredentials = async (): Promise<UserData> => {
-    let userData = sessionStorage.getItem("userData");
-
-    if (userData) return JSON.parse(userData);
-
-    const response = await Api.getCurrentUser();
-
-    userData = response.data
-
-    sessionStorage.setItem("userData", JSON.stringify(userData))
-
-    return new Promise<UserData>(JSON.parse(userData ? userData : ""))
-}
-
 export function useLatest(value : any){
     const valueRef = useRef(value);
 

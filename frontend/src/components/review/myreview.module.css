@@ -35,8 +35,8 @@
 }
 
 .my__textarea{
+    padding: 10px 15px;
     font-size: 13px;
-    padding-left: 3%;
     display: block;
     position: relative;
     resize: none;

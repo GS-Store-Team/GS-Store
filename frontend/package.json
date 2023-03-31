@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-static-block": "^7.21.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.7",
     "@types/react": "^18.0.28",
