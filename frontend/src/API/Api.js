@@ -63,11 +63,15 @@ export default class Api {
     }
 
     static async sendReview(review, pluginId){
-        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {headers:Api.httpHeaders});
+        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {
+            headers:httpHeaders
+        });
     }
 
     static async getReviews(id){
-        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {headers:Api.httpHeaders});
+        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {
+                headers:httpHeaders
+        });
     }
 
     static async previewByPluginId(id){

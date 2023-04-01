@@ -100,24 +100,24 @@ const Main = () => {
                     selectedTags={selectedTags}
             />
             <div className={classes.main__content}>
-                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
-                    {load?
-                        <div className={classes.loader}>
-                            <Loader radius={12} />
-                        </div>
+                {load?
+                    <div className={classes.loader}>
+                        <Loader radius={12} />
+                    </div>
+                    :
+                    noContent ?
+                        <div className={classes.my__no__content}>No content for current request.</div>
                         :
-                        noContent ?
-                            <div className={classes.my__no__content}>No content for current request.</div>
-                            :
-                            <div>
-                                <PluginList list={plugins} perLine={3}/>
-                                <MyPagination
-                                    page={pageCnt}
-                                    current={currentPage}
-                                    change={changePage}
-                                />
-                            </div>
-                    }
+                        <div>
+                            <PluginList list={plugins} perLine={3}/>
+                            <MyPagination
+                                page={pageCnt}
+                                current={currentPage}
+                                change={changePage}
+                            />
+                        </div>
+                }
+                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
             </div>
             <MyFooter />
         </div>
