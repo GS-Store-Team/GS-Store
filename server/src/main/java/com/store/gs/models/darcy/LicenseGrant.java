@@ -1,4 +1,4 @@
-package com.store.gs.models.license;
+package com.store.gs.models.darcy;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

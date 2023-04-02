@@ -1,7 +1,7 @@
 package com.store.gs.services;
 
 import com.store.gs.dto.LicenseRequestDTO;
-import com.store.gs.models.license.LicenseData;
+import com.store.gs.models.darcy.LicenseData;
 import com.store.gs.repositories.LicenseDataRepository;
 import com.store.gs.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;

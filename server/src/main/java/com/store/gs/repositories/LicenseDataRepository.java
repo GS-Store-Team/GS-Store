@@ -1,6 +1,6 @@
 package com.store.gs.repositories;
 
-import com.store.gs.models.license.LicenseData;
+import com.store.gs.models.darcy.LicenseData;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
