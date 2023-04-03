@@ -121,4 +121,10 @@ export default class Api {
             headers:httpHeaders,
         });
     }
+
+    static async deleteComment(comment){
+        return await axios.delete(`http://localhost:8080/plugins/comments/${comment.id}`, {
+            headers:httpHeaders,
+        });
+    }
 }

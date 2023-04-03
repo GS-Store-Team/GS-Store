@@ -1,6 +1,4 @@
-import {RefObject, useEffect, useLayoutEffect, useMemo, useRef, useState} from "react";
-import {UserData} from "../types/Types";
-import Api from "../API/Api";
+import {RefObject, useEffect, useLayoutEffect, useRef} from "react";
 
 export function useOutsideClick(ref : RefObject<any>, handler : () => void, attached : boolean = true){
     const latestHandler = useLatest(handler);

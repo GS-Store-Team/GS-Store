@@ -1,0 +1,33 @@
+.my__rating {
+    display: block;
+    overflow: hidden;
+}
+.my__rating:not(:checked) > input {
+    display: none;
+}
+.my__rating:not(:checked) > label {
+    float: right;
+    width: auto;
+    padding: 0;
+    cursor: pointer;
+    font-size: 150%;
+    line-height: 32px;
+    color: lightgrey;
+}
+.my__rating:not(:checked) > label:before {
+    content: '★';
+}
+.my__rating > input:checked ~ label {
+    color: #ffc201;
+}
+.my__rating:not(:checked) > label:hover,
+.my__rating:not(:checked) > label:hover ~ label {
+    color: #ffc201;
+}
+.my__rating > input:checked + label:hover,
+.my__rating > input:checked + label:hover ~ label,
+.my__rating > input:checked ~ label:hover,
+.my__rating > input:checked ~ label:hover ~ label,
+.my__rating > label:hover ~ input:checked ~ label {
+    color: #ffc201;
+}
