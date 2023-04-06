@@ -1,6 +1,9 @@
 package com.store.gs.services;
 
+import com.store.gs.dto.DarcyUserDTO;
+import com.store.gs.dto.ShortProductDTO;
 import com.store.gs.models.User;
+import com.store.gs.models.darcy.LicenseData;
 import com.store.gs.models.darcy.UserAuth;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -11,6 +14,8 @@ import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
+import java.util.List;
+
 @Service
 public class DarcyClientService {
     private final WebClient webClient;
@@ -20,12 +25,25 @@ public class DarcyClientService {
         this.webClient = webClient;
     }
 
-    public Mono<User> getUserById(long id) {
+    public DarcyUserDTO getUserById(long id) {
         return webClient.get()
                 .uri(String.join("/Users/", Long.toString(id)))
                 .retrieve()
-                .bodyToMono(User.class);
+                .bodyToMono(DarcyUserDTO.class)
+                .block();
     }
+
+   /* public List<LicenseData> getLicensesByUserId(long userId) {
+        DarcyUserDTO userDTO = getUserById(userId);
+        List<ShortProductDTO> productDTOS = userDTO.getProducts();
+        return webClient.get()
+                .uri(String.join("/Users/", Long.toString(userId)))
+                .retrieve()
+                .bodyToMono(User.class)
+                .block();
+    }
+
+    public Lice*/
 
     public UserAuth auth(String username, String password) {
         MultiValueMap<String, String> userFormMap = new LinkedMultiValueMap<>();

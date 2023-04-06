@@ -1,7 +1,9 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.ChangePasswordRequestDTO;
+import com.store.gs.models.darcy.LicenseData;
 import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.services.DarcyClientService;
 import com.store.gs.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,16 +14,19 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
+import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 @RequestMapping("/users")
 public class UsersController {
     private final UserService userService;
+    private final DarcyClientService darcyClientService;
 
     @Autowired
-    public UsersController(UserService userService) {
+    public UsersController(UserService userService, DarcyClientService darcyClientService) {
         this.userService = userService;
+        this.darcyClientService = darcyClientService;
     }
 
     @Operation(summary = "Get data for current authenticated user")
@@ -77,5 +82,16 @@ public class UsersController {
 
         return ResponseEntity.ok(userData);
     }
+
+    @Operation(summary = "Get licences of current authenticated user")
+    @GetMapping("/me/licenses")
+    public ResponseEntity<List<LicenseData>> userLicenses(Authentication authentication) {
+        return ResponseEntity.ok(
+                darcyClientService.getLicensesByUserId(
+                        userService.getUserByEmail(
+                                authentication.getName()).getId())
+        );
+    }
+
 
 }
