@@ -43,7 +43,6 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}
-            disableAccept={wrongForm}
         >
             <S.Title>UPLOAD NEW PLUGIN</S.Title>
             <S.Body>
