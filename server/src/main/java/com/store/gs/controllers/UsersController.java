@@ -1,7 +1,7 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.ChangePasswordRequestDTO;
-import com.store.gs.models.darcy.LicenseData;
+import com.store.gs.dto.ShortProductDTO;
 import com.store.gs.models.supportclasses.UserData;
 import com.store.gs.services.DarcyClientService;
 import com.store.gs.services.UserService;
@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import javax.validation.Valid;
 import java.nio.file.attribute.UserPrincipalNotFoundException;
 import java.util.List;
@@ -31,7 +32,7 @@ public class UsersController {
 
     @Operation(summary = "Get data for current authenticated user")
     @GetMapping("/me")
-    public ResponseEntity<Object> me(Authentication authentication){
+    public ResponseEntity<Object> me(Authentication authentication) {
 
         UserData userData = userService.getUserDataFromCurrentUser(authentication);
 
@@ -41,10 +42,10 @@ public class UsersController {
     @Operation(summary = "Update data for current authenticated user")
     @PatchMapping("/me")
     public ResponseEntity<?> me(@Valid @RequestBody UserData userData,
-                                     BindingResult bindingResult,
-                                     Authentication authentication) throws UserPrincipalNotFoundException {
+                                BindingResult bindingResult,
+                                Authentication authentication) throws UserPrincipalNotFoundException {
 
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
+        if (bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
         UserData updatedUserData = userService.updateUserdataForCurrentUser(authentication, userData);
 
         return ResponseEntity.ok(updatedUserData);
@@ -56,13 +57,13 @@ public class UsersController {
                                                   BindingResult bindingResult,
                                                   Authentication authentication) throws UserPrincipalNotFoundException {
 
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
+        if (bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
         boolean status = userService.updateUserAuthentication(authentication, changePasswordRequestDTO);
 
-        return status?
+        return status ?
                 ResponseEntity.ok().build()
-                :ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
+                : ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).build();
     }
 
     @Operation(summary = "Delete data for current authenticated user: profile, user data, comments, related plugins. (But security user will not be deleted! User still will be able to enter with his login and password)")
@@ -76,21 +77,34 @@ public class UsersController {
 
     @Operation(summary = "Get data for user by user-id")
     @GetMapping("/{id}")
-    public ResponseEntity<UserData> userById(@PathVariable("id") long id){
+    public ResponseEntity<UserData> userById(@PathVariable("id") long id) {
 
         UserData userData = userService.getUserDataById(id);
 
         return ResponseEntity.ok(userData);
     }
 
-    @Operation(summary = "Get licences of current authenticated user")
+    @Operation(summary = "Get products of current authenticated user")
     @GetMapping("/me/licenses")
-    public ResponseEntity<List<LicenseData>> userLicenses(Authentication authentication) {
+    public ResponseEntity<List<ShortProductDTO>> userProducts(Authentication authentication) {
         return ResponseEntity.ok(
-                darcyClientService.getLicensesByUserId(
+                darcyClientService.getProductsByUserId(
                         userService.getUserByEmail(
                                 authentication.getName()).getId())
         );
+    }
+
+    @PostMapping("/me/darcy_signup")
+    public void signUpDarcy(Authentication authentication,
+                                         String nickname,
+                                         String password) {
+        darcyClientService.login(nickname, password);
+    }
+
+    @GetMapping("/me/darcy_check")
+    public ResponseEntity<?> checkDarcySign(Authentication authentication) {
+
+
     }
 
 
