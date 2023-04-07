@@ -16,6 +16,6 @@ export const SelectedTags = ({list, remove, removeAll}) => {
                        src={image}  alt={":("}/>
                </div>
             </div>
-            :<div />
+            :<></>
     );
 };

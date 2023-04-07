@@ -1,44 +1,21 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
+import React, {useCallback, useContext} from 'react';
 import {useNavigate} from "react-router-dom"
 import classes from "./profiletab.module.css";
-import {AuthContext} from "../../context/context";
 import man from "../../UI/img/man.png";
 import exit from "../../UI/img/exit.png";
 import line from "../../UI/img/line.png";
-import {useUserCredentials} from "../../hooks/Hooks";
-import Api from "../../API/Api";
+import {AuthContext} from "../../App";
 
 export const ProfileTab = () => {
-
     const navigate = useNavigate();
+    const { setAuth, user } = useContext(AuthContext);
 
-    const [userData, setUserData] = useState({
-        active: true,
-        description: '',
-        email: '',
-        id: 1,
-        image: '',
-        nickName: '',
-        phoneNumber: ''
-    })
-
-
-    useEffect(() => {
-        Api.getCurrentUser().then((response) => {
-            setUserData(response.data)
-        })
+    const logout = useCallback(() => {
+        setAuth(false);
     }, [])
 
-    const {setAuth} = useContext(AuthContext);
-    const logout = (e) => {
-        e.preventDefault();
-        setAuth(false);
-        sessionStorage.removeItem('token');
-    }
-
-
     const myProfile = useCallback( () =>{
-        navigate('/user/' + userData.id);
+        navigate('/user/' + user.id);
     },[navigate])
 
     return (
@@ -47,19 +24,15 @@ export const ProfileTab = () => {
                 onClick={myProfile}
                 className={classes.my__img1}
                 src={man}  alt={":("}/>
-
             <div className={classes.my__name} onClick={myProfile}>
-                {userData.nickName}
+                {user.nickName}
             </div>
-
             <img
                 className={classes.my__img3}
                 src={line}  alt={":("}/>
-
-            <img onClick={(e) => logout(e)}
+            <img onClick={logout}
                  className={classes.my__img2}
                  src={exit}  alt={":("}/>
-
         </div>
     );
 };

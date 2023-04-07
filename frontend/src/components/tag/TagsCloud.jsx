@@ -14,7 +14,7 @@ export const TagsCloud = ({list, selectedTags, add, setVisible}) => {
             className={classes.tag__cloud}
             onClick={(e) => e.stopPropagation()}
         >
-            {list.map((tag) => <TagVisualization id={tag.id} tag={tag} add={add} selected={selectedTags.includes(tag)}/>)}
+            {list.map((tag) => <TagVisualization key={tag.id} tag={tag} add={add} selected={selectedTags.includes(tag)}/>)}
         </div>
     );
 };

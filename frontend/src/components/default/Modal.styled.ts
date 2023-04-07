@@ -9,7 +9,6 @@ const ModalBackground = styled.div`
   z-index: 1000;
   width: 100%;
   height: 100%;
-  
   background-color: rgba(0,0,0,0.2);
 `
 
@@ -17,31 +16,27 @@ const Modal = styled.div<{ $height?: Property.Height, $width?: Property.Width }>
   margin: auto;
   inset: 0;
   position: absolute;
-
   background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  
   width: ${({ $width }) => `${$width ? $width : 600}px` };
   height: ${({ $height }) => `${$height ? $height : 600}px` };
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 `
 
 const Buttons = styled.div`
   width: 50%;
-  height: min-content;
   display: flex;
   padding: 20px 0 50px 0;
   justify-content: space-between;
-  position:absolute;
-  bottom: 0;
+  margin: auto;
 `
 
 const Title = styled.div`
   width: 100%;
+  display: block;
   height: min-content;
   padding: 50px 0;
-  position:absolute;
   text-align: center;
   font-size: 30px;
   font-weight: 3;
@@ -49,10 +44,12 @@ const Title = styled.div`
 `
 
 const Body = styled.div`
-  padding: 120px 40px;
+  flex: 1 1 auto;
+  margin-top: 0;
+  margin-bottom: auto;
+  padding: 0 40px;
   width: 100%;
-  height: 100%;
-  display: block;
+  overflow: auto;
 `
 
 const Cross = styled.div`
@@ -62,6 +59,23 @@ const Cross = styled.div`
   cursor: pointer;
   font-weight: bold;
   width: 20px;
+  height: 20px;
+  display: flex;
+`
+
+const Text = styled.div`
+  font-size: 16px;
+  width: 100%;
+  padding: 10px 20px;
+`
+
+const ScrollSection = styled.div<{$height?: Property.Height}>`
+  width: 100%;
+  height: ${({ $height }) => `${$height ? $height : 400}px` };
+  flex: 1 1 auto;
+  overflow-block: auto;
+  overflow: auto;
+  overflow-y: scroll;
 `
 
 export const Styled = {
@@ -70,5 +84,7 @@ export const Styled = {
     Buttons,
     Title,
     Body,
-    Cross
+    Cross,
+    Text,
+    ScrollSection,
 };

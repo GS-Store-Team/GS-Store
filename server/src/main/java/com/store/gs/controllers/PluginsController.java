@@ -1,5 +1,6 @@
 package com.store.gs.controllers;
 
+import com.store.gs.converters.PageConverter;
 import com.store.gs.dto.CommentDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.Plugin;
@@ -89,12 +90,12 @@ public class PluginsController {
     @Operation(summary = "Leave comment under current plugin")
     @PostMapping("/{id}/comment")
     public ResponseEntity<?> leaveComment(@PathVariable("id") long id,
-                                          @RequestBody @Valid CommentDTO commentDTO,
+                                          @RequestBody @Valid Comment comment,
                                           BindingResult bindingResult,
                                           Authentication authentication){
         if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
-        commentService.addComment(id, Comment.fromDTO(commentDTO), authentication);
+        commentService.addComment(id, comment, authentication);
 
         return ResponseEntity.ok().build();
     }
@@ -114,17 +115,11 @@ public class PluginsController {
     @Operation(summary = "Get page of comments related for current plugin-id")
     @GetMapping("/{id}/comments")
     public ResponseEntity<?> getComments(@PathVariable("id") long id,
-                                         @RequestParam(name = "_page", required = false) String pageId,
-                                         @RequestParam(name = "_limit", required = false) String pageSize,
-                                         @RequestParam(name = "_type", required = false) String sortingType,
+                                         @RequestParam(name = "_page",  required = false) Integer pageId,
+                                         @RequestParam(name = "_limit", required = false) Integer pageSize,
+                                         @RequestParam(name = "_type",  required = false) Integer sortingType,
                                          Authentication authentication){
-        return ResponseEntity.ok(commentService.getCommentsForPluginId(
-                id,
-                ControllersUtils.parseIntParam(pageId),
-                ControllersUtils.parseIntParam(pageSize),
-                ControllersUtils.parseIntParam(sortingType),
-                authentication
-        ));
+        return ResponseEntity.ok(commentService.getCommentsForPluginId(id, pageId, pageSize, sortingType, authentication));
     }
 
     @Operation(summary = "Delete plugin by id")

@@ -21,3 +21,14 @@ export type Plugin = {
     price: number
     shortDescription: string
 }
+
+export type Comment = {
+    id: number | undefined;
+    mark: number;
+    text: string;
+    creationTime: number;
+    lastChange: number | null;
+    reviewer: number
+    avatar: any;
+    nickName: string;
+}
