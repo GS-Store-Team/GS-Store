@@ -36,6 +36,8 @@ export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
             setInputStyle({height: "120px", resize: "none", backgroundColor: "#eaeaea"})
     }, [comment])
 
+    const equalToPreviousComment = useCallback(() => { return comment.text === currentComment.text && comment.mark === currentComment.mark }, [comment, currentComment])
+
     return (
         <S.NewReview>
             <FlexRow justifyContent={"end"}>
@@ -61,7 +63,7 @@ export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
                     <input type="radio" id="star-1" name="rating" value="1" checked={comment.mark === 1} onChange={() => setComment(prevState => ({...prevState, mark: 1}))}/>
                     <label htmlFor="star-1"></label>
                 </div>
-                <Btn style={{fontSize: "12px"}} disabled={comment.text? comment.text.length === 0 || comment.text.length > 2048 : true} secondary onClick={handleClick}>Comment</Btn>
+                <Btn style={{fontSize: "12px"}} disabled={(comment.text? comment.text.length === 0 || comment.text.length > 2048 : true) || equalToPreviousComment()} secondary onClick={handleClick}>Comment</Btn>
             </FlexRow>
         </S.NewReview>
     );

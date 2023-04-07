@@ -29,8 +29,6 @@ export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
     }, [fetch, sortType])
 
     const handleUploadComment = useCallback((comment : Partial<Comment>) => {
-        console.log("HERE: ",comment)
-
         Api.sendReview(comment, pluginId).then(r => {
             setFetch(prevState => (!prevState))
         })
