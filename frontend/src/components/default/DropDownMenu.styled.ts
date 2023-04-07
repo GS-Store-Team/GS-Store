@@ -25,7 +25,20 @@ const Elem = styled.div`
   }
 `
 
+const Selected = styled.div`
+  background-color: rgba(255, 255, 255, 1);
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px 20px;
+
+  &:hover {
+    background-color: white;
+    color: black;
+  }
+`
+
 export const Styled = {
     Menu,
     Elem,
+    Selected,
 }

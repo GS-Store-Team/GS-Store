@@ -30,12 +30,19 @@ const Nickname = styled.div`
 
 const Date = styled.div`
   color: gray;
-  width:100%;
-  display:flex;
   font-size: 12px;
-  justify-content:flex-end;
   overflow: hidden;
   white-space: nowrap;
+  display: flex;
+  justify-content: flex-end;
+`
+
+const Edited = styled.div`
+  padding-left: 5px;
+  cursor: pointer;
+  &:hover{
+    color: #34678c
+  }
 `
 
 const Rate = styled.div`
@@ -77,7 +84,7 @@ const Title = styled.div`
 const Area = styled.div`
   height: 100%;
   min-width: 300px;
-  width: 400px;
+  width: 500px;
   background-color: rgba(245, 243, 243, 0.85);
 `
 
@@ -87,9 +94,12 @@ const Reviews = styled.div`
   word-wrap: break-word;
 `
 
-const Filters = styled.span`
+const Filters = styled.div`
   opacity: 0.6;
   cursor: pointer;
+  width: 40px;
+  height: 40px;
+  display: flex;
   &:hover{opacity: 1}
 `
 
@@ -112,6 +122,7 @@ export const Styled = {
     Nickname,
     Rate,
     Date,
+    Edited,
     Menu,
     Avatar,
     NewReview,

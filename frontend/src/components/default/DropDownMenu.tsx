@@ -11,10 +11,11 @@ export interface IDropDownMenuElement{
 interface IDropDownMenu{
     renderElementRef : React.RefObject<any>;
     menuElements: IDropDownMenuElement[];
+    selected?:string;
     right?: boolean;
 }
 
-export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements, right = false}) => {
+export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements, selected, right = false}) => {
     const [opened, setOpened] = useState<boolean>(false)
     const ref = useRef(null)
     const [coords, setCoords] = useState({top:0, left:0, right:0})
@@ -22,15 +23,21 @@ export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements
     useOutsideClick(ref, handleClose, opened)
     const clickHandler = useCallback(() => {setOpened(prevState => (!prevState))}, [])
 
-    const processCoords = useCallback((mouseEvent : MouseEvent) => {
-        const boundary = (mouseEvent.target as HTMLElement).getBoundingClientRect();
+    const processCoords = useCallback((element : HTMLElement) => {
+        const boundary = element.getBoundingClientRect();
         setCoords({top: boundary.bottom, left: boundary.left, right: document.body.clientWidth - boundary.right})
     }, [setCoords])
 
     const onRefElementClick = useCallback((e : MouseEvent) => {
-        if(e.target === renderElementRef.current) {
+        if(renderElementRef.current.contains(e.target)) {
             clickHandler()
-            processCoords(e)
+
+            const target : HTMLElement = renderElementRef.current as HTMLElement
+            let scopeElem : HTMLElement | null = e.target as HTMLElement
+
+            while(scopeElem !== target && scopeElem) scopeElem = scopeElem.parentElement
+
+            if(scopeElem) processCoords(scopeElem as HTMLElement)
         }
     },[processCoords, clickHandler])
 
@@ -54,7 +61,10 @@ export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements
     return(
         opened ?
             <S.Menu ref={ref} $top={coords.top as Property.Top} $left={!right ? `${coords.left}px` as Property.Left: "unset"} $right={right ? `${coords.right}px` as Property.Right: "unset"}>
-                {menuElements.map((e, index) => <S.Elem key={index} onClick={() => handleClick(e.action)}>{e.title}</S.Elem>)}
+                {menuElements.map((e, index) =>
+                    selected && selected === e.title ?
+                        <S.Selected key={index} onClick={() => handleClick(e.action)}>{e.title}</S.Selected >
+                        :<S.Elem key={index} onClick={() => handleClick(e.action)}>{e.title}</S.Elem>)}
             </S.Menu> : <></>
     );
 }

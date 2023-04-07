@@ -68,9 +68,14 @@ export default class Api {
         });
     }
 
-    static async getReviews(id){
+    static async getReviews(id, page = 1, limit = 100, sortType = 0){
         return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {
-                headers:httpHeaders
+            headers:httpHeaders,
+            params: {
+                _page: page,
+                _limit: limit,
+                _type: sortType,
+            },
         });
     }
 

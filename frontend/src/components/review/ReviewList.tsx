@@ -11,17 +11,17 @@ import {AuthContext} from "../../App";
 import {DropDownMenu, IDropDownMenuElement} from "../default/DropDownMenu";
 import {Modal} from "../default/Modal";
 import {Styled as M} from "./../default/Modal.styled";
-import {useOutsideClick} from "../../hooks/Hooks";
 
 interface IReview{
     comment: Comment;
     deleteComment: (comment: Comment) => void;
+    handleEdit: (comment: Comment) => void;
 }
 
 function calculateOpacity(mark: number, total: number): number{
     return 0.1 + Math.pow(mark,2) / Math.pow(total,2);
 }
-export const Review : FC<IReview>= ({comment, deleteComment}) => {
+export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     const ref = useRef(null)
@@ -35,10 +35,10 @@ export const Review : FC<IReview>= ({comment, deleteComment}) => {
         const arr : IDropDownMenuElement[] = []
 
         arr.push({title: "Delete", action: () => setModal(true)})
-        arr.push({title: "Edit", action: () => console.log("edit")})
+        arr.push({title: "Edit", action: () => handleEdit(comment)})
 
         return arr
-    }, [])
+    }, [comment])
 
     const modalJSX = useCallback(() => {
         const handleAccept = () => {
@@ -57,12 +57,12 @@ export const Review : FC<IReview>= ({comment, deleteComment}) => {
                     <M.Text>Are you sure you want to delete the comment?</M.Text>
                     <M.ScrollSection $height={"150"}>
                         <div style={{position: "absolute", backgroundColor:"transparent", height:"150px", width:"505px", zIndex:1, cursor:"not-allowed"}}></div>
-                        <Review comment={comment} deleteComment={() =>{}} />
+                        <Review comment={comment} deleteComment={() =>{}} handleEdit={handleEdit}/>
                     </M.ScrollSection>
                 </M.Body>
             </Modal>
         )
-    },[])
+    },[comment, handleEdit, setModal])
 
     return (
         <>
@@ -85,7 +85,10 @@ export const Review : FC<IReview>= ({comment, deleteComment}) => {
                 </FlexRow>
                 <S.Body>
                     {comment.text}
-                    <S.Date>{dateFormat(comment.time)}</S.Date>
+                    <S.Date>
+                        {dateFormat(comment.creationTime)}
+                        {comment.lastChange && <S.Edited>(edited)</S.Edited>}
+                    </S.Date>
                 </S.Body>
             </S.Review>
             {modal && modalJSX()}
@@ -96,8 +99,9 @@ export const Review : FC<IReview>= ({comment, deleteComment}) => {
 interface IReviewList{
     comments: Comment[];
     deleteComment: (comment: Comment) => void;
+    handleEdit: (comment: Comment) => void;
 }
-export const ReviewList : FC<IReviewList>= ({comments, deleteComment}) => {
+export const ReviewList : FC<IReviewList>= ({comments, deleteComment, handleEdit}) => {
     return (
         comments.length === 0?
           <S.NoComments>No reviews yet</S.NoComments>
@@ -105,6 +109,7 @@ export const ReviewList : FC<IReviewList>= ({comments, deleteComment}) => {
                 <Review comment={c}
                         key={c.id}
                         deleteComment={deleteComment}
+                        handleEdit={handleEdit}
                 />
             )}</S.Reviews>
     );

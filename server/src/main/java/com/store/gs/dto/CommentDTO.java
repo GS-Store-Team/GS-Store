@@ -17,7 +17,8 @@ public class CommentDTO {
     private float mark;
     @Size(min = 1, max = 2048, message = "Comment length should be in range [1 - 2048] characters!")
     private String text;
-    private Timestamp time;
+    private Timestamp creationTime;
+    private Timestamp lastChange;
     private long reviewer;
     private Avatar avatar;
     private String nickName;
@@ -26,7 +27,8 @@ public class CommentDTO {
         this.id = comment.getId();
         this.mark = comment.getMark();
         this.text = comment.getText();
-        this.time = comment.getTime();
+        this.creationTime = comment.getCreationTime();
+        this.lastChange = comment.getLastChange();
         this.reviewer = comment.getReviewer();
     }
 }

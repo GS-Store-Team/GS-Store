@@ -23,10 +23,11 @@ export type Plugin = {
 }
 
 export type Comment = {
-    id: number;
+    id: number | undefined;
     mark: number;
     text: string;
-    time: number;
+    creationTime: number;
+    lastChange: number | null;
     reviewer: number
     avatar: any;
     nickName: string;

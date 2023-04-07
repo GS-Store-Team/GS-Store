@@ -115,19 +115,11 @@ public class PluginsController {
     @Operation(summary = "Get page of comments related for current plugin-id")
     @GetMapping("/{id}/comments")
     public ResponseEntity<?> getComments(@PathVariable("id") long id,
-                                         @RequestParam(name = "_page", required = false) String pageId,
-                                         @RequestParam(name = "_limit", required = false) String pageSize,
-                                         @RequestParam(name = "_type", required = false) String sortingType,
+                                         @RequestParam(name = "_page",  required = false) Integer pageId,
+                                         @RequestParam(name = "_limit", required = false) Integer pageSize,
+                                         @RequestParam(name = "_type",  required = false) Integer sortingType,
                                          Authentication authentication){
-        return ResponseEntity.ok(
-            commentService.getCommentsForPluginId(
-                    id,
-                    ControllersUtils.parseIntParam(pageId),
-                    ControllersUtils.parseIntParam(pageSize),
-                    ControllersUtils.parseIntParam(sortingType),
-                    authentication
-            )
-        );
+        return ResponseEntity.ok(commentService.getCommentsForPluginId(id, pageId, pageSize, sortingType, authentication));
     }
 
     @Operation(summary = "Delete plugin by id")

@@ -9,17 +9,25 @@ import cross from './../../UI/img/cross.png'
 
 interface INewReview{
     uploadComment: (comment : Partial<Comment>) => void;
+    currentComment: Partial<Comment>;
 }
-
-export const NewReview : FC<INewReview>= ({uploadComment}) => {
+export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
     const [badInputCSS,] = useState<CSSProperties>(() => {return {borderColor: "red", backgroundColor: "rgba(255, 0, 0, 0.1)"}})
     const [inputStyle, setInputStyle] = useState<CSSProperties>({height: "120px", resize: "none", backgroundColor: "#eaeaea"})
-    const [comment, setComment] = useState<Partial<Comment>>({mark:1, text:""})
-    const resetComment = useCallback(() => { setComment({mark:1, text:""})}, [setComment])
-    const handleClick = useCallback(() => {
+    const [comment, setComment] = useState<Partial<Comment>>(currentComment)
+
+    useEffect(() => {
+        setComment(currentComment)
+    }, [currentComment])
+
+    const resetComment = useCallback(() => {
+       setComment(currentComment)
+    }, [setComment])
+
+     const handleClick = useCallback(() => {
         uploadComment(comment)
         resetComment()
-    }, [comment, resetComment])
+     }, [comment, resetComment])
 
     useEffect(() => {
         if(comment.text && comment.text.length > 2048)
