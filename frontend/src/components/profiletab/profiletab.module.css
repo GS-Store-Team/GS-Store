@@ -39,10 +39,10 @@
 }
 
 .my__name{
-    width: 100%;
     text-align: left;
     font-size: 14px;
     overflow: hidden;
+    overflow-block: hidden;
     text-overflow: ellipsis;
 }
 

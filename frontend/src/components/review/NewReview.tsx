@@ -6,6 +6,7 @@ import {FlexRow} from "../default/Flex.styled";
 import {Btn} from "../default/Btn";
 import {TextArea} from "../default/Form";
 import cross from './../../UI/img/cross.png'
+import {Icon} from "../default/Icon";
 
 interface INewReview{
     uploadComment: (comment : Partial<Comment>) => void;
@@ -41,9 +42,7 @@ export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
     return (
         <S.NewReview>
             <FlexRow justifyContent={"end"}>
-                <S.Cross onClick={resetComment}>
-                    <img style={{width: "15px", height: "15px"}} src={cross} alt={".."}/>
-                </S.Cross>
+                <Icon style={{width:"15px", height:"15px", margin: "5px"}} img={"cross"} tooltip={{label:"Clear review", placement:"bottom"}} onClick={resetComment}/>
             </FlexRow>
             <TextArea style={inputStyle}
                       placeholder={"Type review"}

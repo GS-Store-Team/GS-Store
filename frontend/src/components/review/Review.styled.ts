@@ -51,11 +51,9 @@ const Rate = styled.div`
 `
 
 const Menu = styled.div`
-  width: 18px;
-  height: 18px;
-  transform: translate(0, -3px);
-  opacity: 0.4;
   cursor: pointer;
+  transform: translate(0, 1px);
+  opacity: 0.4;
   &:hover{opacity: 1}
 `
 
@@ -66,13 +64,6 @@ const Avatar = styled.div`
 
 const NewReview = styled.div`
   padding: 0 20px;
-`
-
-const Cross = styled.div`
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.5;
-  &:hover{ opacity: 1}
 `
 
 const Title = styled.div`
@@ -126,7 +117,6 @@ export const Styled = {
     Menu,
     Avatar,
     NewReview,
-    Cross,
     Title,
     Area,
     Reviews,

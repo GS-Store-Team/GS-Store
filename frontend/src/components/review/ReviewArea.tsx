@@ -5,8 +5,9 @@ import {NewReview} from "./NewReview";
 import {Comment} from "../../types/Types";
 import {Styled as S} from "./Review.styled"
 import {FlexRow} from "../default/Flex.styled";
-import filter from "../../UI/img/filter.png";
 import {DropDownMenu, IDropDownMenuElement} from "../default/DropDownMenu";
+import {Tooltip} from "../default/Tooltip";
+import {Icon} from "../default/Icon";
 
 interface IReviewArea{
     pluginId: number;
@@ -60,9 +61,11 @@ export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
                     Reviews
                     {reviews.length > 1 &&
                         <>
-                            <S.Filters ref={ref}>
-                                <img style={{width: "22px", height: "22px", margin: "auto"}} src={filter} alt={".."}/>
-                            </S.Filters>
+                            <Tooltip label={"Filter"} placement={"left"}>
+                                <S.Filters ref={ref}>
+                                    <Icon img={"filter"} style={{margin: "auto"}}/>
+                                </S.Filters>
+                            </Tooltip>
                             <DropDownMenu
                                 renderElementRef={ref}
                                 menuElements={options()}
