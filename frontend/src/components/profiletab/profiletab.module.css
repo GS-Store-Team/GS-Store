@@ -15,7 +15,7 @@
 }
 
 .my__img1{
-    margin-left: 5%;
+    margin: 0 10px;
     height: 22px;
     width: 22px;
     opacity: 70%;
@@ -27,7 +27,7 @@
 }
 
 .my__img2{
-    margin-right: 5%;
+    margin: 0 5px;
     height: 22px;
     width: 22px;
     opacity: 70%;
@@ -39,11 +39,11 @@
 }
 
 .my__name{
-    margin-top: 7px;
-    text-align: center;
+    width: 100%;
+    text-align: left;
     font-size: 14px;
-    height: 28px;
-    width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .my__img3{

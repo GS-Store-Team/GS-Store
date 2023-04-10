@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useEffect, useState} from 'react';
 import Api from "../../API/Api";
 import settingsButton from "./../../UI/img/settings.png"
 import classes from "./userprofile.module.css";
@@ -10,32 +10,21 @@ import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataMo
 import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
+import {AuthContext} from "../../App";
 
 
 export const UserProfile = () => {
     const navigate = useNavigate();
-
+    const { user, setUser } = useContext(AuthContext);
     const [userDataModal, setUserDataModal] = useState(false);
 
-    const [userData, setUserData] = useState<UserData>({
-        nickName: '',
-        email: '',
-        phoneNumber: '',
-        description: '',
-        image: 0,
-        id: 0
-    });
-
-    useEffect(() => {
-        Api.getCurrentUser().then((response) => {setUserData(response.data)});
-    }, []);
 
     const myProfile = useCallback(() =>{
-        navigate('/user/' + userData.id);
+        navigate('/user/' + user.id);
     },[navigate])
 
     const myPlugins = useCallback(() =>{
-        navigate('/user/' + userData.id + '/plugins');
+        navigate('/user/' + user.id + '/plugins');
     },[navigate])
 
     return (
@@ -58,7 +47,7 @@ export const UserProfile = () => {
                         </div>
                     </div>
 
-                    <UserProfileData  userData={userData}/>
+                    <UserProfileData  userData={user}/>
                     <div className={["col-1", classes.my__button].join(' ')}>
                         <img onClick={() => setUserDataModal(true)} className={classes.my__settingsButton}
                              src={settingsButton}
@@ -69,8 +58,8 @@ export const UserProfile = () => {
             <MyFooter/>
             {userDataModal ?
                 <ChangeUserDataModal
-                    userData={userData}
-                    onChangeUserData={setUserData}
+                    userData={user}
+                    onChangeUserData={setUser}
                     opened={userDataModal}
                     setOpened={setUserDataModal}
                 /> : <></>

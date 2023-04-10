@@ -23,7 +23,6 @@ public class UserData {
     @Size(max = 2048, message = "Description length should be less than 2048 symbols!")
     private String description;
     private Long image;
-
     @Transient
     private long id;
     @Transient

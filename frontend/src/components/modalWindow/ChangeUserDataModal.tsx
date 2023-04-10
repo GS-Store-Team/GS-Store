@@ -29,7 +29,6 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
     const [textAreaCSS,] = useState<CSSProperties>(() => {return {height: "130px", resize: "none"}})
 
     const [fieldStyle, setFieldStyle] = useState<IFieldStyle>(() => {
-        console.log("STATE")
         return {
             nickName: {},
             email: {},
@@ -104,7 +103,7 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
         >
             <S.Title>CHANGE PROFILE</S.Title>
             <S.Body>
-                <div className={classes.my__label}>Nick:</div>
+                <div style={{marginTop: 0}} className={classes.my__label}>Nick:</div>
                 <Input style={fieldStyle.nickName} type={"text"} value={data.nickName} onChange={(e) => {setData({... data, nickName: e.target.value})}}/>
                 <div className={classes.my__label}>Email:</div>
                 <Input style={fieldStyle.email} type={"text"} value={data.email} onChange={(e) => {setData({... data, email: e.target.value})}}/>

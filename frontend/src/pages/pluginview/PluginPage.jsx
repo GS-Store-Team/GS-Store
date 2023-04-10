@@ -8,6 +8,7 @@ import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {ReviewArea} from "../../components/review/ReviewArea";
+import {FlexRow} from "../../components/default/Flex.styled";
 
 const PluginPage = () => {
 
@@ -43,7 +44,9 @@ const PluginPage = () => {
         <div className={classes.my__preview__page}>
             <PluginViewHeader />
             <div className={[classes.my__plugin, "container"].join(' ')}>
+
                 <div className={[classes.my__plugin, "row"].join(' ')}>
+                    <FlexRow>
 
                     <div className={["col-3", classes.my__full__desc].join(' ')}>
                         <div className={classes.my_title}>{plugin.name}</div>
@@ -81,10 +84,8 @@ const PluginPage = () => {
                         </div>
                         <p className={classes.my_desc_text}>{plugin.fullDescription}</p>
                     </div>
-
-                    <div className={["col-4", classes.reviews].join(' ')}>
-                        <ReviewArea pluginId={plugin.id}/>
-                    </div>
+                    { plugin.id && <ReviewArea pluginId={plugin.id}/>}
+                </FlexRow>
                 </div>
             </div>
             <MyFooter />
