@@ -39,7 +39,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
 
     return (
         <Modal
-            $height={"700"}
+            $height={"700px"}
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}

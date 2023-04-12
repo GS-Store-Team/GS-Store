@@ -43,8 +43,9 @@ export const UserProfile = () => {
                     </S.LeftMenu>
 
                     <S.PhotoBlock>
-                        <ImgComponent style={{width: "250px", aspectRatio: "1/1", margin: "10px auto"}}
-                                      func={Api.previewByPluginId(0)}></ImgComponent>
+                        <div style={{width: "250px"}}>
+                            <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
+                        </div>
                     </S.PhotoBlock>
 
                     <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
