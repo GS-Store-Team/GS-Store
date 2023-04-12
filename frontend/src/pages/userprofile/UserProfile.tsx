@@ -1,11 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useContext, useState} from 'react';
 import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
-import {UserData} from "../../types/Types";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
-import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
+import {FlexRow} from "../../components/default/Flex.styled";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
@@ -15,7 +14,6 @@ export const UserProfile = () => {
     const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
     const [userDataModal, setUserDataModal] = useState(false);
-
 
     const myProfile = useCallback(() =>{
         navigate('/user/' + user.id);
