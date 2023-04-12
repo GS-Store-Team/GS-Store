@@ -15,7 +15,7 @@
 }
 
 .my__img1{
-    margin-left: 5%;
+    margin: 0 10px;
     height: 22px;
     width: 22px;
     opacity: 70%;
@@ -28,7 +28,7 @@
 }
 
 .my__img2{
-    margin-right: 5%;
+    margin: 0 5px;
     height: 22px;
     width: 22px;
     opacity: 70%;

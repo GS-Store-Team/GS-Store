@@ -5,6 +5,7 @@ import {Search} from "../search/Search";
 import {ProfileTab} from "../profiletab/ProfileTab";
 import {Category} from "../category/Category";
 import {TagsCloud} from "../tag/TagsCloud";
+import {DropDownMenu} from "../default/DropDownMenu";
 
 export const Header = (props) => {
     const [tagsWindowVisible, setTagsWindowVisible] = useState(false);
@@ -38,7 +39,6 @@ export const Header = (props) => {
                          onClick={() => setTagsWindowVisible(true)}>
                         #tags
                     </div>
-
                     <ProfileTab/>
                 </div>
             </div>

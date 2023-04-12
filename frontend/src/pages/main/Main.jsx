@@ -36,14 +36,17 @@ const Main = () => {
     useEffect(() =>{
         setLoad(true);
         Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
-            if(response.status !== 204) {
+            setLoad(false)
+
+            if(response.status === 200) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
                 setNoContent(false);
             }
-            else setNoContent(true);
 
-            setLoad(false);
+            if(response.status === 204) {
+                setNoContent(true);
+            }
         })
     }, [currentPage])
 
@@ -51,14 +54,13 @@ const Main = () => {
         setLoad(true);
         setCurrentPage(1);
         Api.getPluginsPage(currentPage, LIMIT, filter, currentCat, null).then((response) =>{
+            setLoad(false);
             if(response.status !== 204) {
                 setPlugins(response.data.content);
                 setPageCnt(response.data.totalPages);
                 setNoContent(false);
             }
             else setNoContent(true);
-
-            setLoad(false);
         })
     }, [filter, currentCat])
 
@@ -98,24 +100,24 @@ const Main = () => {
                     selectedTags={selectedTags}
             />
             <div className={classes.main__content}>
-                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
-                    {load?
-                        <div className={classes.loader}>
-                            <Loader radius={12} />
-                        </div>
+                {load?
+                    <div className={classes.loader}>
+                        <Loader radius={12} />
+                    </div>
+                    :
+                    noContent ?
+                        <div className={classes.my__no__content}>No content for current request.</div>
                         :
-                        noContent ?
-                            <div className={classes.my__no__content}>No content for current request.</div>
-                            :
-                            <div>
-                                <PluginList list={plugins} perLine={3}/>
-                                <MyPagination
-                                    page={pageCnt}
-                                    current={currentPage}
-                                    change={changePage}
-                                />
-                            </div>
-                    }
+                        <div>
+                            <PluginList list={plugins} perLine={3}/>
+                            <MyPagination
+                                page={pageCnt}
+                                current={currentPage}
+                                change={changePage}
+                            />
+                        </div>
+                }
+                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
             </div>
             <MyFooter />
         </div>

@@ -6,6 +6,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
+    "@types/jquery": "^3.5.16",
     "axios": "^1.2.0",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
@@ -46,6 +47,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-static-block": "^7.21.0",
     "@types/jest": "^29.5.0",
     "@types/node": "^18.15.7",
     "@types/react": "^18.0.28",

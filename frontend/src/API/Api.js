@@ -1,14 +1,36 @@
 import axios from "axios";
+import {useContext} from "react";
+import {AuthContext} from "../App";
 
-const httpHeaders ={
-        "Content-Type": "application/json",
-        "responseType": "arraybuffer",
-        "Authorization": `Bearer_${sessionStorage.getItem('token')}`
+const httpHeaders= {
+    "Content-Type": "application/json",
+    "responseType": "arraybuffer",
+    "Authorization": "",
+}
+
+window.addEventListener('storage', function (){
+    httpHeaders.Authorization = `Bearer_${sessionStorage.getItem('token')}`
+});
+
+function forceLogout(){
+    const {setAuth}  = useContext(AuthContext)
+    setAuth(false)
+}
+
+const restClient = axios.create();
+
+restClient.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    async (error) => {
+        forceLogout()
+        return Promise.reject(error);
     }
+);
 
 export default class Api {
     static async getPluginsPage(page = 1, limit = 10, filter, currentCat, tags){
-
         return  await axios.get("http://localhost:8080/plugins", {
             headers:httpHeaders,
             params: {
@@ -17,7 +39,6 @@ export default class Api {
                 _filter: filter,
                 _cat: currentCat,
             },
-
         })
     }
 
@@ -42,11 +63,20 @@ export default class Api {
     }
 
     static async sendReview(review, pluginId){
-        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {headers:httpHeaders});
+        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {
+            headers:httpHeaders
+        });
     }
 
-    static async getReviews(id){
-        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {headers:httpHeaders});
+    static async getReviews(id, page = 1, limit = 100, sortType = 0){
+        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {
+            headers:httpHeaders,
+            params: {
+                _page: page,
+                _limit: limit,
+                _type: sortType,
+            },
+        });
     }
 
     static async previewByPluginId(id){
@@ -93,6 +123,12 @@ export default class Api {
 
     static async changeUserData(userData){
         return await axios.patch("http://localhost:8080/users/me", userData, {
+            headers:httpHeaders,
+        });
+    }
+
+    static async deleteComment(comment){
+        return await axios.delete(`http://localhost:8080/plugins/comments/${comment.id}`, {
             headers:httpHeaders,
         });
     }

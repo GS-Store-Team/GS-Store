@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {AuthContext} from "../../context/context";
 import Api from "../../API/Api";
 import classes from "./login.module.css";
 import {BareHeader} from "../../components/header/BareHeader";
 import {Link} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
+import {AuthContext} from "../../App";
 
 export const Login = () => {
 
@@ -61,7 +61,6 @@ export const Login = () => {
         Api.login(request).then((response)=>{
             if(response.status === 200) {
                 sessionStorage.setItem('token', response.data.token);
-                Api.getCurrentUser().then((response) => sessionStorage.setItem("userData", JSON.stringify(response.data)))
                 setAuth(true);
             }
             if(response.status === 204){

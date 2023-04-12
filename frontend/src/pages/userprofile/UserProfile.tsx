@@ -5,35 +5,24 @@ import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {UserData} from "../../types/Types";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
-import {FlexRow} from "../../components/default/Flex.styled";
+import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
+import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
-
+    const { user, setUser } = useContext(AuthContext);
     const [userDataModal, setUserDataModal] = useState(false);
 
-    const [userData, setUserData] = useState<UserData>({
-        nickName: '',
-        email: '',
-        phoneNumber: '',
-        description: '',
-        image: 0,
-        id: 0
-    });
-
-    useEffect(() => {
-        Api.getCurrentUser().then((response) => {setUserData(response.data)});
-    }, []);
 
     const myProfile = useCallback(() =>{
-        navigate('/user/' + userData.id);
+        navigate('/user/' + user.id);
     },[navigate])
 
     const myPlugins = useCallback(() =>{
-        navigate('/user/' + userData.id + '/plugins');
+        navigate('/user/' + user.id + '/plugins');
     },[navigate])
 
     const handleOpenModal = useCallback(() =>{
@@ -60,14 +49,14 @@ export const UserProfile = () => {
                                       func={Api.previewByPluginId(0)}></ImgComponent>
                     </S.PhotoBlock>
 
-                    <UserProfileData userData={userData} onOpenModal={handleOpenModal}/>
+                    <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
                 </FlexRow>
             </div>
             <MyFooter/>
             {userDataModal ?
                 <ChangeUserDataModal
-                    userData={userData}
-                    onChangeUserData={setUserData}
+                    userData={user}
+                    onChangeUserData={setUser}
                     opened={userDataModal}
                     setOpened={setUserDataModal}
                 /> : <></>

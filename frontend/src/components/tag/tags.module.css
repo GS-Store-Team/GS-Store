@@ -1,8 +1,10 @@
 .tags__area{
     position: fixed;
-    margin-top: 2px;
+    top: 0;
+    margin-top: 102px;
     display: flex;
     justify-content: space-between;
+
     width: 100%;
 }
 
@@ -68,7 +70,6 @@
     text-align: center;
     left: 50%;
     transform: translate(-50%);
-    z-index: 100;
     overflow: hidden;
 }
 
@@ -77,7 +78,6 @@
     position: absolute;
     width: 100%;
     height: 100vh;
-    z-index: 90;
 }
 
 .tag__viz{
@@ -91,6 +91,7 @@
     height: 20px;
     cursor: pointer;
 }
+
 .tag__viz:hover{
     font-weight: bolder;
     background-color: rgba(238,215,193, 0.9);
