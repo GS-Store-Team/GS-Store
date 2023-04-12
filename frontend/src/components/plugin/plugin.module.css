@@ -1,5 +1,15 @@
 .my__plugin{
     height: 300px;
+    cursor: pointer;
+}
+
+.my__plugin:hover{
+    animation: aScale 0.1s forwards ease-out;
+}
+
+@keyframes aScale {
+    0% {scale: 1}
+    100% {scale: 1.05;}
 }
 
 .my__col {
@@ -31,6 +41,11 @@
     text-align: center;
     word-break: break-word;
     display: flex;
+    animation: appear 1s forwards ease-out;
+}
+@keyframes appear {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
 
 .my__star{

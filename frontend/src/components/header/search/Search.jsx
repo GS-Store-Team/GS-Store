@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import classes from "./search.module.css";
-import image from "../../UI/img/shovel.png";
+import image from "../../../UI/img/shovel.png";
 
 export const Search = ({setFilterFunc, currentFilter}) => {
     const [filter, setFilter] = useState("");

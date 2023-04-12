@@ -38,31 +38,30 @@
     z-index: 90;
 }
 
+.my__dropped__list__el{
+    height: 40px;
+    line-height: 40px;
+    background-color: rgb(128,128,128);
+    margin: 2px auto;
+    color: white;
+}
+
 .my__dropped__list__hidden{
     position: absolute;
     visibility: hidden;
 }
 
-.my__dropped__list__el{
-    height: 40px;
-    background-color: rgba(0,0,0,0.4);
-    border: 1px solid black;
-    border-radius: 4px;
-    margin: 2px auto ;
-    color: white;
-    padding-top: 5px;
-}
-
 .my__dropped__list__el__current{
     height: 40px;
-    background-color: rgba(0,0,0,0.7);
-    border: 1px solid black;
-    border-radius: 4px;
-    margin: 2px auto ;
-    color: white;
-    padding-top: 5px;
+    line-height: 40px;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    border: 1px solid rgb(128,128,128);
 }
 
 .my__dropped__list__el:hover{
-    background-color: rgba(0,0,0,0.7);;
+    background-color: rgb(255, 255, 255);
+    box-sizing: border-box;
+    border: 1px solid rgb(128,128,128);
+    color: black;
 }

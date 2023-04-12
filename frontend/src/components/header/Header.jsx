@@ -1,11 +1,9 @@
 import React, {useState} from 'react';
 import classes from './header.module.css'
-import image from './../../UI/img/logo.png'
-import {Search} from "../search/Search";
-import {ProfileTab} from "../profiletab/ProfileTab";
-import {Category} from "../category/Category";
+import {Search} from "./search/Search";
+import {LogoTab, ProfileTab} from "./Tabs";
+import {Categories} from "./category/Categories";
 import {TagsCloud} from "../tag/TagsCloud";
-import {DropDownMenu} from "../default/DropDownMenu";
 
 export const Header = (props) => {
     const [tagsWindowVisible, setTagsWindowVisible] = useState(false);
@@ -20,16 +18,9 @@ export const Header = (props) => {
             <div className="container" style={{height: "100%"}}>
                 <div className={classes.my__container}>
 
-                    <div onClick={myNavigate}
-                          style={{textDecoration: "none"}}
-                          className={[classes.my__logo, "col-6"].join(' ')}>
-                        <img
-                            className={classes.my__img}
-                            src={image}  alt={":("}/>
-                        <div className={[classes.my__title, "flex-column justify-content-center"].join(' ')}>GS-Store</div>
-                    </div>
+                    <LogoTab onClick={myNavigate}/>
 
-                    <Category setCurrentCat={props.setCurrentCat} currentCategory={props.currentCategory}/>
+                    <Categories setCategory={props.setCurrentCat} category={props.currentCategory}/>
 
                     <Search className={["col-6"].join(' ')}
                             setFilterFunc={props.setFilter}

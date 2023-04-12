@@ -1,8 +1,9 @@
 import styled from "styled-components";
+import {Property} from "csstype";
 
 const Review = styled.div`
   padding: 5px 20px 15px 20px;
-  &:hover {
+  &:hover{
     background-color: rgba(255, 255, 255, 1);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.6)
   }
@@ -23,6 +24,7 @@ const Nickname = styled.div`
   overflow: hidden;
   white-space: nowrap;
   cursor: pointer;
+  width: 160px;
   &:hover {
     color: #34678c
   }
@@ -51,11 +53,9 @@ const Rate = styled.div`
 `
 
 const Menu = styled.div`
-  width: 18px;
-  height: 18px;
-  transform: translate(0, -3px);
-  opacity: 0.4;
   cursor: pointer;
+  transform: translate(0, 1px);
+  opacity: 0.4;
   &:hover{opacity: 1}
 `
 
@@ -66,35 +66,35 @@ const Avatar = styled.div`
 
 const NewReview = styled.div`
   padding: 0 20px;
-`
-
-const Cross = styled.div`
-  padding: 5px;
-  cursor: pointer;
-  opacity: 0.5;
-  &:hover{ opacity: 1}
+  min-height: 200px;
+  min-width: min(500px, 100%);
 `
 
 const Title = styled.div`
+  min-height: 120px;
   padding: 60px 30px 20px 20px;
   overflow: hidden;
   font-size: 26px;
 `
 
-const Area = styled.div`
-  height: 100%;
+const Area = styled.div<{$height: Property.Height}>`
+  display: flex;
+  flex-direction: column;
+  height: ${({ $height }) => `${$height}` };
   min-width: 300px;
-  width: 500px;
   background-color: rgba(245, 243, 243, 0.85);
 `
 
 const Reviews = styled.div`
-  height: 450px;
+  flex: 1 1 auto;
   overflow: auto;
   word-wrap: break-word;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
-const Filters = styled.div`
+const Tab = styled.div`
   opacity: 0.6;
   cursor: pointer;
   width: 40px;
@@ -105,7 +105,7 @@ const Filters = styled.div`
 
 const NoComments = styled.div`
   padding: 20px;
-  height: 450px;
+  flex: 1 1 auto;
 `
 
 const ScrollSection = styled.div`
@@ -126,11 +126,10 @@ export const Styled = {
     Menu,
     Avatar,
     NewReview,
-    Cross,
     Title,
     Area,
     Reviews,
-    Filters,
+    Tab,
     NoComments,
     ScrollSection
 }

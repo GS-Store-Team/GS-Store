@@ -18,10 +18,11 @@ const Modal = styled.div<{ $height?: Property.Height, $width?: Property.Width }>
   position: absolute;
   background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  width: ${({ $width }) => `${$width ? $width : 600}px` };
-  height: ${({ $height }) => `${$height ? $height : 600}px` };
+  width: ${({ $width }) => `${$width ? $width : "600px"}` };
+  height: ${({ $height }) => `${$height ? $height : "600px"}` };
   display: flex;
   flex-direction: column;
+  z-index: 500;
 `
 
 const Buttons = styled.div`

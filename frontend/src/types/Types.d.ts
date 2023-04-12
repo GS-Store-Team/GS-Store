@@ -32,3 +32,8 @@ export type Comment = {
     avatar: any;
     nickName: string;
 }
+
+export type Category = {
+    id: number
+    title: string
+}

@@ -95,7 +95,7 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
 
     return (
         <Modal
-            $height={"700"}
+            $height={"700px"}
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}

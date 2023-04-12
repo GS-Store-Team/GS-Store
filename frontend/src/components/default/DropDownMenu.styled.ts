@@ -13,7 +13,7 @@ const Menu = styled.div<{ $top: Property.Top, $left?: Property.Left, $right?: Pr
 `
 
 const Elem = styled.div`
-  background-color: rgba(0,0,0,.6);
+  background-color: rgba(128, 128, 128);
   cursor: pointer;
   font-size: 14px;
   color: white;
@@ -37,8 +37,17 @@ const Selected = styled.div`
   }
 `
 
+const Icon = styled.div `
+  display: flex;
+  opacity: .7;
+  &:hover{
+    opacity: 1;
+  }
+`
+
 export const Styled = {
     Menu,
     Elem,
     Selected,
+    Icon,
 }

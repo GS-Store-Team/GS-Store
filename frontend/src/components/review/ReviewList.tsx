@@ -1,7 +1,4 @@
 import React, {FC, useCallback, useContext, useRef, useState} from 'react';
-import man from './../../UI/img/reviewPic.png'
-import star from './../../UI/img/star.png'
-import menu from './../../UI/img/menu.png'
 import {FlexRow} from "../default/Flex.styled";
 import {useNavigate} from "react-router-dom";
 import {Comment} from "../../types/Types";
@@ -11,17 +8,20 @@ import {AuthContext} from "../../App";
 import {DropDownMenu, IDropDownMenuElement} from "../default/DropDownMenu";
 import {Modal} from "../default/Modal";
 import {Styled as M} from "./../default/Modal.styled";
+import {Tooltip} from "../default/Tooltip";
+import {Icon} from "../default/Icon";
 
 interface IReview{
     comment: Comment;
     deleteComment: (comment: Comment) => void;
     handleEdit: (comment: Comment) => void;
+    hovered?: boolean
 }
 
 function calculateOpacity(mark: number, total: number): number{
     return 0.1 + Math.pow(mark,2) / Math.pow(total,2);
 }
-export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
+export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered}) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     const ref = useRef(null)
@@ -50,7 +50,7 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
             <Modal onAccept={handleAccept}
                    onDecline={() => setModal(false)}
                    onClose={() => setModal(false)}
-                   $height={"450"}
+                   $height={"450px"}
             >
                 <M.Title>CONFIRM ACTION</M.Title>
                 <M.Body>
@@ -68,17 +68,27 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
         <>
             <S.Review>
                 <FlexRow  gap={"0"}>
-                    <S.Avatar onClick={navigateProfile}><img style={{width:"24px", height: "24px"}} src={man} alt={".."}/></S.Avatar>
+                    <S.Avatar onClick={navigateProfile}>
+                        <Icon img={"reviewPic"} style={{width:"24px", height: "24px"}} />
+                    </S.Avatar>
                     <FlexRow justifyContent={"space-between"} gap={"0"} style={{width : "100%"}}>
-                        <S.Nickname onClick={navigateProfile}>{comment.nickName}</S.Nickname>
+                        <Tooltip label={"View user"}>
+                            <S.Nickname onClick={navigateProfile}>
+                                {comment.nickName}
+                            </S.Nickname>
+                        </Tooltip>
                         <S.Rate>{comment.mark}<span style={{fontSize: "10px", fontWeight: "normal"}}>/5</span></S.Rate>
                     </FlexRow>
-                    <img style={{width: "15px", height: "15px", transform: "translateY(4px)", opacity: calculateOpacity(comment.mark, 5)}}
-                         src={star}
-                         alt={".."}/>
+                    <Icon img={"star"} style={{width: "17px", height: "15px", transform: "translateY(4px)", opacity: calculateOpacity(comment.mark, 5)}} nonClickable></Icon>
                     { user.id === comment.reviewer &&
                         <>
-                            <S.Menu><img ref={ref} src={menu} alt={".."}/></S.Menu>
+                            <Tooltip label={"Menu"} placement={"top"}>
+                                <S.Menu>
+                                    <span ref={ref}>
+                                        <Icon img={"menu"} style={{padding: 0}}/>
+                                    </span>
+                                </S.Menu>
+                            </Tooltip>
                             <DropDownMenu renderElementRef={ref} menuElements={options()} right={true}></DropDownMenu>
                         </>
                     }
@@ -87,7 +97,12 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
                     {comment.text}
                     <S.Date>
                         {dateFormat(comment.creationTime)}
-                        {comment.lastChange && <S.Edited>(edited)</S.Edited>}
+                        {
+                            comment.lastChange &&
+                            <Tooltip label={`Last change was at ${dateFormat(comment.lastChange)}`}>
+                                <S.Edited>(edited)</S.Edited>
+                            </Tooltip>
+                        }
                     </S.Date>
                 </S.Body>
             </S.Review>
