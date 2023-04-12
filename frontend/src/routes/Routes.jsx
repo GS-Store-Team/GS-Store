@@ -5,7 +5,7 @@ import {Login} from "../pages/login/Login";
 import NoMatch from "./NoMatch";
 import {SignUp} from "../pages/signup/SignUp";
 import {UserProfile} from "../pages/userprofile/UserProfile";
-import UserPlugin from "../pages/usersplugin/UserPlugin";
+import {UserPlugin} from "../pages/usersplugin/UserPlugin";
 import UploadPlugin from "../pages/uploadplugin/UploadPlugin";
 
 export const privateRoutes = [

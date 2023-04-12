@@ -2,11 +2,11 @@ import React, {useState, useEffect} from 'react';
 import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
-import classes from "./userplugin.module.css";
+import {classes} from "./userplugin1.module.css";
 import {useNavigate} from "react-router-dom";
 import plusButton from "../../UI/img/plus.png";
 
-const UserPlugin = () => {
+const UserPlugin1 = () => {
 
     const [userData, setUserData] = useState({
         nickName: '',
