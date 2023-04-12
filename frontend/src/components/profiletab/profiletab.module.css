@@ -24,6 +24,7 @@
 .my__img1:hover{
     opacity: 100%;
     scale: 1.15;
+    cursor: pointer;
 }
 
 .my__img2{
@@ -34,16 +35,18 @@
 }
 
 .my__img2:hover{
+    cursor: pointer;
     opacity: 100%;
     scale: 1.15;
 }
 
 .my__name{
-    width: 100%;
-    text-align: left;
+    cursor: pointer;
+    margin-top: 7px;
+    text-align: center;
     font-size: 14px;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    height: 28px;
+    width: 50%;
 }
 
 .my__img3{

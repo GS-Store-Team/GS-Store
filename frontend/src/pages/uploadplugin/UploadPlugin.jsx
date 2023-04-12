@@ -62,10 +62,17 @@ const UploadPlugin = () => {
     }
 
     const upload = () =>{
+
+/*        setPluginData({...pluginData, hashtags: })*/
+        const array = pluginData.hashtags.map((tag) => tag.id);
+        pluginData.hashtags = array;
+        console.log(pluginData);
+
         Api.sendNewPlugin(pluginData)
             .then((response) => {console.log(response)})
             .catch((response) => {console.log(response)});
         console.log(pluginData);
+        console.log(Api.getPluginById(1));
         myProfile();
     }
 
