@@ -16,8 +16,9 @@ import settings from "../../UI/img/settings.png";
 import shovel from "../../UI/img/shovel.png";
 import star from "../../UI/img/star.png";
 import trashBin from "../../UI/img/trash-bin.png";
+import fullScreen from "../../UI/img/full-screen.png"
 
-export type IconType = "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" | "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" | "trash-bin"
+export type IconType = "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" | "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" | "trash-bin" | "full-screen"
 
 function getPng(title : IconType){
     switch (title){
@@ -35,12 +36,13 @@ function getPng(title : IconType){
         case "shovel": return shovel
         case "star": return star
         case "trash-bin": return trashBin
+        case "full-screen": return fullScreen
     }
 }
 
 interface IIconTooltip{
     label: string
-    placement: Placement
+    placement?: Placement
     offset?: number
     disable?: boolean
 }

@@ -1,19 +1,24 @@
-import React, {useEffect, useState} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import classes from "./category.module.css";
-import Api from "../../API/Api";
+import Api from "../../../API/Api";
+import {Category} from "../../../types/Types";
 
-export const Category = ({setCurrentCat, currentCategory}) => {
-    const [categoryList, setCategoryList] = useState([]);
-    const [visible, setVisible] = useState(false);
+interface ICategory{
+    category: number
+    setCategory: (category: number) => void
+}
+export const Categories: FC<ICategory> = ({setCategory, category}) => {
+    const [categoryList, setCategoryList] = useState<Category[]>([]);
+    const [visible, setVisible] = useState<boolean>(false);
     const [currentTitle, setCurrentTitle] = useState("Categories")
 
     useEffect(() => {
-        if(currentCategory === -1) setCurrentTitle("Categories");
-    },[currentCategory])
+        if(category === -1) setCurrentTitle("Categories");
+    },[category])
 
-    const mySelect = (c) =>{
+    const mySelect = (c : Category) =>{
         setVisible(false);
-        setCurrentCat(c.id);
+        setCategory(c.id);
         setCurrentTitle(c.title)
     }
 

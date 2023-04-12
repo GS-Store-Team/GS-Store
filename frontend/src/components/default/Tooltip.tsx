@@ -56,7 +56,7 @@ export const Tooltip : FC<IToolTip> = ({children, label, placement = "bottom", o
 
     return(
         disable?
-            <>children</>
+            <>{children}</>
             : <>
                 <span ref={ref}
                       onMouseEnter={() => setOpened(true)}

@@ -84,7 +84,7 @@ const PluginPage = () => {
                         </div>
                         <p className={classes.my_desc_text}>{plugin.fullDescription}</p>
                     </div>
-                    { plugin.id && <ReviewArea pluginId={plugin.id}/>}
+                        { plugin.id && <span style={{width: "400px"}}><ReviewArea pluginId={plugin.id}/></span>}
                 </FlexRow>
                 </div>
             </div>

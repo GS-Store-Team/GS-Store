@@ -15,12 +15,13 @@ interface IReview{
     comment: Comment;
     deleteComment: (comment: Comment) => void;
     handleEdit: (comment: Comment) => void;
+    hovered?: boolean
 }
 
 function calculateOpacity(mark: number, total: number): number{
     return 0.1 + Math.pow(mark,2) / Math.pow(total,2);
 }
-export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
+export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered}) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     const ref = useRef(null)
@@ -49,7 +50,7 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
             <Modal onAccept={handleAccept}
                    onDecline={() => setModal(false)}
                    onClose={() => setModal(false)}
-                   $height={"450"}
+                   $height={"450px"}
             >
                 <M.Title>CONFIRM ACTION</M.Title>
                 <M.Body>
@@ -71,11 +72,11 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit}) => {
                         <Icon img={"reviewPic"} style={{width:"24px", height: "24px"}} />
                     </S.Avatar>
                     <FlexRow justifyContent={"space-between"} gap={"0"} style={{width : "100%"}}>
+                        <Tooltip label={"View user"}>
                             <S.Nickname onClick={navigateProfile}>
-                                <Tooltip label={"View user"}>
-                                    {comment.nickName}
-                                </Tooltip>
+                                {comment.nickName}
                             </S.Nickname>
+                        </Tooltip>
                         <S.Rate>{comment.mark}<span style={{fontSize: "10px", fontWeight: "normal"}}>/5</span></S.Rate>
                     </FlexRow>
                     <Icon img={"star"} style={{width: "17px", height: "15px", transform: "translateY(4px)", opacity: calculateOpacity(comment.mark, 5)}} nonClickable></Icon>

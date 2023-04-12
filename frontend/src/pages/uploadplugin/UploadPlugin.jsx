@@ -6,7 +6,7 @@ import classes from "./uploadplugin.module.css";
 import {useNavigate} from "react-router-dom";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import crossButton from "../../UI/img/cross.png";
-import {Category} from "../../components/category/Category";
+import {Categories} from "../../components/header/category/Categories";
 import {SelectedTags} from "../../components/tag/SelectedTags";
 import {TagsCloud} from "../../components/tag/TagsCloud";
 
@@ -111,9 +111,9 @@ const UploadPlugin = () => {
 
                         <div className={classes.my__categoryNtags}>
                             <div className={classes.my__category}>
-                                <Category setCurrentCat={(currentCat) =>
+                                <Categories setCurrentCat={(currentCat) =>
                                 {setPluginData({...pluginData, categories: currentCat})}}
-                                          currentCategory={pluginData.categories}/>
+                                            currentCategory={pluginData.categories}/>
                             </div>
 
 
