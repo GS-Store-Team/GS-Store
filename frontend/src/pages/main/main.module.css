@@ -10,16 +10,6 @@
     justify-content: center;
 }
 
-.my__background{
-    background-color: rgba(227, 224, 218, 0.25);
-    min-height: 100vh;
-}
-
-.main__content{
-    padding-top: 100px;
-    padding-bottom: 120px;
-}
-
 .loader{
     position: absolute;
     display: flex;

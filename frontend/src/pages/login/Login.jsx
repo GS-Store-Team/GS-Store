@@ -6,6 +6,7 @@ import {Link} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {AuthContext} from "../../App";
+import {Styled as S} from "../Pages.styled"
 
 export const Login = () => {
 
@@ -74,9 +75,9 @@ export const Login = () => {
     }
 
     return (
-        <div>
+        <S.Wrapper>
             <BareHeader />
-            <div className={classes.my__form}>
+            <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                    <div className={classes.my__title}>Login</div>
                     <label className={classes.my__label1}
@@ -110,8 +111,8 @@ export const Login = () => {
                             Sign up</Link>
                     </div>
                 </div>
-            </div>
-            <LoginFooter />
-        </div>
+            </S.Main>
+            <LoginFooter/>
+        </S.Wrapper>
     );
 };

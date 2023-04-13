@@ -5,6 +5,7 @@ import classes from "./signup.module.css";
 import {Link, useNavigate} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
+import {Styled as S} from "../Pages.styled"
 
 export const SignUp = () => {
 
@@ -55,9 +56,9 @@ export const SignUp = () => {
     }
 
     return (
-        <div>
-            <BareHeader />
-            <div className={classes.my__form}>
+        <S.Wrapper>
+            <BareHeader/>
+            <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                     <div className={classes.my__title}>Sign Up</div>
                     <label className={classes.my__label1}
@@ -99,8 +100,8 @@ export const SignUp = () => {
                                 Sign in</Link>
                     </div>
                 </div>
-            </div>
+            </S.Main>
             <LoginFooter />
-        </div>
+        </S.Wrapper>
     );
 };

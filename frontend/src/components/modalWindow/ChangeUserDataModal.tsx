@@ -111,6 +111,9 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
                 <Input style={fieldStyle.phoneNumber} type={"text"} value={data.phoneNumber} onChange={(e) => {setData({... data, phoneNumber: e.target.value})}}/>
                 <div className={classes.my__label}>Description:</div>
                 <TextArea style={fieldStyle.description} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
+                <TextArea style={fieldStyle.description} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
+                <TextArea style={fieldStyle.description} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
+                <TextArea style={fieldStyle.description} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
             </S.Body>
         </Modal>
     )
