@@ -9,6 +9,7 @@ import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {ReviewArea} from "../../components/review/ReviewArea";
 import {FlexRow} from "../../components/default/Flex.styled";
+import {Styled as S} from "../Pages.styled"
 
 const PluginPage = () => {
 
@@ -41,10 +42,9 @@ const PluginPage = () => {
     },[]);
 
     return (
-        <div className={classes.my__preview__page}>
+        <S.Wrapper>
             <PluginViewHeader />
-            <div className={[classes.my__plugin, "container"].join(' ')}>
-
+            <S.Main>
                 <div className={[classes.my__plugin, "row"].join(' ')}>
                     <FlexRow>
 
@@ -87,9 +87,9 @@ const PluginPage = () => {
                         { plugin.id && <span style={{width: "400px"}}><ReviewArea pluginId={plugin.id}/></span>}
                 </FlexRow>
                 </div>
-            </div>
-            <MyFooter />
-        </div>
+            </S.Main>
+            <MyFooter/>
+        </S.Wrapper>
     );
 };
 

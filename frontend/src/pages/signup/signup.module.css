@@ -1,14 +1,9 @@
 .my_login__form{
+    margin: auto;
     border: 1px solid black;
     border-radius: 30px;
     width: 400px;
     text-align: center;
-}
-
-.my__form{
-    display: flex;
-    justify-content: center;
-    padding-top: 320px;
 }
 
 .my__input{

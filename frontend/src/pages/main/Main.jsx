@@ -7,6 +7,7 @@ import {Header} from "../../components/header/Header";
 import classes from "./main.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {SelectedTags} from "../../components/tag/SelectedTags";
+import {Styled as S} from "../Pages.styled";
 
 const LIMIT = 9
 
@@ -89,7 +90,7 @@ const Main = () => {
     },[setFilter, setCurrentCat, setCurrentPage, setSelectedTags])
 
     return (
-        <div className={classes.my__background}>
+        <S.Wrapper style={{backgroundColor: "rgba(227, 224, 218, 0.25)"}}>
             <Header setFilter={setFilter}
                     currentFilter={filter}
                     setCurrentCat={setCurrentCat}
@@ -99,7 +100,7 @@ const Main = () => {
                     tags={tags}
                     selectedTags={selectedTags}
             />
-            <div className={classes.main__content}>
+            <S.Main>
                 {load?
                     <div className={classes.loader}>
                         <Loader radius={12} />
@@ -118,9 +119,9 @@ const Main = () => {
                         </div>
                 }
                 <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
-            </div>
-            <MyFooter />
-        </div>
+            </S.Main>
+            <MyFooter/>
+        </S.Wrapper>
     );
 }
 
