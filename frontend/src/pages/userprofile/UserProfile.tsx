@@ -5,7 +5,7 @@ import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
 import {FlexRow} from "../../components/default/Flex.styled";
-import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
+import {ImgComponent} from "../../components/default/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";

@@ -67,11 +67,9 @@ export const Login = () => {
                 setEmailDoNotExists(true);
                 setEmailList([...emailList, request.username])
             }
-        }).catch((error) => {
-            if(error.response.status === 403){
-                setInvalidPassword(true);
-                setPasswordList([...passwordList, request.password])
-            }
+        }).catch(() => {
+            setInvalidPassword(true);
+            setPasswordList([...passwordList, request.password])
         });
     }
 
