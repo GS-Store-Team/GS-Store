@@ -4,6 +4,7 @@ import {ImgComponent} from "../default/ImgComponent";
 import {Styled as S} from "./ImgBlock.styled"
 import {Icon} from "../default/Icon";
 import {FlexRow} from "../default/Flex.styled";
+import {Tooltip} from "../default/Tooltip";
 
 interface IImgBlock{
     pluginId: number
@@ -39,8 +40,12 @@ export const ImgBlock : FC<IImgBlock> = ({pluginId}) => {
             {images.length > 1 &&
                 <>
                     <FlexRow justifyContent={"space-between"} style={{padding: "5px 0 "}}>
-                        <S.Arrow><Icon img={"arrow"} onClick={handleLeftClick}/></S.Arrow>
-                        <S.Arrow><Icon img={"arrow"} onClick={handleRightClick} style={{transform: "rotate(180deg)"}}/></S.Arrow>
+                        <Tooltip label={"Left"}>
+                            <S.Arrow><Icon img={"arrow"} onClick={handleLeftClick}/></S.Arrow>
+                        </Tooltip>
+                        <Tooltip label={"Right"}>
+                            <S.Arrow><Icon img={"arrow"} onClick={handleRightClick} style={{transform: "rotate(180deg)"}}/></S.Arrow>
+                        </Tooltip>
                     </FlexRow>
                     <S.Others>
                     {images.slice(1).map((e, index) =>
