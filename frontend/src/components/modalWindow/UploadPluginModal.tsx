@@ -24,6 +24,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
         setOpened(false)
     }, [setOpened])
 
+
     const handleAcceptModal = useCallback(() =>{
 /*        const array = pluginData.hashtags.map((tag) => tag.id);
         setPluginData({...pluginData, hashtags: array});
@@ -39,7 +40,8 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
 
     return (
         <Modal
-            $height={"700px"}
+            $height={"900px"}
+            $width={"900px"}
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}
@@ -58,6 +60,9 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                 <div className={classes.my__label}>Price:</div>
                 <TextArea type={"text"} value={pluginData.price}
                           onChange={(e) => {setPluginData({... pluginData, price: e.target.value})}}/>
+
+                <input className={classes.my__fileLoader}
+                       type={"file"}/>
             </S.Body>
         </Modal>
     )
