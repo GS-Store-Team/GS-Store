@@ -14,8 +14,7 @@ const Heading = styled.div`
 `
 
 const Bug = styled.div`
-  position: absolute;
-  inset: 10px 0 initial initial;
+  transform: translateY(6px);
 `
 
 const Text = styled.div`
@@ -27,7 +26,7 @@ const Rate = styled.div`
 `
 
 const Star = styled.div`
-  transform: translate(4px, 4px);
+  transform: translate(4px, 6px);
 `
 
 export const Styled = {
