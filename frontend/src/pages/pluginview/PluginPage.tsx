@@ -1,22 +1,17 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Api from "../../API/Api";
-import classes from "./pluginpage.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
-import {ImgComponent} from "../../components/default/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {ReviewArea} from "../../components/review/ReviewArea";
-import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
+import {Column, FlexRow} from "../../components/default/Flex.styled";
 import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
 import {Styled as S} from "./PluginPage.styled"
 import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
 import {Styled as S1} from "./../Pages.styled"
-import {Tooltip} from "../../components/default/Tooltip";
 
 const PluginPage = () => {
-
-    const [imgList, setImgList] = useState([])
 
     const [plugin, setPlugin] = useState({
         id: 0,
@@ -34,57 +29,52 @@ const PluginPage = () => {
         Api.getPluginById(params.id).then((response) => {
                 if (response.status === 200) {
                     setPlugin(response.data);
-
-                    Api.imageListByPluginId(response.data.id).then((response) =>{
-                        if(response.status === 200)
-                            setImgList(response.data.map((e : any) => <ImgComponent func={Api.getImageById(e)}/>));
-                    })
                 }
             }
         )
     },[]);
 
+    const handleViewOwner = useCallback(() => {
+
+    }, [])
+
     return (
         <S1.Wrapper>
             <PluginViewHeader />
                 <S1.Main>
-                    <div className={[classes.my__profile, "container"].join(' ')}>
+                    <div className={"container"}>
                         <FlexRow style={{gap: 0}} justifyContent={"space-between"}>
-                            <FlexColumn style={{minWidth: "200px", width: "300px", paddingRight: "20px", justifyContent:"space-between"}}>
-
-                                <div style={{marginTop: "60px"}}>
+                            <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
+                                <FlexRow style={{marginTop: "100px"}}>
                                     <ImgBlock pluginId={plugin.id} />
-                                </div>
+                                </FlexRow>
+                                <Btn style={{marginBottom:"20px", width: "150px"}} primary>Purchase</Btn>
+                            </Column>
 
-                                <FlexColumn style={{marginBottom: "60px"}}>
-                                    <FlexRow justifyContent={"space-between"} style={{marginBottom: "20px"}}>
-                                        <Tooltip label={"Leave bug report if some issues found"} placement={"top"}>
-                                            <S.Bug>
-                                                <Icon img={"bug"}/>
-                                            </S.Bug>
-                                        </Tooltip>
-                                        <FlexRow style={{gap: 0}}>
-                                            <S.Rate><span style={{fontSize: "22px"}}>{plugin.mark}</span>/5</S.Rate>
-                                            <S.Star><Icon img={"star"} nonClickable style={{opacity:1}}/></S.Star>
-                                        </FlexRow>
+                            <Column style={{width: "50%", padding: "100px 20px 50px 20px"}}>
+                                <S.Header>
+                                    {plugin.name}
+                                    <FlexRow style={{gap: 0}}>
+                                        <S.Rate><span style={{fontSize: "22px"}}>{plugin.mark}</span>/5</S.Rate>
+                                        <S.Star><Icon img={"star"} nonClickable style={{opacity:1}}/></S.Star>
                                     </FlexRow>
-                                    <Btn primary>Purchase</Btn>
-                                </FlexColumn>
-                            </FlexColumn>
+                                </S.Header>
 
-                            <FlexColumn style={{width: "50%", gap: 0, minWidth: "300px"}}>
-                                <S.Header>{plugin.name}</S.Header>
+                                <S.Items>
+                                    <Icon img={"man"} style={{width: "20px", height: "20px"}} tooltip={{label:"View owner", placement:"top"}} onClick={handleViewOwner}/>
+                                    <Icon img={"bug"} style={{width: "20px", height: "20px"}} tooltip={{label:"Leave bug report if some issues found", placement:"top"}}/>
+                                </S.Items>
 
                                 <S.Heading>Introduction</S.Heading>
                                 <S.Text>{plugin.shortDescription}</S.Text>
 
                                 <S.Heading>Description</S.Heading>
                                 <S.Text>{plugin.fullDescription}</S.Text>
+                            </Column>
 
-                            </FlexColumn>
-                            <FlexColumn style={{width: "400px"}}>
+                            <Column style={{width: "400px"}}>
                                 { plugin.id && <ReviewArea pluginId={plugin.id}/> }
-                            </FlexColumn>
+                            </Column>
                         </FlexRow>
                     </div>
                 </S1.Main>

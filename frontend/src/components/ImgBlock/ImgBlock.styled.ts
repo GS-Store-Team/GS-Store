@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
 const Block = styled.div`
-  width: 100%;
-  min-width: 200px;
+  width: min(100%, 250px);
+  min-width: 150px;
   padding: 5px;
   border: 2px solid #BEBBB6;
   border-radius: 5px;

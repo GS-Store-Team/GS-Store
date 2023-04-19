@@ -3,7 +3,7 @@ package com.store.gs.services;
 import com.store.gs.dto.ChangePasswordRequestDTO;
 import com.store.gs.enums.Role;
 import com.store.gs.models.User;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
 import com.store.gs.repositories.UserRepository;
 import com.store.gs.utils.ModelsUtils;
 import lombok.RequiredArgsConstructor;

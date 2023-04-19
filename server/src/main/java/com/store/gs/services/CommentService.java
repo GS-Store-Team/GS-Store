@@ -5,7 +5,7 @@ import com.store.gs.converters.PageMerger;
 import com.store.gs.dto.CommentDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.User;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
 import com.store.gs.repositories.CommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.util.NoSuchElementException;
-import java.util.function.Function;
 
 @Service
 public class CommentService {

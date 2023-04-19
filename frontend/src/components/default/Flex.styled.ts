@@ -15,6 +15,14 @@ export const FlexRow = styled.div<{ gap?: Property.Gap, justifyContent?: Propert
     margin: ${({ margin }) => margin};
 `;
 
-export const FlexGrow = styled.div`
-    flex-grow: 1;
+export const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: auto;
+    min-width: 300px;
+    max-height: calc(100vh - 170px);
+    ::-webkit-scrollbar {
+    display: none;
+    }
 `;

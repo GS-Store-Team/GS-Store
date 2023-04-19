@@ -1,7 +1,7 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.ChangePasswordRequestDTO;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
 import com.store.gs.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -4,13 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("plugin_category")
+@Table("plugin_image")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-public class CategoryRef {
-    private Long categoryId;
+public class PluginImageRef {
+    @Column("image_id")
+    private Long imageId;
 }

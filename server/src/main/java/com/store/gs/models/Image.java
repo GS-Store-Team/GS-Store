@@ -7,16 +7,17 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@NoArgsConstructor
 @Getter @Setter
 @Table("image")
-public class MyImage {
+public class Image {
     @Id
     private long id;
-    @Column("plugin_id")
-    private long pluginId;
     @Column("is_preview")
     private boolean isPreview;
-
     private byte[] data;
+
+    public Image(byte[] data, boolean isPreview) {
+        this.data = data;
+        this.isPreview = isPreview;
+    }
 }
