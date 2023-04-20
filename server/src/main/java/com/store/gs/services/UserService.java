@@ -4,6 +4,7 @@ import com.store.gs.dto.ChangePasswordRequestDTO;
 import com.store.gs.enums.Role;
 import com.store.gs.models.User;
 import com.store.gs.models.UserData;
+import com.store.gs.repositories.UserDataRepository;
 import com.store.gs.repositories.UserRepository;
 import com.store.gs.utils.ModelsUtils;
 import com.store.gs.utils.ServiceUtils;
@@ -19,6 +20,7 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
     private final PasswordEncoder encoder;
 
     public User getUserByEmail(String email) throws NoSuchElementException{
@@ -78,11 +80,15 @@ public class UserService {
         }
     }
 
-    public UserData updateUserdata(UserData userData){
-            User user = userRepository.getUserById(ServiceUtils.getUserId()).orElseThrow();
-            user.setUserData(userData);
+    public UserData updateUserdata(UserData updatedUserData){
+        UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
 
-            return userRepository.save(user).getUserData();
+        userData.setEmail(updatedUserData.getEmail());
+        userData.setDescription(updatedUserData.getDescription());
+        userData.setNickName(updatedUserData.getNickName());
+        userData.setPhoneNumber(updatedUserData.getPhoneNumber());
+
+        return userDataRepository.save(userData);
     }
 
     public boolean updateUserAuthentication(Authentication authentication, ChangePasswordRequestDTO changePasswordRequestDTO) throws UserPrincipalNotFoundException{

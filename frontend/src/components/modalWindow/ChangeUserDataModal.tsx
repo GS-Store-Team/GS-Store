@@ -24,62 +24,15 @@ interface IChangeUserDataModal {
 export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, onChangeUserData, opened, setOpened}) => {
 
     const [data, setData] = useState<UserData>(userData)
-    const [wrongForm, setWrongForm] = useState<boolean>(false)
-    const [badInputCSS,] = useState<CSSProperties>(() => {return {borderColor: "red", backgroundColor: "rgba(255, 0, 0, 0.1)"}})
     const [textAreaCSS,] = useState<CSSProperties>(() => {return {height: "130px", resize: "none"}})
 
-    const [fieldStyle, setFieldStyle] = useState<IFieldStyle>(() => {
-        return {
-            nickName: {},
-            email: {},
-            phoneNumber: {},
-            description: textAreaCSS,
-        }
-    })
+    const nickNameInvalid = data.nickName.length < 4 || data.nickName.length > 64
 
-    useEffect(() => {
-        if (data.nickName.length < 4 || data.nickName.length > 64) {
-            setWrongForm(true)
-            setFieldStyle(prevState => ({...prevState, nickName: badInputCSS}))
-        }
-        else {
-            setWrongForm(false)
-            setFieldStyle(prevState => ({...prevState, nickName: {}}));
-        }
-    }, [data.nickName])
+    const phoneNumberInvalid = data.phoneNumber.length > 20
 
-    useEffect(() => {
-        if(data.description.length > 2048) {
-            setWrongForm(true)
-            setFieldStyle(prevState => ({...prevState, description: {...badInputCSS, ...textAreaCSS}}))
-        }
-        else {
-            setWrongForm(false)
-            setFieldStyle(prevState => ({...prevState, description: textAreaCSS}))
-        }
-    }, [data.description])
+    const emailInvalid = data.email.length > 256 || !Utils.validateEmail(data.email)
 
-    useEffect(() => {
-        if(data.phoneNumber.length > 20) {
-            setWrongForm(true)
-            setFieldStyle(prevState => ({...prevState, phoneNumber: badInputCSS}))
-        }
-        else {
-            setWrongForm(false)
-            setFieldStyle(prevState => ({...prevState, phoneNumber: {}}))
-        }
-    }, [data.phoneNumber])
-
-    useEffect(() => {
-        if(data.email.length > 256 || !Utils.validateEmail(data.email)) {
-            setWrongForm(true)
-            setFieldStyle(prevState => ({...prevState, email: badInputCSS}))
-        }
-        else {
-            setWrongForm(false)
-            setFieldStyle(prevState => ({...prevState, email: {}}))
-        }
-    }, [data.email])
+    const descriptionInvalid = data.description.length > 2048
 
     const handleCloseModal = useCallback(() => {
         setOpened(false)
@@ -99,18 +52,18 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}
-            disableAccept={wrongForm}
+            disableAccept={nickNameInvalid || phoneNumberInvalid || emailInvalid || descriptionInvalid}
         >
             <S.Title>CHANGE PROFILE</S.Title>
             <S.Body>
-                <div style={{marginTop: 0}} className={classes.my__label}>Nick:</div>
-                <Input style={fieldStyle.nickName} type={"text"} value={data.nickName} onChange={(e) => {setData({... data, nickName: e.target.value})}}/>
-                <div className={classes.my__label}>Email:</div>
-                <Input style={fieldStyle.email} type={"text"} value={data.email} onChange={(e) => {setData({... data, email: e.target.value})}}/>
-                <div className={classes.my__label}>Telephone:</div>
-                <Input style={fieldStyle.phoneNumber} type={"text"} value={data.phoneNumber} onChange={(e) => {setData({... data, phoneNumber: e.target.value})}}/>
-                <div className={classes.my__label}>Description:</div>
-                <TextArea style={fieldStyle.description} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
+                <S.Row>Nick:</S.Row>
+                <Input type={"text"} invalid={nickNameInvalid} value={data.nickName} onChange={(e) => {setData({... data, nickName: e.target.value})}}/>
+                <S.Row>Email:</S.Row>
+                <Input type={"text"} invalid={emailInvalid} value={data.email} onChange={(e) => {setData({... data, email: e.target.value})}}/>
+                <S.Row>Telephone:</S.Row>
+                <Input type={"text"} invalid={phoneNumberInvalid} value={data.phoneNumber} onChange={(e) => {setData({... data, phoneNumber: e.target.value})}}/>
+                <S.Row>Description:</S.Row>
+                <TextArea style={textAreaCSS} invalid={descriptionInvalid} type={"text"} value={data.description} onChange={(e) => {setData({... data, description: e.target.value})}}/>
             </S.Body>
         </Modal>
     )

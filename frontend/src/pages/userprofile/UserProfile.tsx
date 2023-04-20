@@ -10,6 +10,7 @@ import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";
 import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
@@ -32,8 +33,8 @@ export const UserProfile = () => {
         <Sp.Wrapper>
             <PluginViewHeader/>
             <Sp.Main>
-                <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "120px"}}>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
                                 Profile
@@ -52,7 +53,7 @@ export const UserProfile = () => {
 
                         <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
                     </FlexRow>
-                </div>
+                </Container>
             </Sp.Main>
             <MyFooter/>
             {userDataModal ?

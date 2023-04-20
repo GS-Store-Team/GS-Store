@@ -9,6 +9,7 @@ import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 
 export const UserPlugin = () => {
     const navigate = useNavigate();
@@ -44,8 +45,8 @@ export const UserPlugin = () => {
         <Sp.Wrapper>
             <PluginViewHeader/>
             <Sp.Main>
-                <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "120px"}}>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn onClick={myProfile}>
                                 Profile
@@ -73,7 +74,7 @@ export const UserPlugin = () => {
                                  style={{width: "20px", height: "20px", float: "right"}}/>
                         </S.UploadButton>
                     </FlexRow>
-                </div>
+                </Container>
             </Sp.Main>
             {pluginDataModal ?
                 <UploadPluginModal
