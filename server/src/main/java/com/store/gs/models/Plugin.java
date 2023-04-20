@@ -21,7 +21,7 @@ import java.util.Set;
 public class Plugin {
     @Id
     private long id;
-    private String developer;
+    private Long developer;
 
     @Size(min = 4, max = 64, message = "Name length should be in range [4 - 64] characters!")
     private String name;

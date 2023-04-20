@@ -2,6 +2,8 @@ package com.store.gs.services;
 
 import com.store.gs.Exceptions.ImagesCountLimitExceededException;
 import com.store.gs.Exceptions.NotImageException;
+import com.store.gs.Exceptions.NotYourImageException;
+import com.store.gs.dto.ImageDTO;
 import com.store.gs.models.Image;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.UserData;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 @Service
@@ -34,18 +37,38 @@ public class ImageService {
     private Integer PLUGIN_PICTURES_MAX;
     private final String PREFIX = "data:image/jpeg;base64,";
 
-    public String getImage(Long id){
-        Image myImage = imageRepository.findById(id).orElseThrow();
+    public ImageDTO getImage(Long id){
+        Image image = imageRepository.findById(id).orElseThrow();
 
-        return wrap(Base64.encodeBase64String(myImage.getData()));
+        return new ImageDTO(
+                image.getId(),
+                wrap(Base64.encodeBase64String(image.getData())),
+                image.isPreview()
+        );
     }
 
-    public String getPreviewForPlugin(Long id){
-        return "";
+    public ImageDTO getPreviewForPlugin(Long id){
+        Plugin plugin = pluginRepository.findById(id).orElseThrow();
+
+        Image image = imageRepository.getPreviewByIds(plugin.getImages().stream().map(PluginImageRef::getImageId).toList()).orElseThrow();
+
+        return new ImageDTO(
+                image.getId(),
+                wrap(Base64.encodeBase64String(image.getData())),
+                image.isPreview()
+        );
     }
 
-    public String getPreviewForUser(){
-        return "";
+    public ImageDTO getPreviewForUser(){
+        UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
+
+        Image image = imageRepository.getPreviewByIds(userData.getImages().stream().map(UserdataImageRef::getImageId).toList()).orElseThrow();
+
+        return new ImageDTO(
+                image.getId(),
+                wrap(Base64.encodeBase64String(image.getData())),
+                image.isPreview()
+        );
     }
 
     public void uploadImageForPlugin(Long id, MultipartFile file){
@@ -91,11 +114,32 @@ public class ImageService {
     }
 
     public void setPreviewForPlugin(Long id, Long pluginId){
+        Plugin plugin = pluginRepository.findById(pluginId).orElseThrow();
 
+        List<Long> ids = plugin.getImages().stream().map(PluginImageRef::getImageId).toList();
+
+        if(!ids.contains(id)) throw new NotYourImageException();
+
+        Image preview = imageRepository.getPreviewByIds(ids).orElseThrow();
+
+        imageRepository.UnsetPreviewById(preview.getId());
+
+        imageRepository.setPreviewById(id);
     }
 
     public void setPreviewForUser(Long id){
 
+        UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
+
+        List<Long> ids = userData.getImages().stream().map(UserdataImageRef::getImageId).toList();
+
+        if(!ids.contains(id)) throw new NotYourImageException();
+
+        Image preview = imageRepository.getPreviewByIds(ids).orElseThrow();
+
+        imageRepository.UnsetPreviewById(preview.getId());
+
+        imageRepository.setPreviewById(id);
     }
 
     private String wrap(String body){

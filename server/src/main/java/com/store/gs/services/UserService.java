@@ -6,6 +6,7 @@ import com.store.gs.models.User;
 import com.store.gs.models.UserData;
 import com.store.gs.repositories.UserRepository;
 import com.store.gs.utils.ModelsUtils;
+import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,7 +34,7 @@ public class UserService {
         user.setPassword(encoder.encode(password));
         user.setRole(Role.USER);
         user.setActive(true);
-        user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
+        //user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
 
         userRepository.save(user);
 
@@ -48,9 +49,7 @@ public class UserService {
 
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setId(user.getId());
-        userData.setActive(user.isActive());
-        userData.setAvatar(user.getAvatar());
+        userData.setUserId(user.getId());
 
         return userData;
     }
@@ -62,8 +61,7 @@ public class UserService {
 
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setId(user.getId());
-        userData.setActive(user.isActive());
+        userData.setUserId(user.getId());
 
         return userData;
     }
@@ -80,15 +78,11 @@ public class UserService {
         }
     }
 
-    public UserData updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException{
-        try {
-            User user = getUserByEmail(authentication.getName());
+    public UserData updateUserdata(UserData userData){
+            User user = userRepository.getUserById(ServiceUtils.getUserId()).orElseThrow();
             user.setUserData(userData);
 
             return userRepository.save(user).getUserData();
-        }catch (NoSuchElementException e){
-            throw new UserPrincipalNotFoundException("current user not found");
-        }
     }
 
     public boolean updateUserAuthentication(Authentication authentication, ChangePasswordRequestDTO changePasswordRequestDTO) throws UserPrincipalNotFoundException{

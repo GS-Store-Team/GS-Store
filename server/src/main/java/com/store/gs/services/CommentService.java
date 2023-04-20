@@ -83,7 +83,6 @@ public class CommentService {
                         comment -> {
                             CommentDTO commentDTO = new CommentDTO(comment);
                             UserData userData = userService.getUserDataById(comment.getReviewer());
-                            commentDTO.setAvatar(userData.getAvatar());
                             commentDTO.setNickName(userData.getNickName());
                             return commentDTO;
                         }

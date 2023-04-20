@@ -16,7 +16,8 @@ import java.util.Set;
 @Table("userdata")
 public class UserData {
     @Id
-    private Long id;
+    @Column("user_id")
+    private Long userId;
 
     @Size(min = 4, max = 64, message = "Name length should be in range [4 - 64] characters!")
     @Column("nickname")

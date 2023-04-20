@@ -1,5 +1,6 @@
 package com.store.gs.controllers.advicies;
 
+import com.store.gs.Exceptions.GSException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -16,6 +17,7 @@ import java.util.NoSuchElementException;
 @ControllerAdvice
 @Slf4j
 public class MyControllerAdvice {
+
     @ExceptionHandler(FileUploadException.class)
     public ResponseEntity<?> wrongFileExceptionHandler(){
         return ResponseEntity.status(-1).build();
@@ -29,6 +31,12 @@ public class MyControllerAdvice {
     @ExceptionHandler(SizeLimitExceededException.class)
     public ResponseEntity<?> tooLargeFile(){
         return ResponseEntity.status(-2).build();
+    }
+
+    @ExceptionHandler(GSException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public void processRuntimeException(GSException e) {
+        log.error(e.toString());
     }
 
     @ExceptionHandler(RuntimeException.class)
