@@ -1,4 +1,4 @@
-import React, {FC, useCallback, useMemo, useRef, useState} from "react";
+import React, {FC, useCallback, useRef, useState} from "react";
 import {Styled as S} from "./Tooltip.styled";
 
 export type Placement = "left" | "right" | "top" | "bottom"

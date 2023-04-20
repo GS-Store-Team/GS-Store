@@ -17,8 +17,12 @@ import shovel from "../../UI/img/shovel.png";
 import star from "../../UI/img/star.png";
 import trashBin from "../../UI/img/trash-bin.png";
 import fullScreen from "../../UI/img/full-screen.png"
+import arrow from "../../UI/img/arrow.png"
 
-export type IconType = "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" | "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" | "trash-bin" | "full-screen"
+export type IconType =
+    "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" |
+    "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" |
+    "trash-bin" | "full-screen" | "arrow"
 
 function getPng(title : IconType){
     switch (title){
@@ -37,6 +41,7 @@ function getPng(title : IconType){
         case "star": return star
         case "trash-bin": return trashBin
         case "full-screen": return fullScreen
+        case "arrow": return arrow
     }
 }
 

@@ -5,10 +5,12 @@ import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
 import {FlexRow} from "../../components/default/Flex.styled";
-import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
+import {ImgComponent} from "../../components/default/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";
+import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
@@ -28,29 +30,31 @@ export const UserProfile = () => {
     }, [setUserDataModal])
 
     return (
-        <div>
+        <Sp.Wrapper>
             <PluginViewHeader/>
-            <div className={["container"].join(' ')}>
-                <FlexRow style={{marginTop: "120px"}}>
-                    <S.LeftMenu>
-                        <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
-                            Profile
-                        </S.MenuBtn>
+            <Sp.Main>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
+                        <S.LeftMenu>
+                            <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
+                                Profile
+                            </S.MenuBtn>
 
-                        <S.MenuBtn onClick={myPlugins}>
-                            Plugins
-                        </S.MenuBtn>
-                    </S.LeftMenu>
+                            <S.MenuBtn onClick={myPlugins}>
+                                Plugins
+                            </S.MenuBtn>
+                        </S.LeftMenu>
 
-                    <S.PhotoBlock>
-                        <div style={{width: "250px"}}>
-                            <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
-                        </div>
-                    </S.PhotoBlock>
+                        <S.PhotoBlock>
+                            <div style={{width: "250px"}}>
+                                <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
+                            </div>
+                        </S.PhotoBlock>
 
-                    <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
-                </FlexRow>
-            </div>
+                        <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
+                    </FlexRow>
+                </Container>
+            </Sp.Main>
             <MyFooter/>
             {userDataModal ?
                 <ChangeUserDataModal
@@ -60,6 +64,6 @@ export const UserProfile = () => {
                     setOpened={setUserDataModal}
                 /> : <></>
             }
-        </div>
+        </Sp.Wrapper>
     );
 };

@@ -1,37 +1,8 @@
-import axios from "axios";
-import {useContext} from "react";
-import {AuthContext} from "../App";
-
-const httpHeaders= {
-    "Content-Type": "application/json",
-    "responseType": "arraybuffer",
-    "Authorization": "",
-}
-
-window.addEventListener('storage', function (){
-    httpHeaders.Authorization = `Bearer_${sessionStorage.getItem('token')}`
-});
-
-function forceLogout(){
-    const {setAuth}  = useContext(AuthContext)
-    setAuth(false)
-}
-
-const restClient = axios.create();
-
-restClient.interceptors.response.use(
-    (response) => {
-        return response;
-    },
-    async (error) => {
-        forceLogout()
-        return Promise.reject(error);
-    }
-);
+import {httpHeaders, restClient} from "./Config";
 
 export default class Api {
     static async getPluginsPage(page = 1, limit = 10, filter, currentCat, tags){
-        return  await axios.get("http://localhost:8080/plugins", {
+        return  await restClient.get("http://localhost:8080/plugins", {
             headers:httpHeaders,
             params: {
                 _page: page,
@@ -43,33 +14,33 @@ export default class Api {
     }
 
     static async getPluginById(id){
-        return await axios.get("http://localhost:8080/plugins/" + id,{
+        return await restClient.get("http://localhost:8080/plugins/" + id,{
             headers:httpHeaders,
         });
     }
 
     static async sendNewPlugin(plugin){
-        return await axios.post("http://localhost:8080/plugins", plugin, {
+        return await restClient.post("http://localhost:8080/plugins", plugin, {
             headers:httpHeaders,
         });
     }
 
     static async login(authRequest){
-        return await axios.post("http://localhost:8080/login", authRequest);
+        return await restClient.post("http://localhost:8080/login", authRequest);
     }
 
     static async signUp(authRequest){
-        return await axios.post("http://localhost:8080/signup", authRequest);
+        return await restClient.post("http://localhost:8080/signup", authRequest);
     }
 
     static async sendReview(review, pluginId){
-        return await axios.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {
+        return await restClient.post(`http://localhost:8080/plugins/${pluginId}/comment`, review, {
             headers:httpHeaders
         });
     }
 
     static async getReviews(id, page = 1, limit = 100, sortType = 0){
-        return await axios.get(`http://localhost:8080/plugins/${id}/comments`, {
+        return await restClient.get(`http://localhost:8080/plugins/${id}/comments`, {
             headers:httpHeaders,
             params: {
                 _page: page,
@@ -80,55 +51,55 @@ export default class Api {
     }
 
     static async previewByPluginId(id){
-        return await axios.get(`http://localhost:8080/image/plugin/${id}/preview`, {
+        return await restClient.get(`http://localhost:8080/image/plugin/${id}/preview`, {
                 headers:httpHeaders,
             });
     }
 
     static async getImageById(id){
-        return await axios.get(`http://localhost:8080/image/${id}`, {
+        return await restClient.get(`http://localhost:8080/image/${id}`, {
             headers:httpHeaders,
         });
     }
 
     static async imageListByPluginId(id){
-        return await axios.get(`http://localhost:8080/image/plugin/${id}`, {
+        return await restClient.get(`http://localhost:8080/image/plugin/${id}`, {
             headers:httpHeaders,
         });
     }
 
     static async getCategories(){
-        return await axios.get(`http://localhost:8080/categories`, {
+        return await restClient.get(`http://localhost:8080/categories`, {
             headers:httpHeaders,
         });
     }
 
     static async getTags(){
-        return await axios.get(`http://localhost:8080/tags`, {
+        return await restClient.get(`http://localhost:8080/tags`, {
             headers:httpHeaders,
         });
     }
 
     static async getCurrentUser(){
-        return await axios.get(`http://localhost:8080/users/me`, {
+        return await restClient.get(`http://localhost:8080/users/me`, {
             headers:httpHeaders,
         });
     }
 
     static async getUserById(id){
-        return await axios.get(`http://localhost:8080/users/id`, {
+        return await restClient.get(`http://localhost:8080/users/id`, {
             headers:httpHeaders,
         });
     }
 
     static async changeUserData(userData){
-        return await axios.patch("http://localhost:8080/users/me", userData, {
+        return await restClient.patch("http://localhost:8080/users/me", userData, {
             headers:httpHeaders,
         });
     }
 
     static async deleteComment(comment){
-        return await axios.delete(`http://localhost:8080/plugins/comments/${comment.id}`, {
+        return await restClient.delete(`http://localhost:8080/plugins/comments/${comment.id}`, {
             headers:httpHeaders,
         });
     }

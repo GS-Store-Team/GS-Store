@@ -8,6 +8,8 @@ import {FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
+import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 
 export const UserPlugin = () => {
     const navigate = useNavigate();
@@ -40,39 +42,40 @@ export const UserPlugin = () => {
     }, [setPluginDataModal])
 
     return (
-        <div>
+        <Sp.Wrapper>
             <PluginViewHeader/>
-            <div className={["container"].join(' ')}>
-                <FlexRow style={{marginTop: "120px"}}>
-                    <S.LeftMenu>
-                        <S.MenuBtn onClick={myProfile}>
-                            Profile
-                        </S.MenuBtn>
+            <Sp.Main>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
+                        <S.LeftMenu>
+                            <S.MenuBtn onClick={myProfile}>
+                                Profile
+                            </S.MenuBtn>
 
-                        <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myPlugins}>
-                            Plugins
-                        </S.MenuBtn>
-                    </S.LeftMenu>
+                            <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myPlugins}>
+                                Plugins
+                            </S.MenuBtn>
+                        </S.LeftMenu>
 
-                    <S.MiddleMenu>
-                        <S.MenuBtn>
-                            downloaded
-                        </S.MenuBtn>
+                        <S.MiddleMenu>
+                            <S.MenuBtn>
+                                downloaded
+                            </S.MenuBtn>
 
-                        <S.MenuBtn>
-                            uploaded
-                        </S.MenuBtn>
-                    </S.MiddleMenu>
+                            <S.MenuBtn>
+                                uploaded
+                            </S.MenuBtn>
+                        </S.MiddleMenu>
 
-                    <S.UploadButton>
-                        <img src={plus}
-                             onClick={handleOpenModal}
-                             alt={".."}
-                        style={{width: "20px", height: "20px", float: "right"}}/>
-                    </S.UploadButton>
-
-                </FlexRow>
-            </div>
+                        <S.UploadButton>
+                            <img src={plus}
+                                 onClick={handleOpenModal}
+                                 alt={".."}
+                                 style={{width: "20px", height: "20px", float: "right"}}/>
+                        </S.UploadButton>
+                    </FlexRow>
+                </Container>
+            </Sp.Main>
             {pluginDataModal ?
                 <UploadPluginModal
                     opened={pluginDataModal}
@@ -81,6 +84,6 @@ export const UserPlugin = () => {
             }
 
             <MyFooter/>
-        </div>
+        </Sp.Wrapper>
     );
 };

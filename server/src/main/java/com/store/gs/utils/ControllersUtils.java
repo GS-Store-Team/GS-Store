@@ -1,6 +1,6 @@
 package com.store.gs.utils;
 
-import com.store.gs.models.MyImage;
+import com.store.gs.models.Image;
 import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -22,7 +22,7 @@ public class ControllersUtils {
         return 0;
     }
 
-    public static void setImageToResponse(MyImage image , HttpServletResponse response) throws IOException {
+    public static void setImageToResponse(Image image , HttpServletResponse response) throws IOException {
         response.setContentType("image/jpeg");
         InputStream in = new ByteArrayInputStream(image.getData());
         IOUtils.copy(in, response.getOutputStream());

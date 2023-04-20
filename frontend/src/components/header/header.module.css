@@ -1,11 +1,9 @@
 .my__header{
-    position: fixed;
-    top: 0;
     width: 100%;
     background-color: #eed7c1;
     height: 100px;
+    min-height: 100px;
     text-align: right;
-    z-index: 50;
 }
 
 .my__img{
@@ -15,7 +13,7 @@
 }
 
 .my__logo{
-    margin-bottom: 0px;
+    margin-bottom: 0;
     width: 143px;
     background-color: #E3E0DA;
     height: 40px;

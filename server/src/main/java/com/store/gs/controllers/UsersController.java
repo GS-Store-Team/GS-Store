@@ -1,7 +1,7 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.ChangePasswordRequestDTO;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
 import com.store.gs.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +36,10 @@ public class UsersController {
     @Operation(summary = "Update data for current authenticated user")
     @PatchMapping("/me")
     public ResponseEntity<?> me(@Valid @RequestBody UserData userData,
-                                     BindingResult bindingResult,
-                                     Authentication authentication) throws UserPrincipalNotFoundException {
+                                     BindingResult bindingResult){
 
         if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
-        UserData updatedUserData = userService.updateUserdataForCurrentUser(authentication, userData);
+        UserData updatedUserData = userService.updateUserdata(userData);
 
         return ResponseEntity.ok(updatedUserData);
     }
