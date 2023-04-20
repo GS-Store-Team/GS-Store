@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {FlexRow} from "../default/Flex.styled";
-import {Plugin} from "../../types/Types";
+import {Plugin} from "../../Types";
 import {PluginComponent} from "../plugin/PluginComponent";
 
 interface IPluginList{

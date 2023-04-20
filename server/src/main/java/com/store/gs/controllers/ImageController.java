@@ -4,6 +4,7 @@ import com.store.gs.dto.ImageDTO;
 import com.store.gs.services.ImageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,6 @@ public class ImageController {
     }
 
     @GetMapping("/plugin/{id}/preview")
-    @ResponseStatus(HttpStatus.OK)
     public ImageDTO getPreviewForPlugin(@PathVariable("id") Long id) {
         return imageService.getPreviewForPlugin(id);
     }

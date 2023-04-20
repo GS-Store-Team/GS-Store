@@ -1,7 +1,7 @@
 import React, {FC, useCallback, useContext, useRef, useState} from 'react';
 import {FlexRow} from "../default/Flex.styled";
 import {useNavigate} from "react-router-dom";
-import {Comment} from "../../types/Types";
+import {Comment} from "../../Types";
 import {Styled as S} from "./Review.styled";
 import {dateFormat} from "../../utils/Utils";
 import {AuthContext} from "../../App";
@@ -80,7 +80,7 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered
                         <S.Rate>{comment.mark}<span style={{fontSize: "10px", fontWeight: "normal"}}>/5</span></S.Rate>
                     </FlexRow>
                     <Icon img={"star"} style={{width: "17px", height: "15px", transform: "translateY(4px)", opacity: calculateOpacity(comment.mark, 5)}} nonClickable></Icon>
-                    { user.id === comment.reviewer &&
+                    { user.userId === comment.reviewer &&
                         <>
                             <Tooltip label={"Menu"} placement={"top"}>
                                 <S.Menu>
