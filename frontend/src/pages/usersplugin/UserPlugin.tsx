@@ -3,7 +3,7 @@ import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
-import {UserData} from "../../types/Types";
+import {UserData} from "../../Types";
 import {FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
@@ -20,7 +20,7 @@ export const UserPlugin = () => {
         phoneNumber: '',
         description: '',
         image: 0,
-        id: 0
+        userId: 0
     });
 
     useEffect(() => {
@@ -28,11 +28,11 @@ export const UserPlugin = () => {
     }, []);
 
     const myProfile = useCallback(() =>{
-        navigate('/user/' + userData.id);
+        navigate('/user/' + userData.userId);
     },[navigate])
 
     const myPlugins = useCallback(() =>{
-        navigate('/user/' + userData.id + '/plugins');
+        navigate('/user/' + userData.userId + '/plugins');
     },[navigate])
 
     const [pluginDataModal, setPluginDataModal] = useState(false);

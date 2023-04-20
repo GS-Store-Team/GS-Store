@@ -1,6 +1,6 @@
 import React, {CSSProperties, FC, useCallback, useEffect, useState} from 'react';
 import classes from "./stars.module.css";
-import {Comment} from "../../types/Types";
+import {Comment} from "../../Types";
 import {Styled as S} from "./Review.styled";
 import {FlexRow} from "../default/Flex.styled";
 import {Btn} from "../default/Btn";

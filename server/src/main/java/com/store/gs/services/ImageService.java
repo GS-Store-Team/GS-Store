@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 @Service
@@ -50,7 +51,11 @@ public class ImageService {
     public ImageDTO getPreviewForPlugin(Long id){
         Plugin plugin = pluginRepository.findById(id).orElseThrow();
 
-        Image image = imageRepository.getPreviewByIds(plugin.getImages().stream().map(PluginImageRef::getImageId).toList()).orElseThrow();
+        List<Long> ids = plugin.getImages().stream().map(PluginImageRef::getImageId).toList();
+
+        if(ids.size() == 0) throw new NoSuchElementException();
+
+        Image image = imageRepository.getPreviewByIds(ids).orElseThrow();
 
         return new ImageDTO(
                 image.getId(),
@@ -62,7 +67,11 @@ public class ImageService {
     public ImageDTO getPreviewForUser(){
         UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
 
-        Image image = imageRepository.getPreviewByIds(userData.getImages().stream().map(UserdataImageRef::getImageId).toList()).orElseThrow();
+        List<Long> ids = userData.getImages().stream().map(UserdataImageRef::getImageId).toList();
+
+        if(ids.size() == 0) throw new NoSuchElementException();
+
+        Image image = imageRepository.getPreviewByIds(ids).orElseThrow();
 
         return new ImageDTO(
                 image.getId(),

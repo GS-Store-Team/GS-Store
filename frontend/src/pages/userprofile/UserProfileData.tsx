@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {UserData} from "../../types/Types";
+import {UserData} from "../../Types";
 import {FlexColumn, FlexRow} from "../../components/default/Flex.styled";
 import classes from "./userprofile.module.css";
 import settingsButton from "../../UI/img/settings.png";

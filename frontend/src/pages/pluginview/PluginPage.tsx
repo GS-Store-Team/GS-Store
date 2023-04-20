@@ -10,17 +10,24 @@ import {Styled as S} from "./PluginPage.styled"
 import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
 import {Styled as S1} from "./../Pages.styled"
+import {Container} from "react-bootstrap";
+import {Plugin} from "../../Types";
 
 const PluginPage = () => {
 
-    const [plugin, setPlugin] = useState({
+    const [plugin, setPlugin] = useState<Plugin>({
         id: 0,
+        categories: [],
+        checked: false,
+        developer: 0,
+        hashtags: [],
+        images: [],
         name: 'none',
         shortDescription: 'none',
         fullDescription: '',
         deleted: false,
         mark: 5,
-        price: 0,
+        price: 0
     });
 
     const params = useParams();
@@ -28,7 +35,7 @@ const PluginPage = () => {
     useEffect(() =>{
         Api.getPluginById(params.id).then((response) => {
                 if (response.status === 200) {
-                    setPlugin(response.data);
+                    setPlugin(response.data as Plugin);
                 }
             }
         )
@@ -42,11 +49,11 @@ const PluginPage = () => {
         <S1.Wrapper>
             <PluginViewHeader />
                 <S1.Main>
-                    <div className={"container"}>
+                    <Container>
                         <FlexRow style={{gap: 0}} justifyContent={"space-between"}>
                             <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
                                 <FlexRow style={{marginTop: "100px"}}>
-                                    <ImgBlock pluginId={plugin.id} />
+                                    <ImgBlock plugin={plugin} />
                                 </FlexRow>
                                 <Btn style={{marginBottom:"20px", width: "150px"}} primary>Purchase</Btn>
                             </Column>
@@ -76,7 +83,7 @@ const PluginPage = () => {
                                 { plugin.id && <ReviewArea pluginId={plugin.id}/> }
                             </Column>
                         </FlexRow>
-                    </div>
+                    </Container>
                 </S1.Main>
             <MyFooter />
         </S1.Wrapper>

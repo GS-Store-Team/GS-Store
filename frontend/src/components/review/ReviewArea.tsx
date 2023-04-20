@@ -2,7 +2,7 @@ import React, {FC, Ref, useCallback, useEffect, useRef, useState} from 'react';
 import {ReviewList} from "./ReviewList";
 import Api from "../../API/Api";
 import {NewReview} from "./NewReview";
-import {Comment} from "../../types/Types";
+import {Comment} from "../../Types";
 import {Styled as S} from "./Review.styled"
 import {Styled as S1} from "./../default/Modal.styled"
 import {FlexRow} from "../default/Flex.styled";

@@ -22,7 +22,7 @@ public class CategoryTagController {
 
     @Operation(summary = "Get list of categories")
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getAllCategories(){
+    public ResponseEntity<List<Category>> getCategories(){
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(categories::add);
 
@@ -33,7 +33,7 @@ public class CategoryTagController {
 
     @Operation(summary = "Get list of tags")
     @GetMapping("/tags")
-    public ResponseEntity<List<Tag>> getAllategories(){
+    public ResponseEntity<List<Tag>> getTags(){
         List<Tag> tags = new ArrayList<>();
         tagRepository.findAll().forEach(tags::add);
 

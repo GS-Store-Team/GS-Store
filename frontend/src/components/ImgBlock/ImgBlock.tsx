@@ -5,24 +5,25 @@ import {Styled as S} from "./ImgBlock.styled"
 import {Icon} from "../default/Icon";
 import {FlexRow} from "../default/Flex.styled";
 import {Tooltip} from "../default/Tooltip";
+import {Plugin} from "../../Types";
 
 interface IImgBlock{
-    pluginId: number
+    plugin: Plugin
 }
 
-export const ImgBlock : FC<IImgBlock> = ({pluginId}) => {
+export const ImgBlock : FC<IImgBlock> = ({plugin}) => {
 
     const [images, setImages] = useState<JSX.Element[]>([])
 
     const ref = useRef(null)
 
     useEffect(() => {
-        if(!pluginId) return
-        Api.imageListByPluginId(pluginId).then((response) =>{
-            if(response.status === 200)
-                setImages(response.data.map((e: any, index: number) => {return <ImgComponent func={Api.getImageById(e as number)}/>}));
-        })
-    }, [pluginId])
+        console.log(plugin)
+        if(!plugin.id) return
+
+        setImages(plugin.images.map((img: { imageId : number }, index: number) => {return <ImgComponent key={index} func={Api.getImageById(img.imageId)}/>}));
+
+    }, [plugin])
 
     const handleLeftClick = useCallback(() => {
         setImages([...images.slice(1), images[0]])
