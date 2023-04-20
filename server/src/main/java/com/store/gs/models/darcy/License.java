@@ -12,21 +12,35 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@Table("grants")
-public class LicenseModule {
+@Table("licenses")
+public class License {
     @Id
     private long id;
+
+    private long ownerId;
+
+    @Size(max = 64)
+    private String title;
+
+    @Size(max = 64)
+    private String company;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date activationDate;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date expireDate;
-    @Size(min = 1)
-    private int amount;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private Date supportEndDate;
+
+    @Size(min = 1)
+    private int amount;
+
     private String document;
 
     @Column("module_id")
-    private long moduleId;
-    private String moduleName;
+    private long pluginId;
+
+    private String pluginName;
 }
