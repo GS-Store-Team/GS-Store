@@ -33,7 +33,7 @@ export const UserProfile = () => {
             <PluginViewHeader/>
             <Sp.Main>
                 <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "120px"}}>
+                    <FlexRow style={{marginTop: "50px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
                                 Profile

@@ -36,6 +36,12 @@ export const UserPlugin = () => {
 
     const [pluginDataModal, setPluginDataModal] = useState(false);
 
+    const [uploaded, setUploaded] = useState(false);
+
+    const toggleStateTrue = () => setUploaded(true);
+    const toggleStateFalse = () => setUploaded(false);
+
+
     const handleOpenModal = useCallback(() =>{
         setPluginDataModal(true);
     }, [setPluginDataModal])
@@ -45,7 +51,7 @@ export const UserPlugin = () => {
             <PluginViewHeader/>
             <Sp.Main>
                 <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "120px"}}>
+                    <FlexRow style={{marginTop: "50px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn onClick={myProfile}>
                                 Profile
@@ -57,13 +63,25 @@ export const UserPlugin = () => {
                         </S.LeftMenu>
 
                         <S.MiddleMenu>
-                            <S.MenuBtn>
-                                downloaded
-                            </S.MenuBtn>
+                            {uploaded ?
+                                <S.MenuBtn onClick={toggleStateFalse}>
+                                    downloaded
+                                </S.MenuBtn> :
+                                <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"}
+                                           onClick={toggleStateFalse}>
+                                    downloaded
+                                </S.MenuBtn>
+                            }
 
-                            <S.MenuBtn>
-                                uploaded
-                            </S.MenuBtn>
+                            {uploaded ?
+                                <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"}
+                                           onClick={toggleStateTrue}>
+                                    uploaded
+                                </S.MenuBtn> :
+                                <S.MenuBtn onClick={toggleStateTrue}>
+                                    uploaded
+                                </S.MenuBtn>
+                            }
                         </S.MiddleMenu>
 
                         <S.UploadButton>
@@ -73,6 +91,13 @@ export const UserPlugin = () => {
                                  style={{width: "20px", height: "20px", float: "right"}}/>
                         </S.UploadButton>
                     </FlexRow>
+
+                    <S.PluginList>
+                        { uploaded ?
+                            <div>no plugins loaded</div> :
+                            <div>no plugins downloaded</div>
+                        }
+                    </S.PluginList>
                 </div>
             </Sp.Main>
             {pluginDataModal ?
