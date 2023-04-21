@@ -26,7 +26,7 @@ const Modal = styled.div<{ $height?: Property.Height, $width?: Property.Width }>
 `
 
 const Buttons = styled.div`
-  width: 50%;
+  width: min(300px, 100%);
   display: flex;
   padding: 20px 0 50px 0;
   justify-content: space-between;

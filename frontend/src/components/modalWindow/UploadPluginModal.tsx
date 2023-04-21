@@ -3,7 +3,7 @@ import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import Api from "../../API/Api";
 import {Input, TextArea} from "../default/Form";
-import classes from "./modalwindow.module.css";
+
 interface IUploadPluginModal {
     opened: boolean;
     setOpened: (state : boolean) => void;
@@ -46,16 +46,16 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
         >
             <S.Title>UPLOAD NEW PLUGIN</S.Title>
             <S.Body>
-                <div className={classes.my__label}>Name:</div>
+                <S.Row>Name:</S.Row>
                 <Input type={"text"} value={pluginData.name}
                        onChange={(e) => {setPluginData({... pluginData, name: e.target.value})}}/>
-                <div className={classes.my__label}>Short description:</div>
+                <S.Row>Short description:</S.Row>
                 <Input type={"text"} value={pluginData.shortDescription}
                        onChange={(e) => {setPluginData({... pluginData, shortDescription: e.target.value})}}/>
-                <div className={classes.my__label}>Full description:</div>
+                <S.Row>Full description:</S.Row>
                 <Input type={"text"} value={pluginData.fullDescription}
                        onChange={(e) => {setPluginData({... pluginData, fullDescription: e.target.value})}}/>
-                <div className={classes.my__label}>Price:</div>
+                <S.Row>Price:</S.Row>
                 <TextArea type={"text"} value={pluginData.price}
                           onChange={(e) => {setPluginData({... pluginData, price: e.target.value})}}/>
             </S.Body>

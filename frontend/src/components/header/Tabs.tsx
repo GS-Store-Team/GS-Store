@@ -4,7 +4,6 @@ import {AuthContext} from "../../App";
 import {Icon} from "../default/Icon";
 import {Styled as S} from "./Header.styled"
 import {Tooltip} from "../default/Tooltip";
-import classes from "./header.module.css";
 
 export const ProfileTab = () => {
     const navigate = useNavigate();

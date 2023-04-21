@@ -1,11 +1,9 @@
-import {cssNumber} from "jquery";
-
 export type UserData = {
     nickName: string,
     email: string,
     phoneNumber: string,
     description: string,
-    image: number,
+    images: number[],
     userId: number,
 }
 
@@ -16,7 +14,7 @@ export type Plugin = {
     developer: number
     fullDescription: string
     hashtags: number[]
-    images: { imageId : number }[]
+    images: number[]
     id: number
     mark: number
     name: string
@@ -44,4 +42,10 @@ export type Image = {
     id: number
     image: string
     isPreview: boolean
+}
+
+export type Filter = {
+    value: string
+    categoryId: number
+    selectedTags: number[]
 }

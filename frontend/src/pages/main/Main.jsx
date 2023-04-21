@@ -91,15 +91,7 @@ const Main = () => {
 
     return (
         <S.Wrapper style={{backgroundColor: "rgba(227, 224, 218, 0.25)"}}>
-            <Header setFilter={setFilter}
-                    currentFilter={filter}
-                    setCurrentCat={setCurrentCat}
-                    currentCategory={currentCat}
-                    setDefaultFilters={setDefaultFilters}
-                    addTag={selectedTag}
-                    tags={tags}
-                    selectedTags={selectedTags}
-            />
+            <Header onSearch={(filter) => {}}/>
             <S.Main>
                 {load?
                     <div className={classes.loader}>

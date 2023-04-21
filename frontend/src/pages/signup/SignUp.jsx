@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from 'react';
 import Api from "../../API/Api";
-import {BareHeader} from "../../components/header/BareHeader";
 import classes from "./signup.module.css";
 import {Link, useNavigate} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {Styled as S} from "../Pages.styled"
+import {Header} from "../../components/header/Header";
 
 export const SignUp = () => {
 
@@ -57,7 +57,7 @@ export const SignUp = () => {
 
     return (
         <S.Wrapper>
-            <BareHeader/>
+            <Header disableProfile/>
             <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                     <div className={classes.my__title}>Sign Up</div>

@@ -1,16 +1,15 @@
 import React, {useCallback, useContext, useState} from 'react';
-import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
-import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
 import {FlexRow} from "../../components/default/Flex.styled";
-import {ImgComponent} from "../../components/default/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";
 import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
+import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
+import {Header} from "../../components/header/Header";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
@@ -31,7 +30,7 @@ export const UserProfile = () => {
 
     return (
         <Sp.Wrapper>
-            <PluginViewHeader/>
+            <Header/>
             <Sp.Main>
                 <Container>
                     <FlexRow style={{marginTop: "20px"}}>
@@ -45,11 +44,7 @@ export const UserProfile = () => {
                             </S.MenuBtn>
                         </S.LeftMenu>
 
-                        <S.PhotoBlock>
-                            <div style={{width: "250px"}}>
-                                <ImgComponent func={Api.previewByPluginId(0)}></ImgComponent>
-                            </div>
-                        </S.PhotoBlock>
+                        {user.images && <ImgBlock imageRefs={user.images} />}
 
                         <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
                     </FlexRow>

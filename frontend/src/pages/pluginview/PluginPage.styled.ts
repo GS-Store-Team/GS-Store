@@ -12,10 +12,12 @@ const Header = styled.div`
 const Heading = styled.div`
   padding: 10px 10px 0 10px;
   font-size: 25px;
+  word-break: break-word;
 `
 
 const Text = styled.div`
   padding: 10px;
+  word-break: break-word;
 `
 
 const Rate = styled.div`

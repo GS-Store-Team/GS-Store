@@ -1,7 +1,5 @@
 package com.store.gs.controllers;
 
-import com.store.gs.converters.PageConverter;
-import com.store.gs.dto.CommentDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;

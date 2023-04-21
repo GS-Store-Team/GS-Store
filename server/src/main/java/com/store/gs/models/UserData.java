@@ -2,6 +2,7 @@ package com.store.gs.models;
 
 import com.store.gs.models.supportclasses.UserdataImageRef;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
@@ -36,14 +37,4 @@ public class UserData {
 
     @MappedCollection(idColumn = "userdata_id")
     private Set<UserdataImageRef> images = new HashSet<>();
-
-    public static UserData defaultUser(String nickName){
-        UserData userData = new UserData();
-        userData.nickName = nickName;
-        userData.email = null;
-        userData.phoneNumber = null;
-        userData.description = "New GS-store user!";
-
-        return userData;
-    }
 }

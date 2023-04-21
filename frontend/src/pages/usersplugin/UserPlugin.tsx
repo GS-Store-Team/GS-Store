@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
-import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {UserData} from "../../Types";
 import {FlexRow} from "../../components/default/Flex.styled";
@@ -10,6 +9,7 @@ import plus from "../../UI/img/plus.png"
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
+import {Header} from "../../components/header/Header";
 
 export const UserPlugin = () => {
     const navigate = useNavigate();
@@ -19,7 +19,7 @@ export const UserPlugin = () => {
         email: '',
         phoneNumber: '',
         description: '',
-        image: 0,
+        images: [],
         userId: 0
     });
 
@@ -43,7 +43,7 @@ export const UserPlugin = () => {
 
     return (
         <Sp.Wrapper>
-            <PluginViewHeader/>
+            <Header/>
             <Sp.Main>
                 <Container>
                     <FlexRow style={{marginTop: "20px"}}>

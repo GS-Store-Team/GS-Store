@@ -1,6 +1,7 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.ChangePasswordRequestDTO;
+import com.store.gs.dto.UserDataDTO;
 import com.store.gs.models.UserData;
 import com.store.gs.services.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -26,11 +27,8 @@ public class UsersController {
 
     @Operation(summary = "Get data for current authenticated user")
     @GetMapping("/me")
-    public ResponseEntity<Object> me(Authentication authentication){
-
-        UserData userData = userService.getUserDataFromCurrentUser(authentication);
-
-        return ResponseEntity.ok(userData);
+    public UserDataDTO me(Authentication authentication){
+        return userService.getUserDataFromCurrentUser(authentication);
     }
 
     @Operation(summary = "Update data for current authenticated user")
@@ -70,10 +68,7 @@ public class UsersController {
 
     @Operation(summary = "Get data for user by user-id")
     @GetMapping("/{id}")
-    public ResponseEntity<UserData> userById(@PathVariable("id") long id){
-
-        UserData userData = userService.getUserDataById(id);
-
-        return ResponseEntity.ok(userData);
+    public UserDataDTO userById(@PathVariable("id") long id){
+        return userService.getUserDataById(id);
     }
 }

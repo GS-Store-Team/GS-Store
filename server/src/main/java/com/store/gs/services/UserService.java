@@ -1,6 +1,9 @@
 package com.store.gs.services;
 
+import com.store.gs.GlobalConfig;
+import com.store.gs.converters.ModelToDTO;
 import com.store.gs.dto.ChangePasswordRequestDTO;
+import com.store.gs.dto.UserDataDTO;
 import com.store.gs.enums.Role;
 import com.store.gs.models.User;
 import com.store.gs.models.UserData;
@@ -19,6 +22,7 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 @Service
 public class UserService {
+    private final GlobalConfig config;
     private final UserRepository userRepository;
     private final UserDataRepository userDataRepository;
     private final PasswordEncoder encoder;
@@ -31,19 +35,22 @@ public class UserService {
         if(userRepository.existsUserByEmail(username)) return false;
 
         User user = new User();
-
         user.setEmail(username);
         user.setPassword(encoder.encode(password));
         user.setRole(Role.USER);
         user.setActive(true);
-        //user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
 
-        userRepository.save(user);
+        user = userRepository.save(user);
+
+        UserData userData = defaultUserData();
+        userData.setUserId(user.getId());
+
+        rawInsertUserdata(userData);
 
         return true;
     }
 
-    public UserData getUserDataById(long userId) throws NoSuchElementException{
+    public UserDataDTO getUserDataById(long userId) throws NoSuchElementException{
 
         User user = userRepository.getUserById(userId).orElseThrow(NoSuchElementException::new);
 
@@ -51,28 +58,22 @@ public class UserService {
 
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setUserId(user.getId());
-
-        return userData;
+        return ModelToDTO.userDataDTO(userData);
     }
 
-    public UserData getUserDataFromCurrentUser(Authentication authentication){
+    public UserDataDTO getUserDataFromCurrentUser(Authentication authentication){
         User user = getUserByEmail(authentication.getName());
-
         UserData userData = user.getUserData();
-
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setUserId(user.getId());
-
-        return userData;
+        return ModelToDTO.userDataDTO(userData);
     }
 
     public void deleteCurrentUser(Authentication authentication) throws UserPrincipalNotFoundException{
         try {
             User user = getUserByEmail(authentication.getName());
             user.setActive(false);
-            user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
+            user.setUserData(defaultUserData());
 
             userRepository.save(user);
         }catch (NoSuchElementException e){
@@ -105,5 +106,25 @@ public class UserService {
         }catch (NoSuchElementException e){
             throw new UserPrincipalNotFoundException("current user not found");
         }
+    }
+
+    private void rawInsertUserdata(UserData userData){
+        userDataRepository.insert(
+                userData.getUserId(),
+                userData.getNickName(),
+                userData.getEmail(),
+                userData.getPhoneNumber(),
+                userData.getDescription()
+        );
+    }
+
+    private UserData defaultUserData(){
+        UserData userData = new UserData();
+        userData.setNickName(ModelsUtils.generateUserName());
+        userData.setPhoneNumber("");
+        userData.setEmail(config.get_USER_DEFAULT_EMAIL());
+        userData.setDescription(config.get_USER_DEFAULT_DESCRIPTION());
+
+        return userData;
     }
 }

@@ -3,6 +3,7 @@ package com.store.gs.services;
 import com.store.gs.converters.PageConverter;
 import com.store.gs.converters.PageMerger;
 import com.store.gs.dto.CommentDTO;
+import com.store.gs.dto.UserDataDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.User;
 import com.store.gs.models.UserData;
@@ -82,8 +83,8 @@ public class CommentService {
                         resultSet,
                         comment -> {
                             CommentDTO commentDTO = new CommentDTO(comment);
-                            UserData userData = userService.getUserDataById(comment.getReviewer());
-                            commentDTO.setNickName(userData.getNickName());
+                            UserDataDTO userDataDTO = userService.getUserDataById(comment.getReviewer());
+                            commentDTO.setNickName(userDataDTO.getNickName());
                             return commentDTO;
                         }
                 );

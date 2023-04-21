@@ -4,6 +4,7 @@ const Block = styled.div`
   width: min(100%, 250px);
   min-width: 150px;
   padding: 5px;
+  height: fit-content;
   border: 2px solid #BEBBB6;
   border-radius: 5px;
 `
