@@ -47,5 +47,10 @@ export type Image = {
 export type Filter = {
     value: string
     categoryId: number
-    selectedTags: number[]
+    selectedTags: Tag[]
+}
+
+export type Tag = {
+    id: number
+    title: string
 }

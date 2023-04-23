@@ -14,6 +14,7 @@ const Wrapper = styled.div`
   max-height: 100vh;
   flex-direction: column;
   display: flex;
+  overflow-x: hidden;
 `
 
 export const Styled = {

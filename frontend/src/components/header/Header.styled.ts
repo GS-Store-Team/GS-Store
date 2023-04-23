@@ -32,15 +32,14 @@ const TabText = styled.div`
 `
 
 const Search = styled.input`
-  width: min(100%, 350px);
-  min-width: 200px;
+  width: 100%;
   border-radius: 5px;
   border: 1px solid transparent;
   height: 35px;
   background-color: rgba(53, 52, 51, 0.4);
   color: white;
   font-size: 18px;
-  padding: 0 20px;
+  padding: 0 40px 0 20px;
   box-sizing: unset;
 
   &:hover {
@@ -62,16 +61,23 @@ const Shovel = styled.span`
   width: 0;
   transform: translateX(-30px);
   margin: auto;
+  &:hover{
+    scale: 1.05;
+  }
 `
 
 const Menu = styled.span`
-    width: 120px;
+  min-width: 100px;
+  text-align: center;
+  
 `
 
 const SearchArea = styled.div`
   display: flex;
-  justify-content: center;
   justify-items: center;
+  width: min(100%, 350px);
+  min-width: 200px;
+  margin: 0 10px;
 `
 
 export const Styled = {

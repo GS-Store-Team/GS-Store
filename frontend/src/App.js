@@ -30,7 +30,7 @@ function useCredentials(){
     }, [isAuth])
 
     const setAuth = useCallback((value) => {
-        if(value === false) sessionStorage.clear()
+        if(value === false) sessionStorage.removeItem("token")
         setIsAuth(value)
     }, [])
 

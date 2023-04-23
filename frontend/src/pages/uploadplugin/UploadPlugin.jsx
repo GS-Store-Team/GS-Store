@@ -6,8 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {ImgComponent} from "../../components/default/ImgComponent";
 import crossButton from "../../UI/img/cross.png";
 import {Categories} from "../../components/header/category/Categories";
-import {SelectedTags} from "../../components/tag/SelectedTags";
-import {TagsCloud} from "../../components/tag/TagsCloud";
+import {TagsCloud} from "../../components/header/tags/TagsCloud";
 import {Header} from "../../components/header/Header";
 
 const UploadPlugin = () => {
@@ -80,12 +79,12 @@ const UploadPlugin = () => {
         <div>
             <Header disableProfile/>
             <div className={classes.my__tags}>
-                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
-                {tagsWindowVisible?
-                    <TagsCloud list={tags} selectedTags={selectedTags}
-                               add={selectedTag} close={setTagsWindowVisible}/>
-                    :<div/>
-                }
+                {/*<SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>*/}
+                {/*{tagsWindowVisible?*/}
+                {/*    <TagsCloud list={tags} selectedTags={selectedTags}*/}
+                {/*               add={selectedTag} close={setTagsWindowVisible}/>*/}
+                {/*    :<div/>*/}
+                {/*}*/}
             </div>
             <div className={[classes.my__profile, "container"].join(' ')}>
                 <div className={"row"}>
@@ -117,9 +116,9 @@ const UploadPlugin = () => {
 
                         <div className={classes.my__categoryNtags}>
                             <div className={classes.my__category}>
-                                <Categories setCurrentCat={(currentCat) =>
-                                {setPluginData({...pluginData, categories: currentCat})}}
-                                            currentCategory={pluginData.categories}/>
+                                {/*<Categories setCurrentCat={(currentCat) =>*/}
+                                {/*{setPluginData({...pluginData, categories: currentCat})}}*/}
+                                {/*            currentCategory={pluginData.categories}/>*/}
                             </div>
 
 

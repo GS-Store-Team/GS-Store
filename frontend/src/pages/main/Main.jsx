@@ -6,7 +6,6 @@ import Loader from "../../components/loading/Loader";
 import {Header} from "../../components/header/Header";
 import classes from "./main.module.css";
 import {MyFooter} from "../../components/footer/MyFooter";
-import {SelectedTags} from "../../components/tag/SelectedTags";
 import {Styled as S} from "../Pages.styled";
 
 const LIMIT = 9
@@ -110,7 +109,6 @@ const Main = () => {
                             />
                         </div>
                 }
-                <SelectedTags list={selectedTags} remove={removeSelectedTag} removeAll={removeAllTags}/>
             </S.Main>
             <MyFooter/>
         </S.Wrapper>
