@@ -9,9 +9,19 @@ import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 import {Styled as Sp} from "../Pages.styled";
+import PluginList from "../../components/pluginList/PluginList";
 
 export const UserPlugin = () => {
     const navigate = useNavigate();
+    const [plugins, setPlugins] = useState([]);
+    const [filter, setFilter] = useState("");
+    useEffect(() =>{
+        Api.getPluginsPage(1, 9, filter, -1, null).then((response) =>{
+            if(response.status === 200) {
+                setPlugins(response.data.content);
+            }
+        })
+    }, [1])
 
     const [userData, setUserData] = useState<UserData>({
         nickName: '',
@@ -63,6 +73,7 @@ export const UserPlugin = () => {
                         </S.LeftMenu>
 
                         <S.MiddleMenu>
+                            <div>
                             {uploaded ?
                                 <S.MenuBtn onClick={toggleStateFalse}>
                                     downloaded
@@ -75,15 +86,17 @@ export const UserPlugin = () => {
 
                             {uploaded ?
                                 <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"}
-                                           onClick={toggleStateTrue}>
-                                    uploaded
-                                </S.MenuBtn> :
+                                       onClick={toggleStateTrue}>
+                                        uploaded
+                                </S.MenuBtn>:
                                 <S.MenuBtn onClick={toggleStateTrue}>
                                     uploaded
                                 </S.MenuBtn>
                             }
-                        </S.MiddleMenu>
 
+                            <PluginList list={plugins} perLine={3}/>
+                            </div>
+                        </S.MiddleMenu>
                         <S.UploadButton>
                             <img src={plus}
                                  onClick={handleOpenModal}

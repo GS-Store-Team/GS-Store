@@ -9,6 +9,8 @@ const LeftMenu = styled.div`
 
 const MiddleMenu = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   margin: auto;
   margin-top: 0;
 `

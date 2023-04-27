@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {useParams} from "react-router-dom";
 import Api from "../../API/Api";
 import classes from "./pluginpage.module.css";
@@ -8,8 +8,10 @@ import {MyFooter} from "../../components/footer/MyFooter";
 import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {ReviewArea} from "../../components/review/ReviewArea";
+import {ReportModal} from "../../components/modalWindow/ReportModal"
 import {FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "../Pages.styled"
+import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 
 const PluginPage = () => {
 
@@ -24,6 +26,12 @@ const PluginPage = () => {
         mark: 5,
         price: 0,
     });
+
+    const [bugReportModal, setBugReportModal] = useState(false);
+
+    const handleOpenModal = useCallback(() =>{
+        setBugReportModal(true);
+    }, [setBugReportModal])
 
     const params = useParams();
 
@@ -75,7 +83,7 @@ const PluginPage = () => {
                     <div className={["col-5", classes.my__full__desc].join(' ')}>
                         <div className={classes.my_desc}>
                             <div className={classes.my_desc_title}>Description</div>
-                            <button className={classes.bug_report_button}>
+                            <button onClick={handleOpenModal} className={classes.bug_report_button}>
                                 <img className={classes.bug_report_image}
                                      src={bug}
                                      alt={".."}/>
@@ -88,6 +96,12 @@ const PluginPage = () => {
                 </FlexRow>
                 </div>
             </S.Main>
+            {bugReportModal ?
+                <ReportModal
+                    opened={bugReportModal}
+                    setOpened={setBugReportModal}
+                /> : <></>
+            }
             <MyFooter/>
         </S.Wrapper>
     );
