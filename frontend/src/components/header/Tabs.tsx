@@ -21,7 +21,7 @@ export const ProfileTab = () => {
     return (
         <S.Tab>
             <Icon img={"man"} style={{margin: "0 5px 0 0"}} tooltip={{label:"My profile", placement:"bottom"}} onClick={myProfile}></Icon>
-            <Tooltip label={user.nickName} disable={user.nickName.length<10}>
+            <Tooltip label={user.nickName} disable={user.nickName.length<9}>
                 <S.TabText style={{maxWidth: "80px"}} onClick={myProfile}>{user.nickName}</S.TabText>
             </Tooltip>
             <Icon img={"line"} style={{width:"1px"}} nonClickable></Icon>

@@ -4,7 +4,7 @@ import {MyFooter} from "../../components/footer/MyFooter";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import classes from "./uploadplugin.module.css";
 import {useNavigate} from "react-router-dom";
-import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
+import {ImgComponent} from "../../components/default/ImgComponent";
 import crossButton from "../../UI/img/cross.png";
 import {Categories} from "../../components/header/category/Categories";
 import {SelectedTags} from "../../components/tag/SelectedTags";

@@ -51,6 +51,9 @@ const Body = styled.div`
   padding: 0 40px;
   width: 100%;
   overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Cross = styled.div`
@@ -79,6 +82,11 @@ const ScrollSection = styled.div<{$height?: Property.Height}>`
   overflow-y: scroll;
 `
 
+const Row = styled.div`
+  width: 100%;
+  padding: 10px 20px;
+`
+
 export const Styled = {
     ModalBackground,
     Modal,
@@ -88,4 +96,5 @@ export const Styled = {
     Cross,
     Text,
     ScrollSection,
+    Row,
 };

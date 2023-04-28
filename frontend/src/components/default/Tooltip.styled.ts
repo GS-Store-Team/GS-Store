@@ -9,7 +9,7 @@ const Tooltip = styled.div<{$top?:number, $left?:number, $bottom?:number, $right
   position: absolute;
   padding: 5px 10px;
   color: white;
-  font-size: 12px;
+  font-size: 14px;
   background-color: rgba(128, 128, 128, 1);
   transform: ${({ $transform }) => `${$transform}`};
   border-radius: 3px;

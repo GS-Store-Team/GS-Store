@@ -5,11 +5,12 @@ import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
 import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataModal";
 import {FlexRow} from "../../components/default/Flex.styled";
-import {ImgComponent} from "../../components/ImgComponent/ImgComponent";
+import {ImgComponent} from "../../components/default/ImgComponent";
 import {UserProfileData} from "./UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as S} from "./UserProfile.styled";
 import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 
 export const UserProfile = () => {
     const navigate = useNavigate();
@@ -32,8 +33,8 @@ export const UserProfile = () => {
         <Sp.Wrapper>
             <PluginViewHeader/>
             <Sp.Main>
-                <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "50px"}}>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
                                 Profile
@@ -52,7 +53,7 @@ export const UserProfile = () => {
 
                         <UserProfileData userData={user} onOpenModal={handleOpenModal}/>
                     </FlexRow>
-                </div>
+                </Container>
             </Sp.Main>
             <MyFooter/>
             {userDataModal ?

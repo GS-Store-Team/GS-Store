@@ -1,7 +1,7 @@
 import React, {FC, useEffect, useState} from 'react';
 import classes from "./category.module.css";
 import Api from "../../../API/Api";
-import {Category} from "../../../types/Types";
+import {Category} from "../../../Types";
 
 interface ICategory{
     category: number

@@ -3,9 +3,11 @@ package com.store.gs.services;
 import com.store.gs.dto.ChangePasswordRequestDTO;
 import com.store.gs.enums.Role;
 import com.store.gs.models.User;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
+import com.store.gs.repositories.UserDataRepository;
 import com.store.gs.repositories.UserRepository;
 import com.store.gs.utils.ModelsUtils;
+import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ import java.util.NoSuchElementException;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final UserDataRepository userDataRepository;
     private final PasswordEncoder encoder;
 
     public User getUserByEmail(String email) throws NoSuchElementException{
@@ -33,7 +36,7 @@ public class UserService {
         user.setPassword(encoder.encode(password));
         user.setRole(Role.USER);
         user.setActive(true);
-        user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
+        //user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
 
         userRepository.save(user);
 
@@ -48,9 +51,7 @@ public class UserService {
 
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setId(user.getId());
-        userData.setActive(user.isActive());
-        userData.setAvatar(user.getAvatar());
+        userData.setUserId(user.getId());
 
         return userData;
     }
@@ -62,8 +63,7 @@ public class UserService {
 
         if(userData == null) throw new NoSuchElementException();
 
-        userData.setId(user.getId());
-        userData.setActive(user.isActive());
+        userData.setUserId(user.getId());
 
         return userData;
     }
@@ -80,15 +80,15 @@ public class UserService {
         }
     }
 
-    public UserData updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException{
-        try {
-            User user = getUserByEmail(authentication.getName());
-            user.setUserData(userData);
+    public UserData updateUserdata(UserData updatedUserData){
+        UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
 
-            return userRepository.save(user).getUserData();
-        }catch (NoSuchElementException e){
-            throw new UserPrincipalNotFoundException("current user not found");
-        }
+        userData.setEmail(updatedUserData.getEmail());
+        userData.setDescription(updatedUserData.getDescription());
+        userData.setNickName(updatedUserData.getNickName());
+        userData.setPhoneNumber(updatedUserData.getPhoneNumber());
+
+        return userDataRepository.save(userData);
     }
 
     public boolean updateUserAuthentication(Authentication authentication, ChangePasswordRequestDTO changePasswordRequestDTO) throws UserPrincipalNotFoundException{

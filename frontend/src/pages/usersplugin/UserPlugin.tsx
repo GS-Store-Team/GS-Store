@@ -3,12 +3,13 @@ import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {PluginViewHeader} from "../../components/header/PluginViewHeader";
 import {useNavigate} from "react-router-dom";
-import {UserData} from "../../types/Types";
+import {UserData} from "../../Types";
 import {FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 import {Styled as Sp} from "../Pages.styled";
+import {Container} from "react-bootstrap";
 import PluginList from "../../components/pluginList/PluginList";
 
 export const UserPlugin = () => {
@@ -29,7 +30,7 @@ export const UserPlugin = () => {
         phoneNumber: '',
         description: '',
         image: 0,
-        id: 0
+        userId: 0
     });
 
     useEffect(() => {
@@ -37,11 +38,11 @@ export const UserPlugin = () => {
     }, []);
 
     const myProfile = useCallback(() =>{
-        navigate('/user/' + userData.id);
+        navigate('/user/' + userData.userId);
     },[navigate])
 
     const myPlugins = useCallback(() =>{
-        navigate('/user/' + userData.id + '/plugins');
+        navigate('/user/' + userData.userId + '/plugins');
     },[navigate])
 
     const [pluginDataModal, setPluginDataModal] = useState(false);
@@ -60,8 +61,8 @@ export const UserPlugin = () => {
         <Sp.Wrapper>
             <PluginViewHeader/>
             <Sp.Main>
-                <div className={["container"].join(' ')}>
-                    <FlexRow style={{marginTop: "50px"}}>
+                <Container>
+                    <FlexRow style={{marginTop: "20px"}}>
                         <S.LeftMenu>
                             <S.MenuBtn onClick={myProfile}>
                                 Profile
@@ -104,14 +105,7 @@ export const UserPlugin = () => {
                                  style={{width: "20px", height: "20px", float: "right"}}/>
                         </S.UploadButton>
                     </FlexRow>
-
-                    <S.PluginList>
-                        { uploaded ?
-                            <div>no plugins loaded</div> :
-                            <div>no plugins downloaded</div>
-                        }
-                    </S.PluginList>
-                </div>
+                </Container>
             </Sp.Main>
             {pluginDataModal ?
                 <UploadPluginModal

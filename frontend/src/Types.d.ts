@@ -1,3 +1,4 @@
+import {cssNumber} from "jquery";
 
 export type UserData = {
     nickName: string,
@@ -5,7 +6,7 @@ export type UserData = {
     phoneNumber: string,
     description: string,
     image: number,
-    id: number,
+    userId: number,
 }
 
 export type Plugin = {
@@ -15,6 +16,7 @@ export type Plugin = {
     developer: number
     fullDescription: string
     hashtags: number[]
+    images: { imageId : number }[]
     id: number
     mark: number
     name: string
@@ -36,4 +38,10 @@ export type Comment = {
 export type Category = {
     id: number
     title: string
+}
+
+export type Image = {
+    id: number
+    image: string
+    isPreview: boolean
 }

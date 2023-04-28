@@ -5,6 +5,7 @@ import com.store.gs.models.PluginFile;
 import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
+import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -70,7 +71,7 @@ public class PluginService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
 
-        plugin.setDeveloper(securityUser.getUsername());
+        plugin.setDeveloper(ServiceUtils.getUserId());
 
         pluginRepository.save(plugin);
     }

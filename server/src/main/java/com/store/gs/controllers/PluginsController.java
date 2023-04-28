@@ -8,10 +8,12 @@ import com.store.gs.models.PluginFile;
 import com.store.gs.services.CommentService;
 import com.store.gs.services.PluginService;
 import com.store.gs.utils.ControllersUtils;
+import com.store.gs.utils.ServiceUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
@@ -35,7 +38,8 @@ public class PluginsController {
                                                 @RequestParam(name = "_limit", required = false) String pageSize,
                                                 @RequestParam(name = "_filter", required = false) String filter,
                                                 @RequestParam(name = "_cat", required = false) String category,
-                                                @RequestParam(name = "_tag", required = false) String[] tags){
+                                                @RequestParam(name = "_tag", required = false) String[] tags,
+                                                @RequestParam(name = "_my", required = false) Boolean my){
         long categoryId = -1;
         if(category != null) categoryId = ControllersUtils.parseIntParam(category);
 
@@ -46,6 +50,13 @@ public class PluginsController {
                         categoryId,
                         ControllersUtils.checkStringArray(tags)
                     );
+
+        // Should be rewritten. Bad-quick solution
+        if(my != null && my) {
+            Long userid = ServiceUtils.getUserId();
+            List<Plugin> plugins = page.toList().stream().filter(p -> p.getDeveloper().equals(userid)).toList();
+            page = new PageImpl<>(plugins, page.getPageable(), plugins.size());
+        }
 
         return page.getTotalElements() == 0?
                 ResponseEntity.noContent().build()
@@ -152,4 +163,6 @@ public class PluginsController {
 
         return ResponseEntity.ok().build();
     }
+
+
 }

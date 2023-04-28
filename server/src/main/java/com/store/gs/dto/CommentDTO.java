@@ -1,9 +1,7 @@
 package com.store.gs.dto;
 
 import com.store.gs.models.Comment;
-import com.store.gs.models.supportclasses.Avatar;
 import lombok.Data;
-
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -20,7 +18,6 @@ public class CommentDTO {
     private Timestamp creationTime;
     private Timestamp lastChange;
     private long reviewer;
-    private Avatar avatar;
     private String nickName;
 
     public CommentDTO(Comment comment) {
