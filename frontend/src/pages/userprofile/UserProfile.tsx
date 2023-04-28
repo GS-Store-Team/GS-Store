@@ -10,8 +10,11 @@ import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
 import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
 import {Header} from "../../components/header/Header";
+import {Filter} from "../../Types";
+import {defaultFilter} from "../main/Main";
 
 export const UserProfile = () => {
+    const [filter, setFilter] = useState<Filter>(defaultFilter);
     const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
     const [userDataModal, setUserDataModal] = useState(false);
@@ -30,10 +33,10 @@ export const UserProfile = () => {
 
     return (
         <Sp.Wrapper>
-            <Header/>
+            <Header filter={filter} onChangeFilter={setFilter}/>
             <Sp.Main>
                 <Container>
-                    <FlexRow style={{marginTop: "20px"}}>
+                    <FlexRow style={{marginTop: "20px"}} gap={"1em"}>
                         <S.LeftMenu>
                             <S.MenuBtn $backgroundColor={"rgba(217, 217, 217, 0.23)"} onClick={myProfile}>
                                 Profile

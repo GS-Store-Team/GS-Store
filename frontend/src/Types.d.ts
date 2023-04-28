@@ -46,8 +46,12 @@ export type Image = {
 
 export type Filter = {
     value: string
-    categoryId: number
+    category: Category
     selectedTags: Tag[]
+    my?: boolean
+    bought?: boolean
+    pageId: number
+    pageSize: number
 }
 
 export type Tag = {

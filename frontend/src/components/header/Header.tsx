@@ -1,4 +1,4 @@
-import React, {ChangeEvent, FC, useCallback, useState} from 'react';
+import React, {ChangeEvent, Dispatch, FC, SetStateAction, useCallback, useEffect, useState} from 'react';
 import {LogoTab, ProfileTab} from "./Tabs";
 import {Categories} from "./category/Categories";
 import {Filter, Tag} from "../../Types";
@@ -7,31 +7,36 @@ import {Styled as S} from "./Header.styled"
 import {Container} from "react-bootstrap";
 import {SelectedTags, TagsCloud} from "./tags/TagsCloud";
 import {Tooltip} from "../default/Tooltip";
-import {useSessionState} from "../../hooks/UseSessionState";
-import Api from "../../API/Api";
 import {useOutsideClick} from "../../hooks/Hooks";
+import {useNavigate} from "react-router-dom";
 
 interface IHeader{
-    onSearch?: (filter:Filter) => {}
+    filter: Filter
+    onChangeFilter: Dispatch<SetStateAction<Filter>>
+    enableSearch?:boolean
     disableProfile?: boolean
+    onLogoClock?: () => void
 }
 
-const defaultFilter : Filter = {value:'', categoryId:-1, selectedTags:[]}
-
-export const Header:FC<IHeader> = ({onSearch, disableProfile}) => {
-    const [filter, setFilter] = useSessionState<Filter>("FILTER", {value:'', categoryId:-1, selectedTags:[]});
-    const [tags, setTags] = useSessionState<Tag[]>("TAGS_SET",[], onSearch && Api.getTags())
+export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch, filter, onLogoClock}) => {
+    const navigate = useNavigate();
     const [selectedTags, setSelectedTags] = useState<Tag[]>(filter.selectedTags)
     const [tagsCloud, setTagsCloud] = useState<boolean>(false);
     const ref = React.createRef<HTMLDivElement>()
 
-    const handleChangeValue = useCallback((e : ChangeEvent<HTMLInputElement>) => setFilter(prevState => ({...prevState, value: e.target.value})), [setFilter])
-    const handleChangeCategory = useCallback((id : number) => setFilter(prevState => ({...prevState, categoryId: id})), [setFilter])
-    const handleLogoClock = useCallback(() => {setFilter(defaultFilter)}, [setFilter])
+    useEffect(() => {
+        onChangeFilter(prevState => ({...prevState, selectedTags}))
+    }, [selectedTags])
+
+    const handleChangeValue = useCallback((e : ChangeEvent<HTMLInputElement>) => onChangeFilter(prevState => ({...prevState, value: e.target.value})), [onChangeFilter])
+    const handleChangeCategory = useCallback((id : number) => onChangeFilter(prevState => ({...prevState, category: {id, title:''}})), [onChangeFilter])
     const handleCloseTagsCloud = useCallback(() => setTagsCloud(false), [setTagsCloud])
     const handleAddTag = useCallback((tag: Tag) => setSelectedTags(prevState => [...prevState, tag]), [])
     const handleRemoveTag = useCallback((tag: Tag) => setSelectedTags(prevState => [...prevState.filter(t => t.id !== tag.id)]), [])
-
+    const handleLogoClick = useCallback(() => {
+        if(onLogoClock) onLogoClock()
+        else navigate(-1)
+        }, [navigate])
 
     useOutsideClick(ref, handleCloseTagsCloud, tagsCloud)
 
@@ -39,10 +44,10 @@ export const Header:FC<IHeader> = ({onSearch, disableProfile}) => {
         <>
             <S.Header>
                 <Container style={{height: "100%", alignItems: "center", display: "flex", justifyContent:"space-between", flexShrink: "1"}}>
-                    <LogoTab onClick={handleLogoClock}/>
-                    {onSearch &&
+                    <LogoTab onClick={handleLogoClick} />
+                    {enableSearch &&
                         <>
-                            <S.Menu><Categories setCategory={handleChangeCategory} category={filter.categoryId}/></S.Menu>
+                            <S.Menu><Categories setCategory={handleChangeCategory} category={filter.category.id}/></S.Menu>
                             <S.SearchArea>
                                 <S.Search placeholder={"Search"}
                                           value={filter.value}
@@ -51,7 +56,7 @@ export const Header:FC<IHeader> = ({onSearch, disableProfile}) => {
                                           onKeyDown={undefined}>
                                 </S.Search>
                                 <S.Shovel>
-                                    <Icon img={"shovel"} onClick={onSearch ? () => onSearch(filter) : undefined}/>
+                                    <Icon img={"shovel"} onClick={onChangeFilter ? () => onChangeFilter(filter) : undefined}/>
                                 </S.Shovel>
                             </S.SearchArea>
                             <S.Menu>
@@ -63,7 +68,7 @@ export const Header:FC<IHeader> = ({onSearch, disableProfile}) => {
                     }
                     {!disableProfile && <ProfileTab/>}
                 </Container>
-                {tagsCloud && <TagsCloud ref={ref} tags={tags} selected={selectedTags} addTag={handleAddTag} removeTag={handleRemoveTag}/>}
+                {enableSearch && tagsCloud && <TagsCloud ref={ref} selected={selectedTags} addTag={handleAddTag} removeTag={handleRemoveTag}/>}
             </S.Header>
             <Container>
                 <SelectedTags selected={selectedTags} onRemove={handleRemoveTag} onRemoveAll={() => setSelectedTags([])}/>

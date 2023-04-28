@@ -10,10 +10,13 @@ import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
 import {Styled as S1} from "./../Pages.styled"
 import {Container} from "react-bootstrap";
-import {Plugin} from "../../Types";
+import {Filter, Plugin} from "../../Types";
 import {Header} from "../../components/header/Header";
+import {defaultFilter} from "../main/Main";
 
 const PluginPage = () => {
+
+    const [filter, setFilter] = useState<Filter>(defaultFilter);
 
     const [plugin, setPlugin] = useState<Plugin>({
         id: 0,
@@ -47,7 +50,7 @@ const PluginPage = () => {
 
     return (
         <S1.Wrapper>
-            <Header />
+            <Header filter={filter} onChangeFilter={setFilter}/>
             <S1.Main>
                 <Container>
                     <FlexRow style={{gap: 0}} justifyContent={"space-between"}>

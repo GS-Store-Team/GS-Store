@@ -27,8 +27,8 @@ public class UsersController {
 
     @Operation(summary = "Get data for current authenticated user")
     @GetMapping("/me")
-    public UserDataDTO me(Authentication authentication){
-        return userService.getUserDataFromCurrentUser(authentication);
+    public UserDataDTO me(){
+        return userService.getUserDataFromCurrentUser();
     }
 
     @Operation(summary = "Update data for current authenticated user")

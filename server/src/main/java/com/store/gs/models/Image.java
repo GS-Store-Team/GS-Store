@@ -1,13 +1,12 @@
 package com.store.gs.models;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Getter @Setter
+@Data
+@AllArgsConstructor
 @Table("image")
 public class Image {
     @Id

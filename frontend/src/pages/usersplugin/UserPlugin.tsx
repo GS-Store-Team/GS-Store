@@ -2,7 +2,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {useNavigate} from "react-router-dom";
-import {UserData} from "../../Types";
+import {Filter, UserData} from "../../Types";
 import {FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "./UserPlugin.styled";
 import plus from "../../UI/img/plus.png"
@@ -10,8 +10,10 @@ import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal"
 import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
 import {Header} from "../../components/header/Header";
+import {defaultFilter} from "../main/Main";
 
 export const UserPlugin = () => {
+    const [filter, setFilter] = useState<Filter>(defaultFilter);
     const navigate = useNavigate();
 
     const [userData, setUserData] = useState<UserData>({
@@ -43,7 +45,7 @@ export const UserPlugin = () => {
 
     return (
         <Sp.Wrapper>
-            <Header/>
+            <Header filter={filter} onChangeFilter={setFilter}/>
             <Sp.Main>
                 <Container>
                     <FlexRow style={{marginTop: "20px"}}>

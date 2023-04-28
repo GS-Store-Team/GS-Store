@@ -16,7 +16,7 @@ import com.store.gs.repositories.UserDataRepository;
 import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -88,7 +88,7 @@ public class ImageService {
             Image image = new Image(file.getBytes(), imageRefs.size() == 0);
             image = imageRepository.save(image);
 
-            imageRefs.add(new PluginImageRef(image.getId()));
+            imageRefs.add(new PluginImageRef(image.getId(), plugin.getId()));
             plugin.setImages(imageRefs);
 
             pluginRepository.save(plugin);
@@ -109,7 +109,7 @@ public class ImageService {
             Image image = new Image(file.getBytes(), imageRefs.size() == 0);
             image = imageRepository.save(image);
 
-            imageRefs.add(new UserdataImageRef(image.getId()));
+            imageRefs.add(new UserdataImageRef(image.getId(), ServiceUtils.getUserId()));
             userData.setImages(imageRefs);
 
             userDataRepository.save(userData);

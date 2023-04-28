@@ -31,7 +31,7 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
     }, [setOpened])
 
     const handleAcceptModal = useCallback(() =>{
-        Api.changeUserData(data)
+        Api.changeUserData({...data, images: undefined})
             .then((response) => {
                 onChangeUserData(response.data as UserData)
             })
@@ -40,7 +40,7 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
 
     return (
         <Modal
-            $height={"900px"}
+            $height={"700px"}
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
             onClose={handleCloseModal}

@@ -6,8 +6,10 @@ import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {Styled as S} from "../Pages.styled"
 import {Header} from "../../components/header/Header";
+import {defaultFilter} from "../main/Main";
 
 export const SignUp = () => {
+    const [filter, setFilter] = useState(defaultFilter);
 
     const [request, setRequest] = useState({
         username:"",
@@ -57,7 +59,7 @@ export const SignUp = () => {
 
     return (
         <S.Wrapper>
-            <Header disableProfile/>
+            <Header filter={filter} onChangeFilter={setFilter} disableProfile/>
             <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                     <div className={classes.my__title}>Sign Up</div>

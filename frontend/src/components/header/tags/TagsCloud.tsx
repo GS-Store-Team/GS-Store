@@ -3,15 +3,17 @@ import {Tag} from "../../../Types";
 import {Icon} from "../../default/Icon";
 import {FlexRow} from "../../default/Flex.styled";
 import {Styled as S} from "./Tags.styled";
+import {useSessionState} from "../../../hooks/UseSessionState";
+import Api from "../../../API/Api";
 
 interface ITagsCloud{
-    tags: Tag[]
     selected: Tag[]
     addTag: (tag: Tag) => void
     removeTag: (tag: Tag) => void
 }
 
-export const TagsCloud = forwardRef<HTMLDivElement, ITagsCloud>(({tags, selected, addTag, removeTag}, ref) => {
+export const TagsCloud = forwardRef<HTMLDivElement, ITagsCloud>(({selected, addTag, removeTag}, ref) => {
+    const [tags, setTags] = useSessionState<Tag[]>("TAGS_SET",[], Api.getTags())
     const isSelected = useCallback((tag: Tag) => selected.includes(tag), [selected])
     return (
         <S.Cloud ref={ref}>

@@ -51,21 +51,13 @@ public class UserService {
     }
 
     public UserDataDTO getUserDataById(long userId) throws NoSuchElementException{
-
-        User user = userRepository.getUserById(userId).orElseThrow(NoSuchElementException::new);
-
-        UserData userData = user.getUserData();
-
-        if(userData == null) throw new NoSuchElementException();
+        UserData userData = userDataRepository.findById(userId).orElseThrow();
 
         return ModelToDTO.userDataDTO(userData);
     }
 
-    public UserDataDTO getUserDataFromCurrentUser(Authentication authentication){
-        User user = getUserByEmail(authentication.getName());
-        UserData userData = user.getUserData();
-        if(userData == null) throw new NoSuchElementException();
-
+    public UserDataDTO getUserDataFromCurrentUser(){
+        UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
         return ModelToDTO.userDataDTO(userData);
     }
 
@@ -73,7 +65,6 @@ public class UserService {
         try {
             User user = getUserByEmail(authentication.getName());
             user.setActive(false);
-            user.setUserData(defaultUserData());
 
             userRepository.save(user);
         }catch (NoSuchElementException e){
