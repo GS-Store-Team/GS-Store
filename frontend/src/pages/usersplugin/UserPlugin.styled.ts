@@ -9,7 +9,10 @@ const LeftMenu = styled.div`
 
 const MiddleMenu = styled.div`
   display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
   margin: auto;
+  margin-top: 0;
 `
 
 const UploadButton = styled.div`
@@ -39,8 +42,16 @@ const PhotoBlock = styled.div`
   min-width: 350px;
 `
 
+const PluginList = styled.div`
+  margin-left: 230px;
+  margin-right: 230px;
+  display: block;
+  height: 100%;
+`
+
 export const Styled = {
     LeftMenu,
+    PluginList,
     UploadButton,
     MiddleMenu,
     MenuBtn,
