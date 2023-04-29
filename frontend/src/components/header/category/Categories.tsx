@@ -2,13 +2,14 @@ import React, {FC, useEffect, useState} from 'react';
 import classes from "./category.module.css";
 import Api from "../../../API/Api";
 import {Category} from "../../../Types";
+import {useSessionState} from "../../../hooks/UseSessionState";
 
 interface ICategory{
     category: number
     setCategory: (category: number) => void
 }
 export const Categories: FC<ICategory> = ({setCategory, category}) => {
-    const [categoryList, setCategoryList] = useState<Category[]>([]);
+    const [categoryList, setCategoryList] = useSessionState<Category[]>("CATEGORIES",[], Api.getCategories());
     const [visible, setVisible] = useState<boolean>(false);
     const [currentTitle, setCurrentTitle] = useState("Categories")
 
@@ -22,11 +23,6 @@ export const Categories: FC<ICategory> = ({setCategory, category}) => {
         setCurrentTitle(c.title)
     }
 
-    useEffect(()=>{
-        Api.getCategories().then((response) =>{
-            setCategoryList(response.data);
-        })
-    }, []);
 
     return (
         <div className={classes.my__select}

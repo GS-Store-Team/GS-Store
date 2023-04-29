@@ -1,24 +1,28 @@
-package com.store.gs.services;
+package com.store.gs.services.plugin;
 
+import com.store.gs.dto.FilterDTO;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
 import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
+import com.store.gs.services.CommentService;
 import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
 
+import static com.store.gs.models.QPlugin.plugin;
+import static com.store.gs.models.supportclasses.QCategoryRef.categoryRef;
+import static com.store.gs.models.supportclasses.QPluginImageRef.pluginImageRef;
+import static com.store.gs.models.supportclasses.QTagRef.tagRef;
 
 @Service
 @RequiredArgsConstructor
@@ -27,40 +31,31 @@ public class PluginService {
     private final CommentService commentService;
     private final PluginFileRepository pluginFileRepository;
 
+    public Page<Plugin> getPage(final FilterDTO filter){
+        var pageId = filter.getPageId();
+        var pageSize = filter.getPageSize();
 
-    public Page<Plugin> getPage(int pageNumber,
-                                int limit,
-                                String filter,
-                                long category,
-                                String[] tags){
-        if(pageNumber < 1) pageNumber = 1;
-        if(limit < 5) limit = 5;
+        if(pageId == null || pageId < 1) pageId = 1;
+        if(pageSize == null || pageSize < 5) pageSize = 5;
 
-        if(tags.length==0)
-            if(category==-1)
-                if(filter == null)
-                    return pluginRepository.findAll(PageRequest.of(pageNumber - 1, limit));
-                else
-                    return pluginRepository.findAllByNameContainingIgnoreCase(filter, PageRequest.of(pageNumber-1, limit));
-            else
-                if(filter == null) {
-                    List<Plugin> plugins = pluginRepository.findAllByCategoryId(category, limit, (long) (pageNumber - 1) * limit);
+        var pluginFilter = new PluginFilter(ServiceUtils.getUserId())
+                .withValue(filter.getValue())
+                .withCategory(filter.getCategory())
+                .withTags(filter.getSelectedTags())
+                .withUser(filter.getMy())
+                .withBoughtByUser(filter.getBought());
 
-                    int totalElem = pluginRepository.findCountOfAllByCategoryId(category);
+        List<Long> ids = pluginRepository.query(q -> q
+                .select(plugin.id).distinct()
+                .from(plugin)
+                .leftJoin(categoryRef).on(plugin.id.eq(categoryRef.pluginId))
+                .leftJoin(tagRef).on(plugin.id.eq(tagRef.pluginId))
+                .leftJoin(pluginImageRef).on(plugin.id.eq(pluginImageRef.pluginId))
+                .where(pluginFilter.buildPredicate())
+                .fetch()
+        );
 
-                    Page<Plugin> p = new PageImpl<>(plugins, PageRequest.of((pageNumber-1), limit), totalElem);
-                    return p;
-                }
-                else {
-                    List<Plugin> plugins = pluginRepository.findAllByCategoryIdAndFilter(filter, category, limit, (long) (pageNumber - 1) * limit);
-
-                    int totalElem = pluginRepository.findCountOfAllByCategoryIdAndFilter(filter, category);
-
-                    Page<Plugin> p = new PageImpl<>(plugins, PageRequest.of((pageNumber-1), limit), totalElem);
-                    return p;
-                }
-
-        return pluginRepository.findAll(PageRequest.of(pageNumber-1,limit));
+        return pluginRepository.findAllByIdIn(ids, PageRequest.of(pageId-1, pageSize));
     }
 
     public Plugin getById(long id){

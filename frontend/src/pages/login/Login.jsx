@@ -1,14 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Api from "../../API/Api";
 import classes from "./login.module.css";
-import {BareHeader} from "../../components/header/BareHeader";
 import {Link} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {AuthContext} from "../../App";
 import {Styled as S} from "../Pages.styled"
+import {Header} from "../../components/header/Header";
+import {defaultFilter} from "../main/Main";
 
 export const Login = () => {
+    const [filter, setFilter] = useState(defaultFilter);
 
     const [request, setRequest] = useState({
             username:"",
@@ -76,7 +78,7 @@ export const Login = () => {
 
     return (
         <S.Wrapper>
-            <BareHeader />
+            <Header filter={filter} onChangeFilter={setFilter} disableProfile/>
             <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                    <div className={classes.my__title}>Login</div>

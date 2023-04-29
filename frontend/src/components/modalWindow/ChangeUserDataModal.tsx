@@ -1,18 +1,10 @@
-import React, {CSSProperties, useCallback, useEffect, useState} from 'react';
+import React, {CSSProperties, useCallback, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import Api from "../../API/Api";
 import {UserData} from "../../Types";
 import {Input, TextArea} from "../default/Form";
-import classes from "./modalwindow.module.css";
 import * as Utils from "../../utils/Utils";
-
-interface IFieldStyle {
-    nickName: CSSProperties,
-    email: CSSProperties,
-    phoneNumber: CSSProperties,
-    description: CSSProperties,
-}
 
 interface IChangeUserDataModal {
     userData: UserData;
@@ -39,7 +31,7 @@ export const ChangeUserDataModal : React.FC<IChangeUserDataModal> = ({userData, 
     }, [setOpened])
 
     const handleAcceptModal = useCallback(() =>{
-        Api.changeUserData(data)
+        Api.changeUserData({...data, images: undefined})
             .then((response) => {
                 onChangeUserData(response.data as UserData)
             })

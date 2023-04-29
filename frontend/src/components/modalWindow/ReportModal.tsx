@@ -1,11 +1,8 @@
-import React, {CSSProperties, useCallback, useEffect, useState} from 'react';
+import React, {CSSProperties, useCallback, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
-import Api from "../../API/Api";
-import {UserData} from "../../types/Types";
 import {Input, TextArea} from "../default/Form";
 import classes from "./modalwindow.module.css";
-import * as Utils from "../../utils/Utils";
 
 interface IFieldStyle {
     header: CSSProperties,

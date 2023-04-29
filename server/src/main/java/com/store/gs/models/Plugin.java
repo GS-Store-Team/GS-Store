@@ -3,21 +3,19 @@ package com.store.gs.models;
 import com.store.gs.models.supportclasses.CategoryRef;
 import com.store.gs.models.supportclasses.PluginImageRef;
 import com.store.gs.models.supportclasses.TagRef;
-import com.store.gs.models.supportclasses.UserdataImageRef;
 import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
 import java.util.Set;
 
-@Setter @Getter
-@ToString
+@Data
+@AllArgsConstructor
 @Table("plugin")
-@NoArgsConstructor
 public class Plugin {
     @Id
     private long id;
@@ -40,14 +38,14 @@ public class Plugin {
     @DecimalMin(value = "0.0", message = "Price should be valid!")
     private double price;
 
-    @MappedCollection(idColumn = "plugin_id")
-    private Set<CategoryRef> categories = new HashSet<>();
+    @MappedCollection(idColumn = "plugin_id", keyColumn = "category_id")
+    private Set<CategoryRef> categories;
 
-    @MappedCollection(idColumn = "plugin_id")
-    private Set<TagRef> hashtags = new HashSet<>();
+    @MappedCollection(idColumn = "plugin_id", keyColumn = "tag_id")
+    private Set<TagRef> tags;
 
-    @MappedCollection(idColumn = "plugin_id")
-    private Set<PluginImageRef> images = new HashSet<>();
+    @MappedCollection(idColumn = "plugin_id", keyColumn = "image_id")
+    private Set<PluginImageRef> images;
 
     @Column("isdeleted")
     private boolean isDeleted;

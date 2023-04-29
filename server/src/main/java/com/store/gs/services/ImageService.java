@@ -3,6 +3,7 @@ package com.store.gs.services;
 import com.store.gs.Exceptions.ImagesCountLimitExceededException;
 import com.store.gs.Exceptions.NotImageException;
 import com.store.gs.Exceptions.NotYourImageException;
+import com.store.gs.GlobalConfig;
 import com.store.gs.dto.ImageDTO;
 import com.store.gs.models.Image;
 import com.store.gs.models.Plugin;
@@ -15,7 +16,7 @@ import com.store.gs.repositories.UserDataRepository;
 import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -27,15 +28,10 @@ import java.util.Set;
 @Service
 @RequiredArgsConstructor
 public class ImageService {
+    private final GlobalConfig config;
     private final ImageRepository imageRepository;
     private final PluginRepository pluginRepository;
     private final UserDataRepository userDataRepository;
-
-    @Value("${user.profile.pictures.max}")
-    private Integer USER_PICTURES_MAX;
-
-    @Value("${plugin.pictures.max}")
-    private Integer PLUGIN_PICTURES_MAX;
     private final String PREFIX = "data:image/jpeg;base64,";
 
     public ImageDTO getImage(Long id){
@@ -86,13 +82,13 @@ public class ImageService {
         Plugin plugin = pluginRepository.findById(id).orElseThrow();
         Set<PluginImageRef> imageRefs = plugin.getImages();
 
-        if(imageRefs.size() + 1 > PLUGIN_PICTURES_MAX) throw new ImagesCountLimitExceededException();
+        if(imageRefs.size() + 1 > config.get_PLUGIN_PICTURES_MAX()) throw new ImagesCountLimitExceededException();
 
         try {
             Image image = new Image(file.getBytes(), imageRefs.size() == 0);
             image = imageRepository.save(image);
 
-            imageRefs.add(new PluginImageRef(image.getId()));
+            imageRefs.add(new PluginImageRef(image.getId(), plugin.getId()));
             plugin.setImages(imageRefs);
 
             pluginRepository.save(plugin);
@@ -107,13 +103,13 @@ public class ImageService {
         UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
         Set<UserdataImageRef> imageRefs = userData.getImages();
 
-        if(imageRefs.size() + 1 > USER_PICTURES_MAX) throw new ImagesCountLimitExceededException();
+        if(imageRefs.size() + 1 > config.get_USER_PICTURES_MAX()) throw new ImagesCountLimitExceededException();
 
         try {
             Image image = new Image(file.getBytes(), imageRefs.size() == 0);
             image = imageRepository.save(image);
 
-            imageRefs.add(new UserdataImageRef(image.getId()));
+            imageRefs.add(new UserdataImageRef(image.getId(), ServiceUtils.getUserId()));
             userData.setImages(imageRefs);
 
             userDataRepository.save(userData);

@@ -67,28 +67,30 @@ export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
             <S.Title>
                 <FlexRow justifyContent={"space-between"} style={{alignItems: "flex-start"}}>
                     Reviews
-                    {reviews.length > 1 &&
-                        <FlexRow justifyContent={"left"} style={{gap: 0}}>
-                            {!wideView &&
-                                <Tooltip label={"View in full screen"} placement={"top"}>
-                                    <S.Tab>
-                                        <Icon img={"full-screen"} style={{width:"18px", height:"18px", margin: "auto", transform:"translateY(1px)"}} onClick={handleOpenWideView}/>
-                                    </S.Tab>
-                                </Tooltip>
-                            }
-                            <Tooltip label={"Filter"} placement={"top"}>
-                                <S.Tab ref={ref}>
-                                    <Icon img={"filter"} style={{margin: "auto"}}/>
+                    <FlexRow justifyContent={"left"} style={{gap: 0}}>
+                        {!wideView &&
+                            <Tooltip label={"View in full screen"} placement={"top"}>
+                                <S.Tab>
+                                    <Icon img={"full-screen"} style={{width:"18px", height:"18px", margin: "auto", transform:"translateY(1px)"}} onClick={handleOpenWideView}/>
                                 </S.Tab>
                             </Tooltip>
-                            <DropDownMenu
-                                renderElementRef={ref}
-                                menuElements={options()}
-                                right={true}
-                                selected={options()[sortType-1].title}
-                            />
-                        </FlexRow>
-                    }
+                        }
+                        {reviews.length > 1 &&
+                            <>
+                                <Tooltip label={"Filter"} placement={"top"}>
+                                    <S.Tab ref={ref}>
+                                        <Icon img={"filter"} style={{margin: "auto"}}/>
+                                    </S.Tab>
+                                </Tooltip>
+                                <DropDownMenu
+                                    renderElementRef={ref}
+                                    menuElements={options()}
+                                    right={true}
+                                    selected={options()[sortType-1].title}
+                                />
+                            </>
+                        }
+                    </FlexRow>
                 </FlexRow>
             </S.Title>
             <ReviewList comments={reviews} deleteComment={deleteComment} handleEdit={handleEdit}/>

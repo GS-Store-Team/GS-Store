@@ -14,9 +14,18 @@ const Wrapper = styled.div`
   max-height: 100vh;
   flex-direction: column;
   display: flex;
+  overflow-x: hidden;
+  background-color: rgba(227, 224, 218, 0.25);
+`
+
+const NoContent = styled.div`
+  width: 100%;
+  line-height: 200px;
+  text-align: center;
 `
 
 export const Styled = {
     Main,
-    Wrapper
+    Wrapper,
+    NoContent,
 };

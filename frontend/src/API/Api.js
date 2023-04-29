@@ -3,15 +3,9 @@ import {httpHeaders, restClient} from "./Config";
 const url = "http://localhost:8080"
 export default class Api {
 
-    static async getPluginsPage(page = 1, limit = 10, filter, currentCat, tags){
-        return  await restClient.get(`${url}/plugins`, {
+    static async getPluginsPage(filter){
+        return  await restClient.post(`${url}/plugins/filter`, filter, {
             headers:httpHeaders,
-            params: {
-                _page: page,
-                _limit: limit,
-                _filter: filter,
-                _cat: currentCat,
-            },
         })
     }
 

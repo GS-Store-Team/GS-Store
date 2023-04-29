@@ -4,7 +4,6 @@ import {AuthContext} from "../../App";
 import {Icon} from "../default/Icon";
 import {Styled as S} from "./Header.styled"
 import {Tooltip} from "../default/Tooltip";
-import classes from "./header.module.css";
 
 export const ProfileTab = () => {
     const navigate = useNavigate();
@@ -36,20 +35,15 @@ interface ILogoTab{
 
 export const LogoTab: FC<ILogoTab> = ({onClick}) => {
     const navigate = useNavigate();
-    const { setAuth, user } = useContext(AuthContext);
 
-    const logout = useCallback(() => {
-        setAuth(false);
-    }, [])
-
-    const myProfile = useCallback( () =>{
-        navigate('/user/' + user.id);
-    },[navigate])
+    const handleClick = useCallback(() => navigate("/main"),[])
 
     return (
         <S.Tab onClick={onClick}>
-            <Icon style={{height:"40px", width:"40px", opacity: 1}} img={"logo"} tooltip={{label: "GS-Store - software plugin store"}}/>
-            <Tooltip label={"Back to main page"}>
+            <span onClick={(e) => e.stopPropagation()}>
+                <Icon style={{height:"40px", width:"40px", opacity: 1}} img={"logo"} tooltip={{label: "GS-Store - software plugin store"}} onClick={handleClick}/>
+            </span>
+            <Tooltip label={"Back to previous page"}>
                 <S.TabText style={{fontSize: "22px", padding: "0 5px"}}>GS-Store</S.TabText>
             </Tooltip>
         </S.Tab>

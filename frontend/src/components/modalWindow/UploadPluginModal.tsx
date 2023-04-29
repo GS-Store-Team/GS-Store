@@ -1,13 +1,10 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import Api from "../../API/Api";
 import {Input, TextArea} from "../default/Form";
-import classes from "./modalwindow.module.css";
 import {Categories} from "../header/category/Categories";
-import {SelectedTags} from "../tag/SelectedTags";
-import {TagsCloud} from "../tag/TagsCloud";
-import {Button} from "react-bootstrap";
+import {Column, FlexRow} from "../default/Flex.styled";
 interface IUploadPluginModal {
     opened: boolean;
     setOpened: (state : boolean) => void;
@@ -20,7 +17,8 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
         shortDescription: "",
         fullDescription: "",
         price: "",
-        categories: -1,
+        categories: [],
+        hashtags: [],
     });
 
     const handleCloseModal = useCallback(() => {
@@ -36,37 +34,39 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
     }, [pluginData, setOpened])
 
     const handleSetCategory = (categoryId: number) => {
-        setPluginData({... pluginData, categories: categoryId});
+        //setPluginData({... pluginData, categories: categoryId});
     }
 
     return (
         <Modal
-            $height={"1000px"}
-            $width={"900px"}
+            $height={"900px"}
+            $width={"1000px"}
             onAccept={handleAcceptModal}
             onDecline={handleCloseModal}
-            onClose={handleCloseModal}>
-
+            onClose={handleCloseModal}
+        >
             <S.Title>UPLOAD NEW PLUGIN</S.Title>
             <S.Body>
-                <div className={classes.my__label}>Name:</div>
-                <Input type={"text"} value={pluginData.name}
-                       onChange={(e) => {setPluginData({... pluginData, name: e.target.value})}}/>
-                <div className={classes.my__label}>Short description:</div>
-                <TextArea style={{resize:"none", height:"100px"}}
-                    type={"text"} value={pluginData.shortDescription}
-                       onChange={(e) => {setPluginData({... pluginData, shortDescription: e.target.value})}}/>
-                <div className={classes.my__label}>Full description:</div>
-                <TextArea style={{resize:"none", height:"150px"}}
-                    type={"text"} value={pluginData.fullDescription}
-                       onChange={(e) => {setPluginData({... pluginData, fullDescription: e.target.value})}}/>
-                <div className={classes.my__label}>Price:</div>
-                <Input style={{marginBottom: "20px"}} type={"text"} value={pluginData.price}
-                          onChange={(e) => {setPluginData({... pluginData, price: e.target.value})}}/>
-
-                <Categories setCategory={handleSetCategory} category={pluginData.categories}/>
-                <input className={classes.my__fileLoader}
-                       type={"file"}/>
+                <FlexRow>
+                    <Column style={{width:"400px"}}>
+                        <S.Row>Name:</S.Row>
+                        <Input type={"text"} value={pluginData.name}
+                               onChange={(e) => {setPluginData({... pluginData, name: e.target.value})}}/>
+                        <S.Row>Short description:</S.Row>
+                        <Input type={"text"} value={pluginData.shortDescription}
+                               onChange={(e) => {setPluginData({... pluginData, shortDescription: e.target.value})}}/>
+                        <S.Row>Full description:</S.Row>
+                        <Input type={"text"} value={pluginData.fullDescription}
+                               onChange={(e) => {setPluginData({... pluginData, fullDescription: e.target.value})}}/>
+                        <S.Row>Price:</S.Row>
+                        <TextArea type={"text"} value={pluginData.price}
+                                  onChange={(e) => {setPluginData({... pluginData, price: e.target.value})}}/>
+                    </Column>
+                    <Column>
+                        <Categories setCategory={handleSetCategory} category={-1}/>
+                        <input type={"file"}/>
+                    </Column>
+                </FlexRow>
             </S.Body>
         </Modal>
     )

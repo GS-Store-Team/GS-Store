@@ -1,8 +1,16 @@
 import styled from "styled-components";
 
+const Header = styled.div`
+  width: 100%;
+  height: 100px;
+  min-height: 100px;
+  background-color: #eed7c1;
+`
+
 const Tab = styled.div`
   padding: 10px;
   width: 160px;
+  min-width: 160px;
   height: 40px;
   background-color: #E3E0DA;
   border: 1px solid darkgray;
@@ -23,7 +31,61 @@ const TabText = styled.div`
   }
 `
 
+const Search = styled.input`
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  height: 35px;
+  background-color: rgba(53, 52, 51, 0.4);
+  color: white;
+  font-size: 18px;
+  padding: 0 40px 0 20px;
+  box-sizing: unset;
+
+  &:hover {
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    border: 1px solid #7c7c7c;
+  }
+
+  :focus {
+    outline: none;
+  }
+
+  ::placeholder {
+    color: white;
+    font-size: 15px;
+  }
+`
+
+const Shovel = styled.span`
+  width: 0;
+  transform: translateX(-30px);
+  margin: auto;
+  &:hover{
+    scale: 1.05;
+  }
+`
+
+const Menu = styled.span`
+  min-width: 100px;
+  text-align: center;
+  
+`
+
+const SearchArea = styled.div`
+  display: flex;
+  justify-items: center;
+  width: min(100%, 350px);
+  min-width: 200px;
+  margin: 0 10px;
+`
+
 export const Styled = {
+    Header,
     Tab,
     TabText,
+    Search,
+    Shovel,
+    Menu,
+    SearchArea,
 }

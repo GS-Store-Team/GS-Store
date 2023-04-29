@@ -1,7 +1,9 @@
 package com.store.gs.models;
 
 import com.store.gs.dto.CommentDTO;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -12,11 +14,13 @@ import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Table("review")
-@ToString
 public class Comment {
     @Id
     private long id;
+    @Column("plugin_id")
     private long pluginId;
     private long reviewer;
     @Min(1)

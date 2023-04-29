@@ -5,7 +5,7 @@ import classes from "./img.module.css";
 import {Image} from "../../Types";
 
 interface IImgComponent {
-    func: Promise<any>;
+    func?: Promise<any>;
 }
 
 const style = { width: "100%", objectFit: "cover", cursor: "pointer"} as CSSProperties
@@ -14,6 +14,7 @@ export const ImgComponent : FC<IImgComponent> = React.memo(({func}) => {
     const [image, setImage] = useState<Image | null>(null)
 
     useEffect(() => {
+        if(!func) return
         func.then(response => {
             if (response.status === 200) {
                 setFail(false)
