@@ -14,7 +14,7 @@ export type Plugin = {
     developer: number
     fullDescription: string
     hashtags: number[]
-    images: number[]
+    images: Image[]
     id: number
     mark: number
     name: string
@@ -57,4 +57,5 @@ export type Filter = {
 export type Tag = {
     id: number
     title: string
+    color?:string
 }

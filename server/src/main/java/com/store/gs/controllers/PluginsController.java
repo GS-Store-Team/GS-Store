@@ -29,7 +29,6 @@ public class PluginsController {
 
     @PostMapping("/filter")
     public Page<Plugin> plugins(@RequestBody FilterDTO filter){
-        System.out.println(filter);
         return pluginService.getPage(filter);
     }
 

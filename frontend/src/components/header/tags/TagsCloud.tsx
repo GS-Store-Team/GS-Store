@@ -1,4 +1,4 @@
-import React, {FC, forwardRef, useCallback} from 'react';
+import React, {FC, forwardRef, useCallback, useEffect, useMemo} from 'react';
 import {Tag} from "../../../Types";
 import {Icon} from "../../default/Icon";
 import {FlexRow} from "../../default/Flex.styled";
@@ -14,12 +14,19 @@ interface ITagsCloud{
 
 export const TagsCloud = forwardRef<HTMLDivElement, ITagsCloud>(({selected, addTag, removeTag}, ref) => {
     const [tags, setTags] = useSessionState<Tag[]>("TAGS_SET",[], Api.getTags())
-    const isSelected = useCallback((tag: Tag) => selected.includes(tag), [selected])
+    const idsSet = useMemo(() => {
+        const set = new Set<number>()
+        selected.forEach(t => set.add(t.id))
+        return set
+    },[selected])
+
+    const isSelected = useCallback((tag: Tag) => idsSet.has(tag.id), [idsSet])
+
     return (
         <S.Cloud ref={ref}>
             {tags.map(tag => isSelected(tag) ?
-                <S.Tag color={"rgba(255,221,128,1)"} onClick={() => removeTag(tag)}>#{tag.title}</S.Tag>
-                :<S.Tag color={"rgb(224,224,224)"} onClick={() => addTag(tag)}>#{tag.title}</S.Tag>
+                 <S.Tag key={tag.id} color={"rgb(255,221,128)"} onClick={() => removeTag(tag)}>#{tag.title}</S.Tag>
+                :<S.Tag key={tag.id} color={"rgb(224,224,224)"} onClick={() => addTag(tag)}>#{tag.title}</S.Tag>
             )}
         </S.Cloud>
     );
@@ -30,13 +37,13 @@ interface ISelectedTags{
     onRemove : (tag : Tag) => void
     onRemoveAll: () => void
 }
-
 export const SelectedTags : FC<ISelectedTags>= ({selected, onRemove, onRemoveAll}) => {
+
     return (
-        selected.length >0 ?
+        selected.length > 0 ?
             <FlexRow justifyContent={"space-between"}>
                 <span>{selected.map(tag =>
-                    <S.Tag color={"rgba(255,221,128,0.47)"}>
+                    <S.Tag key={tag.id} color={"rgba(100,100,100,0.5)"}>
                         <FlexRow style={{alignItems: "center"}}>
                             <span style={{fontSize:"16px"}}>#{tag.title}</span>
                             <Icon img={"cross"} onClick={() => onRemove(tag)} style={{width: "18px", height: "18px"}}/>

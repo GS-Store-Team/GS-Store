@@ -60,7 +60,6 @@ public class PluginFilter {
             builder.and(plugin.developer.eq(user));
 
         if(boughtByUser != null)
-            // rewrite
             builder.and(plugin.developer.eq(boughtByUser));
 
         if(category != null && category != -1)

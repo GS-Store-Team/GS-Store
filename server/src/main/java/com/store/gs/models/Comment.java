@@ -20,6 +20,7 @@ import java.sql.Timestamp;
 public class Comment {
     @Id
     private long id;
+    @Column("plugin_id")
     private long pluginId;
     private long reviewer;
     @Min(1)

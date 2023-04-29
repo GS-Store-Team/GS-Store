@@ -48,6 +48,8 @@ const PluginPage = () => {
 
     }, [])
 
+    console.log("HERE ", )
+
     return (
         <S1.Wrapper>
             <Header filter={filter} onChangeFilter={setFilter}/>
@@ -56,7 +58,7 @@ const PluginPage = () => {
                     <FlexRow style={{gap: 0}} justifyContent={"space-between"}>
                         <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
                             <FlexRow style={{marginTop: "100px"}}>
-                                <ImgBlock imageRefs={plugin.images} />
+                                <ImgBlock imageRefs={plugin.images.map(img => img.id)} />
                             </FlexRow>
                             <Btn style={{marginBottom:"20px", width: "150px"}} primary>Purchase</Btn>
                         </Column>

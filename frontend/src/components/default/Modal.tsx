@@ -21,8 +21,8 @@ export const Modal : React.FC<IModal> = ({onAccept, onClose, onDecline, children
                 {children}
                 {onClose && <S.Cross onClick={onClose}><img style={{width: "15px", height: "15px", margin: "auto"}} src={cross} alt={".."}/></S.Cross>}
                 <S.Buttons>
-                    <Btn secondary onClick={onDecline}>DECLINE</Btn>
-                    <Btn primary disabled={disableAccept} onClick={onAccept}>ACCEPT</Btn>
+                    <Btn secondary onClick={onDecline} style={{width: "90px"}}>DECLINE</Btn>
+                    <Btn primary disabled={disableAccept} style={{width: "90px"}} onClick={onAccept}>ACCEPT</Btn>
                 </S.Buttons>
             </S.Modal>
         </S.ModalBackground>

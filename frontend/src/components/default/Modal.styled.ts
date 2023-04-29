@@ -26,11 +26,11 @@ const Modal = styled.div<{ $height?: Property.Height, $width?: Property.Width }>
 `
 
 const Buttons = styled.div`
-  width: min(300px, 100%);
+  width: 100%;
   display: flex;
-  padding: 20px 0 50px 0;
-  justify-content: space-between;
-  margin: auto;
+  padding: 20px 40px 50px 40px;
+  justify-content: flex-end;
+  gap: 20px;
 `
 
 const Title = styled.div`

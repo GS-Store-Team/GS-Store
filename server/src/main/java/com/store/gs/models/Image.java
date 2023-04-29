@@ -7,6 +7,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table("image")
 public class Image {
     @Id
