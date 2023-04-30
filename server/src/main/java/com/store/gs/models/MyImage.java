@@ -8,7 +8,8 @@ import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 @Table("image")
 public class MyImage {
     @Id

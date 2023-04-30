@@ -18,8 +18,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ENDPOINT = "/login";
     private static final String SIGNUP_ENDPOINT = "/signup";
-    private final JwtConfigurer jwtConfigurer;
-
     private static final String[] SWAGGER_ENDPOINTS = {
             "/swagger",
             "/v2/api-docs",
@@ -28,10 +26,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             "/swagger-resources/**",
             "/swagger-ui/**",
     };
+    private final JwtConfigurer jwtConfigurer;
 
     @Bean
     @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
+    public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
@@ -49,10 +48,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                    .antMatchers(LOGIN_ENDPOINT).permitAll()
-                    .antMatchers(SIGNUP_ENDPOINT).permitAll()
-                    .antMatchers(SWAGGER_ENDPOINTS).permitAll()
-                    .anyRequest().authenticated()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(SIGNUP_ENDPOINT).permitAll()
+                .antMatchers(SWAGGER_ENDPOINTS).permitAll()
+                .anyRequest().authenticated()
                 .and()
                 .apply(jwtConfigurer);
     }

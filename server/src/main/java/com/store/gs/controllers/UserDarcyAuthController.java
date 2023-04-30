@@ -1,15 +1,7 @@
 package com.store.gs.controllers;
 
-import com.store.gs.dto.RefreshDTO;
-import com.store.gs.models.User;
-import com.store.gs.models.darcy.UserDarcyAuth;
-import com.store.gs.services.UserDarcyAuthService;
-import com.store.gs.services.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -17,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @AllArgsConstructor
 public class UserDarcyAuthController {
 
-    private final UserDarcyAuthService userDarcyAuthService;
+    /*private final UserDarcyAuthService userDarcyAuthService;
     private final UserService userService;
 
     @PostMapping("/auth")
@@ -43,5 +35,5 @@ public class UserDarcyAuthController {
 
             return ResponseEntity.ok(refreshDTO);
         } else return null;
-    }
+   }*/
 }

@@ -1,6 +1,5 @@
 package com.store.gs.models;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +7,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @NoArgsConstructor
-@Getter @Setter
+@Getter
+@Setter
 
 @Table("category")
 public class Category {

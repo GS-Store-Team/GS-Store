@@ -1,15 +1,8 @@
 package com.store.gs.services;
 
-import com.store.gs.dto.DarcyUserDTO;
-import com.store.gs.dto.RefreshDTO;
-import com.store.gs.models.darcy.UserDarcyAuth;
 import com.store.gs.repositories.UserDarcyAuthRepository;
 import lombok.AllArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Service
@@ -18,7 +11,9 @@ public class UserDarcyAuthService {
     private final WebClient webClient;
     private final UserDarcyAuthRepository userDarcyAuthRepository;
 
-    public DarcyUserDTO getUserById(long id) {
+    //Commented till better times
+
+    /*public DarcyUserDTO getUserById(long id) {
         return webClient.get()
                 .uri(String.join("/Users/", Long.toString(id)))
                 .retrieve()
@@ -59,5 +54,5 @@ public class UserDarcyAuthService {
                 .retrieve()
                 .bodyToMono(RefreshDTO.class)
                 .block();
-    }
+    }*/
 }

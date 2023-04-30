@@ -1,7 +1,5 @@
 package com.store.gs.controllers;
 
-import com.store.gs.converters.PageConverter;
-import com.store.gs.dto.CommentDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
@@ -35,39 +33,39 @@ public class PluginsController {
                                                 @RequestParam(name = "_limit", required = false) String pageSize,
                                                 @RequestParam(name = "_filter", required = false) String filter,
                                                 @RequestParam(name = "_cat", required = false) String category,
-                                                @RequestParam(name = "_tag", required = false) String[] tags){
+                                                @RequestParam(name = "_tag", required = false) String[] tags) {
         long categoryId = -1;
-        if(category != null) categoryId = ControllersUtils.parseIntParam(category);
+        if (category != null) categoryId = ControllersUtils.parseIntParam(category);
 
         Page<Plugin> page = pluginService.getPage(
-                        ControllersUtils.parseIntParam(pageId),
-                        ControllersUtils.parseIntParam(pageSize),
-                        filter,
-                        categoryId,
-                        ControllersUtils.checkStringArray(tags)
-                    );
+                ControllersUtils.parseIntParam(pageId),
+                ControllersUtils.parseIntParam(pageSize),
+                filter,
+                categoryId,
+                ControllersUtils.checkStringArray(tags)
+        );
 
-        return page.getTotalElements() == 0?
+        return page.getTotalElements() == 0 ?
                 ResponseEntity.noContent().build()
-                :ResponseEntity.ok(page);
+                : ResponseEntity.ok(page);
     }
 
     @Operation(summary = "Get plugin by plugin-id")
     @GetMapping("/{id}")
-    public ResponseEntity<Plugin> plugin(@PathVariable("id") long id){
+    public ResponseEntity<Plugin> plugin(@PathVariable("id") long id) {
         Plugin plugin = pluginService.getById(id);
 
-        return plugin == null?
+        return plugin == null ?
                 ResponseEntity.noContent().build()
-                :ResponseEntity.ok(plugin);
+                : ResponseEntity.ok(plugin);
     }
 
     @Operation(summary = "New plugin")
     @PostMapping
     public ResponseEntity<?> addNewPlugin(@RequestBody @Valid Plugin plugin,
-                                                          BindingResult bindingResult){
+                                          BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
+        if (bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
         pluginService.add(plugin);
 
@@ -77,10 +75,10 @@ public class PluginsController {
     @Operation(summary = "Update plugin by plugin-id")
     @PatchMapping("/{id}")
     public ResponseEntity<?> changePlugin(@PathVariable("id") long id,
-                             @RequestBody @Valid Plugin plugin,
-                             BindingResult bindingResult){
+                                          @RequestBody @Valid Plugin plugin,
+                                          BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
+        if (bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
         pluginService.changeById(plugin);
 
@@ -92,8 +90,8 @@ public class PluginsController {
     public ResponseEntity<?> leaveComment(@PathVariable("id") long id,
                                           @RequestBody @Valid Comment comment,
                                           BindingResult bindingResult,
-                                          Authentication authentication){
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
+                                          Authentication authentication) {
+        if (bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
 
         commentService.addComment(id, comment, authentication);
 
@@ -103,28 +101,28 @@ public class PluginsController {
     @Operation(summary = "Delete comment by comment-id")
     @DeleteMapping("/comments/{id}")
     public ResponseEntity<?> deleteComment(@PathVariable("id") long id,
-                                          Authentication authentication){
+                                           Authentication authentication) {
 
         boolean status = commentService.deleteComment(id, authentication);
 
-        return status?
-                ResponseEntity.ok().build():
+        return status ?
+                ResponseEntity.ok().build() :
                 ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
     @Operation(summary = "Get page of comments related for current plugin-id")
     @GetMapping("/{id}/comments")
     public ResponseEntity<?> getComments(@PathVariable("id") long id,
-                                         @RequestParam(name = "_page",  required = false) Integer pageId,
+                                         @RequestParam(name = "_page", required = false) Integer pageId,
                                          @RequestParam(name = "_limit", required = false) Integer pageSize,
-                                         @RequestParam(name = "_type",  required = false) Integer sortingType,
-                                         Authentication authentication){
+                                         @RequestParam(name = "_type", required = false) Integer sortingType,
+                                         Authentication authentication) {
         return ResponseEntity.ok(commentService.getCommentsForPluginId(id, pageId, pageSize, sortingType, authentication));
     }
 
     @Operation(summary = "Delete plugin by id")
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePlugin(@PathVariable("id") long id){
+    public ResponseEntity<?> deletePlugin(@PathVariable("id") long id) {
         pluginService.deleteById(id);
 
         return ResponseEntity.noContent().build();
@@ -132,13 +130,13 @@ public class PluginsController {
 
     @Operation(summary = "Get plugin file by plugin-id")
     @GetMapping("/{id}/file")
-    public ResponseEntity<PluginFile> getPluginFile(@PathVariable("id") long id){
+    public ResponseEntity<PluginFile> getPluginFile(@PathVariable("id") long id) {
 
         PluginFile pluginFile = pluginService.getPluginFile(id);
 
         return pluginFile != null ?
                 ResponseEntity.ok(pluginFile)
-                :ResponseEntity.noContent().build();
+                : ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Upload plugin file with plugin-id")
@@ -146,7 +144,7 @@ public class PluginsController {
     public ResponseEntity<?> uploadPluginFile(@PathVariable("id") long id,
                                               @RequestParam("_file") MultipartFile file) throws Exception {
 
-        if(!file.isEmpty() && !file.getContentType().contains(".zip")) throw new FileUploadException();
+        if (!file.isEmpty() && !file.getContentType().contains(".zip")) throw new FileUploadException();
 
         pluginService.uploadPluginFile(id, file);
 

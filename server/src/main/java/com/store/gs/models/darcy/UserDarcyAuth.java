@@ -12,10 +12,10 @@ public class UserDarcyAuth {
     @Id
     private final long id;
     private final long userId;
-    private final String username;
+    private String username;
     private String password;
     @Email
-    private final String email;
+    private String email;
     private String accessToken;
     private String refreshToken;
 }

@@ -20,12 +20,12 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
 
-    public User getUserByEmail(String email) throws NoSuchElementException{
+    public User getUserByEmail(String email) throws NoSuchElementException {
         return userRepository.getUserByEmail(email).orElseThrow(NoSuchElementException::new);
     }
 
-    public boolean createNewUser(String username, String password){
-        if(userRepository.existsUserByEmail(username)) return false;
+    public boolean createNewUser(String username, String password) {
+        if (userRepository.existsUserByEmail(username)) return false;
 
         User user = new User();
 
@@ -40,13 +40,13 @@ public class UserService {
         return true;
     }
 
-    public UserData getUserDataById(long userId) throws NoSuchElementException{
+    public UserData getUserDataById(long userId) throws NoSuchElementException {
 
         User user = userRepository.getUserById(userId).orElseThrow(NoSuchElementException::new);
 
         UserData userData = user.getUserData();
 
-        if(userData == null) throw new NoSuchElementException();
+        if (userData == null) throw new NoSuchElementException();
 
         userData.setId(user.getId());
         userData.setActive(user.isActive());
@@ -55,12 +55,12 @@ public class UserService {
         return userData;
     }
 
-    public UserData getUserDataFromCurrentUser(Authentication authentication){
+    public UserData getUserDataFromCurrentUser(Authentication authentication) {
         User user = getUserByEmail(authentication.getName());
 
         UserData userData = user.getUserData();
 
-        if(userData == null) throw new NoSuchElementException();
+        if (userData == null) throw new NoSuchElementException();
 
         userData.setId(user.getId());
         userData.setActive(user.isActive());
@@ -68,41 +68,41 @@ public class UserService {
         return userData;
     }
 
-    public void deleteCurrentUser(Authentication authentication) throws UserPrincipalNotFoundException{
+    public void deleteCurrentUser(Authentication authentication) throws UserPrincipalNotFoundException {
         try {
             User user = getUserByEmail(authentication.getName());
             user.setActive(false);
             user.setUserData(UserData.defaultUser(ModelsUtils.generateUserName()));
 
             userRepository.save(user);
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new UserPrincipalNotFoundException("current user not found");
         }
     }
 
-    public UserData updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException{
+    public UserData updateUserdataForCurrentUser(Authentication authentication, UserData userData) throws UserPrincipalNotFoundException {
         try {
             User user = getUserByEmail(authentication.getName());
             user.setUserData(userData);
 
             return userRepository.save(user).getUserData();
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new UserPrincipalNotFoundException("current user not found");
         }
     }
 
-    public boolean updateUserAuthentication(Authentication authentication, ChangePasswordRequestDTO changePasswordRequestDTO) throws UserPrincipalNotFoundException{
+    public boolean updateUserAuthentication(Authentication authentication, ChangePasswordRequestDTO changePasswordRequestDTO) throws UserPrincipalNotFoundException {
         try {
             User user = getUserByEmail(authentication.getName());
 
-            if(!changePasswordRequestDTO.getOldPassword().equals(changePasswordRequestDTO.getNewPassword()) &&
-               encoder.matches(changePasswordRequestDTO.getOldPassword(), user.getPassword()))
+            if (!changePasswordRequestDTO.getOldPassword().equals(changePasswordRequestDTO.getNewPassword()) &&
+                    encoder.matches(changePasswordRequestDTO.getOldPassword(), user.getPassword()))
                 user.setPassword(encoder.encode(changePasswordRequestDTO.getNewPassword()));
             else return false;
 
             userRepository.save(user);
             return true;
-        }catch (NoSuchElementException e){
+        } catch (NoSuchElementException e) {
             throw new UserPrincipalNotFoundException("current user not found");
         }
     }

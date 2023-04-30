@@ -6,6 +6,7 @@ import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
+
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Size;
@@ -29,7 +30,7 @@ public class Comment {
     @Column("last_change")
     private Timestamp lastChange;
 
-    public static Comment fromDTO(CommentDTO commentDTO){
+    public static Comment fromDTO(CommentDTO commentDTO) {
         Comment comment = new Comment();
 
         comment.setMark(commentDTO.getMark());

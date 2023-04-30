@@ -1,8 +1,10 @@
 package com.store.gs.models.supportclasses;
 
+import com.store.gs.models.darcy.UserDarcy;
 import lombok.Data;
 import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 import javax.validation.constraints.NotBlank;
@@ -31,7 +33,10 @@ public class UserData {
     @Transient
     private Avatar avatar;
 
-    public static UserData defaultUser(String nickName){
+    @MappedCollection(idColumn = "id")
+    private UserDarcy userDarcy;
+
+    public static UserData defaultUser(String nickName) {
         UserData userData = new UserData();
         userData.nickName = nickName;
         userData.email = null;

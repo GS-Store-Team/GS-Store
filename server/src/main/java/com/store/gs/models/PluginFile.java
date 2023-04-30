@@ -7,7 +7,8 @@ import nonapi.io.github.classgraph.json.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
 @NoArgsConstructor
-@Setter @Getter
+@Setter
+@Getter
 @Table("plugin_file")
 public class PluginFile {
     @Id

@@ -11,6 +11,7 @@ import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
 import java.util.List;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -62,7 +63,7 @@ public class ImageController {
     @Operation(summary = "Set new preview image for plugin. Example: \"/image/{image-id}?_plugin_id={plugin-id}\"")
     @PatchMapping("/{id}")
     public ResponseEntity<?> setPreviewImage(@RequestParam(name = "_plugin_id") String pluginId,
-                                             @PathVariable("id") String imageId){
+                                             @PathVariable("id") String imageId) {
         long imgId = ControllersUtils.parseIntParam(imageId);
         long plgId = ControllersUtils.parseIntParam(pluginId);
 
@@ -74,13 +75,13 @@ public class ImageController {
 
     @Operation(summary = "Upload new image for plugin. Example: \"/image?_plugin_id={plugin-id}&_file={binary-file}\"")
     @PostMapping
-    public ResponseEntity<?> newImageForPluginId(@RequestParam(name ="_plugin_id") String pluginId,
+    public ResponseEntity<?> newImageForPluginId(@RequestParam(name = "_plugin_id") String pluginId,
                                                  @RequestParam("_file") MultipartFile file) throws Exception {
 
-        if(!file.isEmpty() && !file.getContentType().contains("image")) throw new FileUploadException();
+        if (!file.isEmpty() && !file.getContentType().contains("image")) throw new FileUploadException();
 
         long id = ControllersUtils.parseIntParam(pluginId);
-        if(pluginRepository.existsById(id)){
+        if (pluginRepository.existsById(id)) {
             MyImage myImage = new MyImage();
             myImage.setPluginId(id);
             myImage.setData(file.getBytes());

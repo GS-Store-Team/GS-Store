@@ -21,6 +21,7 @@ import java.io.IOException;
 public class JwtTokenFilter extends GenericFilterBean {
     private final JwtTokenProvider jwtTokenProvider;
     private final HandlerExceptionResolver resolver;
+
     @Autowired
     public JwtTokenFilter(JwtTokenProvider jwtTokenProvider, @Qualifier("handlerExceptionResolver") HandlerExceptionResolver resolver) {
         this.jwtTokenProvider = jwtTokenProvider;
@@ -33,11 +34,11 @@ public class JwtTokenFilter extends GenericFilterBean {
 
         try {
             if (token != null && jwtTokenProvider.validateToken(token)) {
-                    Authentication authentication = jwtTokenProvider.getAuthenticationByToken(token);
-                    if (authentication != null)
-                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                Authentication authentication = jwtTokenProvider.getAuthenticationByToken(token);
+                if (authentication != null)
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-        }catch (JwtException e){
+        } catch (JwtException e) {
             resolver.resolveException((HttpServletRequest) servletRequest, (HttpServletResponse) servletResponse, null, e);
         }
 

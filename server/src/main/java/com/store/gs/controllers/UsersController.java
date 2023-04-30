@@ -19,6 +19,7 @@ import java.nio.file.attribute.UserPrincipalNotFoundException;
 @RequestMapping("/users")
 public class UsersController {
     private final UserService userService;
+
     @Autowired
     public UsersController(UserService userService) {
         this.userService = userService;

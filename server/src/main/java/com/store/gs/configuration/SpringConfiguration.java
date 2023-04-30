@@ -14,7 +14,7 @@ import java.util.Arrays;
 @EnableWebMvc
 public class SpringConfiguration implements WebMvcConfigurer {
     @Bean
-    public FilterRegistrationBean hiddenHttpMethodFilter(){
+    public FilterRegistrationBean hiddenHttpMethodFilter() {
         FilterRegistrationBean filterRegistrationBean = new FilterRegistrationBean(new HiddenHttpMethodFilter());
         filterRegistrationBean.setUrlPatterns(Arrays.asList("/*"));
         return filterRegistrationBean;

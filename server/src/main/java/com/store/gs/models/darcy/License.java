@@ -1,9 +1,10 @@
 package com.store.gs.models.darcy;
 
+import com.store.gs.models.Plugin;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.relational.core.mapping.Column;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -17,7 +18,8 @@ public class License {
     @Id
     private long id;
 
-    private long ownerId;
+    @MappedCollection(idColumn = "owner_id")
+    private UserDarcy owner;
 
     @Size(max = 64)
     private String title;
@@ -39,8 +41,10 @@ public class License {
 
     private String document;
 
-    @Column("module_id")
-    private long pluginId;
+    @MappedCollection(idColumn = "plugin_id")
+    private Plugin plugin;
 
     private String pluginName;
+
+    private String activationKey;
 }
