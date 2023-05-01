@@ -10,7 +10,7 @@ import {Tooltip} from "../default/Tooltip";
 import {useOutsideClick} from "../../hooks/Hooks";
 import {useNavigate} from "react-router-dom";
 import {useSessionState} from "../../hooks/UseSessionState";
-import {defaultFilter} from "../../pages/main/Main";
+import {defaultFilter} from "../../pages/main/MainPage";
 import Api from "../../API/Api";
 
 interface IHeader{
@@ -19,9 +19,10 @@ interface IHeader{
     enableSearch?:boolean
     disableProfile?: boolean
     onLogoClick?: () => void
+    resetFilter?: () => void
 }
 
-export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch, filter, onLogoClick}) => {
+export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch, filter, onLogoClick, resetFilter}) => {
     const navigate = useNavigate();
     const [tagsCloud, setTagsCloud] = useState<boolean>(false);
     const ref = React.createRef<HTMLDivElement>()
@@ -61,6 +62,9 @@ export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch
                                 <S.Shovel>
                                     <Icon img={"shovel"} onClick={applySearch}/>
                                 </S.Shovel>
+                                <span style={{margin: "auto 5px"}}>
+                                    {resetFilter && <Icon img={"reset-filter"} onClick={resetFilter} tooltip={{label:"Set filter to default"}}/>}
+                                </span>
                             </S.SearchArea>
                             <S.Menu>
                                 <Tooltip label={"Use tags to find plugins more accurate"} placement={"top"}>
@@ -81,12 +85,12 @@ export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch
 };
 
 export const useHeader = (key: string, defaultFilter: Filter) => {
-    const [filter, setFilter] = useSessionState<Filter>("key", defaultFilter);
+    const [filter, setFilter] = useSessionState<Filter>(key, defaultFilter);
     const [plugins, setPlugins] = useState<Plugin[]>([]);
     const [pageCount, setPageCount] = useState<number>(1);
 
-    const resetFilter = useCallback(() => setFilter(defaultFilter), [])
-    const handleChangePage = useCallback((page : number) => setFilter(prevState => ({...prevState, pageId: page})), [])
+    const resetFilter = useCallback(() => setFilter(defaultFilter), [key, filter])
+    const handleChangePage = useCallback((page : number) => setFilter(prevState => ({...prevState, pageId: page})), [key, filter])
     const [loading, setLoading] = useState(false);
     const [noContent, setNoContent] = useState(false);
 

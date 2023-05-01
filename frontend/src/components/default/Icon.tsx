@@ -18,11 +18,12 @@ import star from "../../UI/img/star.png";
 import trashBin from "../../UI/img/trash-bin.png";
 import fullScreen from "../../UI/img/full-screen.png"
 import arrow from "../../UI/img/arrow.png"
+import resetFilter from "../../UI/img/reset-filter.png"
 
 export type IconType =
     "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" |
     "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" |
-    "trash-bin" | "full-screen" | "arrow"
+    "trash-bin" | "full-screen" | "arrow" | "reset-filter"
 
 function getPng(title : IconType){
     switch (title){
@@ -42,6 +43,7 @@ function getPng(title : IconType){
         case "trash-bin": return trashBin
         case "full-screen": return fullScreen
         case "arrow": return arrow
+        case "reset-filter": return resetFilter
     }
 }
 

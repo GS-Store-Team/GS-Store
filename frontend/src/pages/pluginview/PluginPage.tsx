@@ -12,7 +12,7 @@ import {Styled as S1} from "./../Pages.styled"
 import {Container} from "react-bootstrap";
 import {Filter, Plugin} from "../../Types";
 import {Header} from "../../components/header/Header";
-import {defaultFilter} from "../main/Main";
+import {defaultFilter} from "../main/MainPage";
 
 const PluginPage = () => {
 
@@ -48,14 +48,12 @@ const PluginPage = () => {
 
     }, [])
 
-    console.log("HERE ", )
-
     return (
         <S1.Wrapper>
             <Header filter={filter} onChangeFilter={setFilter}/>
             <S1.Main>
                 <Container>
-                    <FlexRow style={{gap: 0}} justifyContent={"space-between"}>
+                    <FlexRow justifyContent={"space-between"}>
                         <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
                             <FlexRow style={{marginTop: "100px"}}>
                                 <ImgBlock imageRefs={plugin.images.map(img => img.id)} />
@@ -66,7 +64,7 @@ const PluginPage = () => {
                         <Column style={{width: "50%", padding: "100px 20px 50px 20px"}}>
                             <S.Header>
                                 {plugin.name}
-                                <FlexRow style={{gap: 0}}>
+                                <FlexRow>
                                     <S.Rate><span style={{fontSize: "22px"}}>{plugin.mark}</span>/5</S.Rate>
                                     <S.Star><Icon img={"star"} nonClickable style={{opacity:1}}/></S.Star>
                                 </FlexRow>

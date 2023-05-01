@@ -13,6 +13,7 @@ export const FlexRow = styled.div<{ gap?: Property.Gap, justifyContent?: Propert
     justify-content: ${({ justifyContent }) => justifyContent };
     gap: ${({ gap }) => gap};
     margin: ${({ margin }) => margin};
+    
 `;
 
 export const Column = styled.div`
@@ -22,6 +23,7 @@ export const Column = styled.div`
     overflow: auto;
     min-width: 300px;
     max-height: calc(100vh - 170px);
+    height: calc(100vh - 170px);
     ::-webkit-scrollbar {
     display: none;
     }

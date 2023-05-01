@@ -6,7 +6,7 @@ import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {Styled as S} from "../Pages.styled"
 import {Header} from "../../components/header/Header";
-import {defaultFilter} from "../main/Main";
+import {defaultFilter} from "../main/MainPage";
 
 export const SignUp = () => {
     const [filter, setFilter] = useState(defaultFilter);
