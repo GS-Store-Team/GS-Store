@@ -17,12 +17,22 @@ export const ProfileTab = () => {
         navigate('/user/' + user.id);
     },[navigate])
 
+    const registrationOnLicenseServer = useCallback( () =>{
+        navigate('/user/license');
+    },[navigate])
+
     return (
-        <S.Tab>
+        <S.Tab style={{width: "182px"}}>
             <Icon img={"man"} style={{margin: "0 5px 0 0"}} tooltip={{label:"My profile", placement:"bottom"}} onClick={myProfile}></Icon>
             <Tooltip label={user.nickName} disable={user.nickName.length<9}>
                 <S.TabText style={{maxWidth: "80px"}} onClick={myProfile}>{user.nickName}</S.TabText>
             </Tooltip>
+            <span style={{padding: "0 2px 0 0"}}>
+            {user.isDarciUser ?
+                <Icon img={"auth"} nonClickable tooltip={{label: "Registration on the license server passed"}}></Icon>
+                :<Icon img={"not-auth"} onClick={registrationOnLicenseServer} tooltip={{label: "Register on the license server"}}></Icon>
+            }
+            </span>
             <Icon img={"line"} style={{width:"1px"}} nonClickable></Icon>
             <Icon img={"exit"} style={{margin: "0 0 0 5px"}} tooltip={{label:"Logout", placement:"bottom"}} onClick={logout}></Icon>
         </S.Tab>

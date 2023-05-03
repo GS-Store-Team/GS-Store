@@ -1,5 +1,6 @@
 package com.store.gs.models;
 
+import com.store.gs.models.supportclasses.BoughtPluginRef;
 import com.store.gs.models.supportclasses.UserdataImageRef;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,4 +42,7 @@ public class UserData {
 
     @MappedCollection(idColumn = "userdata_id")
     private Set<UserdataImageRef> images = new HashSet<>();
+
+    @MappedCollection(idColumn = "userdata_id")
+    private Set<BoughtPluginRef> plugins = new HashSet<>();
 }

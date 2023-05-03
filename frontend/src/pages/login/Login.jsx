@@ -7,7 +7,7 @@ import * as Utils from "../../utils/Utils";
 import {AuthContext} from "../../App";
 import {Styled as S} from "../Pages.styled"
 import {Header} from "../../components/header/Header";
-import {defaultFilter} from "../main/MainPage";
+import {defaultFilter} from "../../DefaultObjects";
 
 export const Login = () => {
     const [filter, setFilter] = useState(defaultFilter);

@@ -5,15 +5,16 @@ export type UserData = {
     description: string,
     images: number[],
     userId: number,
+    isDarciUser: boolean,
 }
 
 export type Plugin = {
-    categories: number[]
+    categories: {categoryId: number, pluginId:number }[]
     checked: boolean
     deleted: boolean
     developer: number
     fullDescription: string
-    hashtags: number[]
+    tags: {tagId: number, pluginId:number }[]
     images: Image[]
     id: number
     mark: number

@@ -34,8 +34,8 @@ export const TagsCloud = forwardRef<HTMLDivElement, ITagsCloud>(({selected, addT
 
 interface ISelectedTags{
     selected: Tag[]
-    onRemove : (tag : Tag) => void
-    onRemoveAll: () => void
+    onRemove? : (tag : Tag) => void
+    onRemoveAll?: () => void
 }
 export const SelectedTags : FC<ISelectedTags>= ({selected, onRemove, onRemoveAll}) => {
 
@@ -46,11 +46,11 @@ export const SelectedTags : FC<ISelectedTags>= ({selected, onRemove, onRemoveAll
                     <S.Tag key={tag.id} color={"rgba(100,100,100,0.5)"}>
                         <FlexRow style={{alignItems: "center"}}>
                             <span style={{fontSize:"16px"}}>#{tag.title}</span>
-                            <Icon img={"cross"} onClick={() => onRemove(tag)} style={{width: "18px", height: "18px"}}/>
+                            {onRemove && <Icon img={"cross"} onClick={() => onRemove(tag)} style={{width: "18px", height: "18px"}}/>}
                         </FlexRow>
                     </S.Tag>
                 )}</span>
-                <Icon img={"trash-bin"} onClick={onRemoveAll} tooltip={{label: "Remove all tags from filter", placement:"top"}}/>
+                {onRemoveAll && <Icon img={"trash-bin"} onClick={onRemoveAll} tooltip={{label: "Remove all tags from filter", placement:"top"}}/>}
             </FlexRow>
             :<></>
     );

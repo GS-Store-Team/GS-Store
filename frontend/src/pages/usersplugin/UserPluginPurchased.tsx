@@ -1,8 +1,6 @@
-import React, {useCallback, useContext, useEffect, useState} from 'react';
-import Api from "../../API/Api";
+import React, {useCallback, useState} from 'react';
 import {MyFooter} from "../../components/footer/MyFooter";
 import {useNavigate} from "react-router-dom";
-import {UserData} from "../../Types";
 import {Column, FlexRow} from "../../components/default/Flex.styled";
 import {Styled as S} from "./UserPluginPage.styled";
 import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
@@ -10,12 +8,10 @@ import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
 import PluginList from "../../components/pluginList/PluginList";
 import {Header, useHeader} from "../../components/header/Header";
-import {defaultFilter} from "../main/MainPage";
-import {Filter} from "../../Types";
-import {AuthContext} from "../../App";
 import {Icon} from "../../components/default/Icon";
 import {UserMenu} from "../../components/user/UserProfileData";
 import {filtersEquals} from "../../utils/Utils";
+import {defaultFilter} from "../../DefaultObjects";
 
 const defaultUserData = {nickName: '', email: '', phoneNumber: '', description: '', images: [], userId: 0}
 

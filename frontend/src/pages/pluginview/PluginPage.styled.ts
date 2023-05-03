@@ -36,6 +36,23 @@ const Items = styled.div`
   gap: 10px;
 `
 
+const Price = styled.div`
+  font-size: 30px;
+`
+
+const Sign = styled.div`
+  font-size: 20px;
+`
+
+const Category = styled.div`
+  font-size: 18px;
+  background-color: #b0e3a9;
+  padding: 5px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  white-space: nowrap;
+`
+
 export const Styled = {
     Header,
     Heading,
@@ -43,4 +60,7 @@ export const Styled = {
     Rate,
     Star,
     Items,
+    Price,
+    Sign,
+    Category,
 }

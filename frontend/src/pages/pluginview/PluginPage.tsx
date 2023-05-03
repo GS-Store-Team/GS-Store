@@ -1,38 +1,27 @@
-import React, {useCallback, useEffect, useState} from 'react';
-import {useParams} from "react-router-dom";
+import React, {useCallback, useContext, useEffect, useMemo, useState} from 'react';
+import {useNavigate, useParams} from "react-router-dom";
 import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ReviewArea} from "../../components/review/ReviewArea";
-import {Column, FlexRow} from "../../components/default/Flex.styled";
+import {Column, FlexColumn, FlexRow} from "../../components/default/Flex.styled";
 import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
 import {Styled as S} from "./PluginPage.styled"
 import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
 import {Styled as S1} from "./../Pages.styled"
 import {Container} from "react-bootstrap";
-import {Filter, Plugin} from "../../Types";
+import {Category, Filter, Plugin, Tag} from "../../Types";
 import {Header} from "../../components/header/Header";
-import {defaultFilter} from "../main/MainPage";
+import {defaultFilter, defaultPlugin} from "../../DefaultObjects";
+import {SelectedTags} from "../../components/header/tags/TagsCloud";
+import {Tooltip} from "../../components/default/Tooltip";
+import {AuthContext} from "../../App";
 
 const PluginPage = () => {
-
+    const {user} = useContext(AuthContext)
+    const navigate = useNavigate()
     const [filter, setFilter] = useState<Filter>(defaultFilter);
-
-    const [plugin, setPlugin] = useState<Plugin>({
-        id: 0,
-        categories: [],
-        checked: false,
-        developer: 0,
-        hashtags: [],
-        images: [],
-        name: 'none',
-        shortDescription: 'none',
-        fullDescription: '',
-        deleted: false,
-        mark: 5,
-        price: 0
-    });
-
+    const [plugin, setPlugin] = useState<Plugin>(defaultPlugin);
     const params = useParams();
 
     useEffect(() =>{
@@ -48,6 +37,26 @@ const PluginPage = () => {
 
     }, [])
 
+    const categories : Category[] = useMemo(() => {
+        const ids = plugin.categories.map(c => c.categoryId)
+        if(ids.length === 0) return []
+        const categories = sessionStorage.getItem("CATEGORIES")
+        if(!categories) return []
+        const cats: Category[] = JSON.parse(categories)
+        return cats.filter(c => ids.includes(c.id))
+    }, [plugin])
+
+    const tags : Tag[] = useMemo(() => {
+        const ids = plugin.tags.map(t => t.tagId)
+        if(ids.length === 0) return []
+        const tags = sessionStorage.getItem("TAGS_SET")
+        if(!tags) return []
+        const ts: Tag[] = JSON.parse(tags)
+        return ts.filter(t => ids.includes(t.id))
+    }, [plugin])
+
+    const handleLicenseRegistrationClick = useCallback(() => navigate("/user/license"), [])
+
     return (
         <S1.Wrapper>
             <Header filter={filter} onChangeFilter={setFilter}/>
@@ -55,10 +64,30 @@ const PluginPage = () => {
                 <Container>
                     <FlexRow justifyContent={"space-between"}>
                         <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
-                            <FlexRow style={{marginTop: "100px"}}>
+                            <FlexColumn style={{marginTop: "100px"}} gap={"40px"}>
                                 <ImgBlock imageRefs={plugin.images.map(img => img.id)} />
-                            </FlexRow>
-                            <Btn style={{marginBottom:"20px", width: "150px"}} primary>Purchase</Btn>
+                                {tags.length > 0 &&
+                                    <div>
+                                        <div style={{marginBottom: "5px"}}>Appropriate tags</div>
+                                        <SelectedTags selected={tags} />
+                                    </div>
+                                }
+                            </FlexColumn>
+                            <FlexColumn gap={"10px"} style={{marginBottom:"20px"}}>
+                                <FlexRow gap={"10px"}>
+                                    <>
+                                        <S.Price>{plugin.price}</S.Price>
+                                        <S.Sign>.00 $</S.Sign>
+                                    </>
+                                    {user.isDarciUser && <Btn primary>Purchase</Btn>}
+                                </FlexRow>
+                                {!user.isDarciUser &&
+                                    <>
+                                        <span>You need to register in the license server to be able to buy plugins</span>
+                                        <Btn style={{width:"150px", backgroundColor:"rgb(255,179,58)"}} onClick={handleLicenseRegistrationClick}>Sing up to Darci</Btn>
+                                    </>
+                                }
+                            </FlexColumn>
                         </Column>
 
                         <Column style={{width: "50%", padding: "100px 20px 50px 20px"}}>
@@ -80,8 +109,15 @@ const PluginPage = () => {
 
                             <S.Heading>Description</S.Heading>
                             <S.Text>{plugin.fullDescription}</S.Text>
-                        </Column>
 
+                            { categories.length > 0 &&
+                                 <FlexRow gap={"5px"} style={{padding: "10px"}}>{categories.map(c=>
+                                    <Tooltip label={"Plugin's category"}>
+                                        <S.Category key={c.id}>{c.title}</S.Category>
+                                    </Tooltip>)}
+                                 </FlexRow>
+                            }
+                        </Column>
                         <Column style={{width: "400px"}}>
                             { plugin.id && <ReviewArea pluginId={plugin.id}/> }
                         </Column>

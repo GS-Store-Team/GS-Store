@@ -5,11 +5,10 @@ import Loader from "../../components/loading/Loader";
 import {Header, useHeader} from "../../components/header/Header";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {Styled as S} from "../Pages.styled";
-import {Filter} from "../../Types";
 import {Container} from "react-bootstrap";
 import {filtersEquals} from "../../utils/Utils";
+import {defaultFilter} from "../../DefaultObjects";
 
-export const defaultFilter : Filter = {value:'', category:{title:'', id: -1}, selectedTags:[], pageId: 1, pageSize: 18}
 const MainPage = () => {
 
     const {
