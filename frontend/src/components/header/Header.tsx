@@ -10,7 +10,6 @@ import {Tooltip} from "../default/Tooltip";
 import {useOutsideClick} from "../../hooks/Hooks";
 import {useNavigate} from "react-router-dom";
 import {useSessionState} from "../../hooks/UseSessionState";
-import {defaultFilter} from "../../pages/main/MainPage";
 import Api from "../../API/Api";
 
 interface IHeader{
@@ -66,7 +65,7 @@ export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch
                                     {resetFilter && <Icon img={"reset-filter"} onClick={resetFilter} tooltip={{label:"Set filter to default"}}/>}
                                 </span>
                             </S.SearchArea>
-                            <S.Menu>
+                            <S.Menu style={{minWidth: "80px"}}>
                                 <Tooltip label={"Use tags to find plugins more accurate"} placement={"top"}>
                                     <span style={{cursor: "pointer"}} onClick={() => setTagsCloud(true)}>#tags</span>
                                 </Tooltip>

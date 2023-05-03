@@ -5,13 +5,12 @@ import {ChangeUserDataModal} from "../../components/modalWindow/ChangeUserDataMo
 import {FlexRow} from "../../components/default/Flex.styled";
 import {UserMenu, UserProfileData} from "../../components/user/UserProfileData";
 import {AuthContext} from "../../App";
-import {Styled as S} from "./UserProfile.styled";
 import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
 import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
 import {Header} from "../../components/header/Header";
 import {Filter} from "../../Types";
-import {defaultFilter} from "../main/MainPage";
+import {defaultFilter} from "../../DefaultObjects";
 
 export const UserProfilePage = () => {
     const [filter, setFilter] = useState<Filter>(defaultFilter);

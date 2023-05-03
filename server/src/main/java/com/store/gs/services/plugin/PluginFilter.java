@@ -3,14 +3,17 @@ package com.store.gs.services.plugin;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Predicate;
 import com.store.gs.models.Category;
+import com.store.gs.models.QUserData;
 import com.store.gs.models.Tag;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 import java.util.List;
 
 import static com.store.gs.models.QPlugin.plugin;
+import static com.store.gs.models.QUserData.userData;
 import static com.store.gs.models.supportclasses.QCategoryRef.categoryRef;
 import static com.store.gs.models.supportclasses.QTagRef.tagRef;
+import static com.store.gs.models.supportclasses.QBoughtPluginRef.boughtPluginRef;
 
 public class PluginFilter {
     private String value;
@@ -54,13 +57,13 @@ public class PluginFilter {
         BooleanBuilder builder = new BooleanBuilder();
 
         if(value != null && !value.equals(""))
-            builder.and(plugin.name.contains(value));
+            builder.and(plugin.name.toUpperCase().contains(value.toUpperCase()));
 
         if(user != null)
             builder.and(plugin.developer.eq(user));
 
         if(boughtByUser != null)
-            builder.and(plugin.developer.eq(boughtByUser));
+            builder.and(boughtPluginRef.userdata_id.eq(userId));
 
         if(category != null && category != -1)
             builder.and(categoryRef.categoryId.eq(category));

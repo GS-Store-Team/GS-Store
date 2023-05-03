@@ -3,6 +3,7 @@ package com.store.gs.services.plugin;
 import com.store.gs.dto.FilterDTO;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
+import com.store.gs.models.supportclasses.QBoughtPluginRef;
 import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.store.gs.models.QPlugin.plugin;
+import static com.store.gs.models.supportclasses.QBoughtPluginRef.boughtPluginRef;
 import static com.store.gs.models.supportclasses.QCategoryRef.categoryRef;
 import static com.store.gs.models.supportclasses.QPluginImageRef.pluginImageRef;
 import static com.store.gs.models.supportclasses.QTagRef.tagRef;
@@ -51,6 +53,7 @@ public class PluginService {
                 .leftJoin(categoryRef).on(plugin.id.eq(categoryRef.pluginId))
                 .leftJoin(tagRef).on(plugin.id.eq(tagRef.pluginId))
                 .leftJoin(pluginImageRef).on(plugin.id.eq(pluginImageRef.pluginId))
+                .leftJoin(boughtPluginRef).on(plugin.id.eq(boughtPluginRef.pluginId))
                 .where(pluginFilter.buildPredicate())
                 .fetch()
         );
