@@ -29,7 +29,6 @@ const Star = styled.div`
 `
 
 const Items = styled.div`
-  width: 100%;
   display: flex;
   justify-content: right;
   align-items: center;
@@ -53,6 +52,16 @@ const Category = styled.div`
   white-space: nowrap;
 `
 
+const Status = styled.div`
+  cursor: pointer;
+  border: 1px solid rgb(255,179,58);
+  border-radius: 3px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 5px 10px;
+  display: flex;
+`
+
 export const Styled = {
     Header,
     Heading,
@@ -63,4 +72,5 @@ export const Styled = {
     Price,
     Sign,
     Category,
+    Status,
 }

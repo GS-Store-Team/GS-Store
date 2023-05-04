@@ -21,12 +21,15 @@ import arrow from "../../UI/img/arrow.png"
 import resetFilter from "../../UI/img/reset-filter.png"
 import notAuth from "../../UI/img/no-auth.png"
 import auth from "../../UI/img/auth.png"
+import blocked from "../../UI/img/blocked.png"
+import moderation from "../../UI/img/moderation.png"
+import ok from "../../UI/img/ok.png"
 
 export type IconType =
     "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" |
     "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" |
     "trash-bin" | "full-screen" | "arrow" | "reset-filter" | "not-auth" |
-    "auth"
+    "auth" | "blocked" | "moderation" | "ok"
 
 
 function getPng(title : IconType){
@@ -50,6 +53,9 @@ function getPng(title : IconType){
         case "reset-filter": return resetFilter
         case "auth": return auth
         case "not-auth": return notAuth
+        case "blocked": return blocked
+        case "moderation": return moderation
+        case "ok": return ok
     }
 }
 
@@ -66,12 +72,13 @@ interface IIcon{
     style?: CSSProperties
     onClick?: () => void
     nonClickable?: boolean
+    size?: number
 }
 
-export const Icon : FC<IIcon> = ({img, tooltip, style, onClick, nonClickable=false}) => {
+export const Icon : FC<IIcon> = ({img, tooltip, style, onClick, nonClickable=false, size = 22}) => {
     const icon = useMemo(() => {
         return(
-            <S.Icon style={{width: "22px", height: "22px", cursor: `${!nonClickable ? "pointer" : "auto"}`, ...style}} onClick={onClick}>
+            <S.Icon style={{width: `${size}px`, height: `${size}px`, cursor: `${!nonClickable ? "pointer" : "auto"}`, ...style}} onClick={onClick}>
                 <img style={{width: "100%", height: "100%"}} draggable={false} src={getPng(img)} alt={":("}/>
             </S.Icon>
         )

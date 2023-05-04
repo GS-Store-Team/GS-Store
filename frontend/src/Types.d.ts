@@ -21,6 +21,7 @@ export type Plugin = {
     name: string
     price: number
     shortDescription: string
+    status: string
 }
 
 export type Comment = {

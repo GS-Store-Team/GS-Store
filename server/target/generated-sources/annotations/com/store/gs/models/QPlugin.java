@@ -40,6 +40,8 @@ public class QPlugin extends com.querydsl.sql.RelationalPathBase<Plugin> {
 
     public final BooleanPath isDeleted = createBoolean("isDeleted");
 
+    public final EnumPath<com.store.gs.enums.PluginStatus> status = createEnum("status", com.store.gs.enums.PluginStatus.class);
+
     public final BooleanPath checked = createBoolean("checked");
 
     public QPlugin(String variable) {
@@ -76,7 +78,8 @@ public class QPlugin extends com.querydsl.sql.RelationalPathBase<Plugin> {
         addMetadata(mark, ColumnMetadata.named("Mark").withIndex(5));
         addMetadata(price, ColumnMetadata.named("Price").withIndex(6));
         addMetadata(isDeleted, ColumnMetadata.named("isdeleted").withIndex(7));
-        addMetadata(checked, ColumnMetadata.named("Checked").withIndex(8));
+        addMetadata(status, ColumnMetadata.named("status").withIndex(8));
+        addMetadata(checked, ColumnMetadata.named("Checked").withIndex(9));
     }
 
 }

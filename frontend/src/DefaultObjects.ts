@@ -12,7 +12,8 @@ export const defaultPlugin = {
     fullDescription: '',
     deleted: false,
     mark: 5,
-    price: 0
+    price: 0,
+    status: "OK"
 }
 
 export const defaultFilter : Filter = {value:'', category:{title:'', id: -1}, selectedTags:[], pageId: 1, pageSize: 18}

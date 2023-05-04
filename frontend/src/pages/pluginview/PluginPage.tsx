@@ -24,6 +24,8 @@ const PluginPage = () => {
     const [plugin, setPlugin] = useState<Plugin>(defaultPlugin);
     const params = useParams();
 
+    const myPlugin = user.userId === plugin.developer
+
     useEffect(() =>{
         Api.getPluginById(params.id).then((response) => {
                 if (response.status === 200) {
@@ -32,6 +34,15 @@ const PluginPage = () => {
             }
         )
     },[]);
+
+    const statusIcon = useMemo(() => {
+        switch (plugin.status){
+            case "OK": return <Icon img={"ok"} tooltip={{label: "Visible to everyone", placement: "top"}}/>
+            case "MODERATION": return <Icon img={"moderation"} tooltip={{label: "Awaiting moderation stage", placement: "top"}}/>
+            case "BLOCKED": return <Icon img={"blocked"} tooltip={{label: "Problems have been identified. Click to view more", placement: "top"}}/>
+            default: return <></>
+        }
+    }, [plugin.status])
 
     const handleViewOwner = useCallback(() => {
 
@@ -73,6 +84,11 @@ const PluginPage = () => {
                                     </div>
                                 }
                             </FlexColumn>
+                            <span style={{width:"fit-content"}}>
+                            <Tooltip label={"Status determines plugin's scope"}>
+                                <S.Status>Status: {plugin.status} <span style={{margin: "1px 0 0 4px"}}>{statusIcon}</span></S.Status>
+                            </Tooltip>
+                            </span>
                             <FlexColumn gap={"10px"} style={{marginBottom:"20px"}}>
                                 <FlexRow gap={"10px"}>
                                     <>
@@ -100,8 +116,16 @@ const PluginPage = () => {
                             </S.Header>
 
                             <S.Items>
-                                <Icon img={"man"} style={{width: "20px", height: "20px"}} tooltip={{label:"View owner", placement:"top"}} onClick={handleViewOwner}/>
-                                <Icon img={"bug"} style={{width: "20px", height: "20px"}} tooltip={{label:"Leave bug report if some issues found", placement:"top"}}/>
+                                { myPlugin ?
+                                    <>
+                                        <Icon img={"settings"} size={24} tooltip={{label:"Configure plugin", placement:"top"}} onClick={handleViewOwner}/>
+                                        <Icon img={"full-screen"} size={20} tooltip={{label:"View all bug reports", placement:"top"}} onClick={handleViewOwner}/>
+                                    </>
+                                    :<>
+                                        <Icon img={"man"} size={20} tooltip={{label:"View owner", placement:"top"}} onClick={handleViewOwner}/>
+                                    </>
+                                }
+                                <Icon img={"bug"} size={20} tooltip={{label:"Leave bug report if some issues found", placement:"top"}}/>
                             </S.Items>
 
                             <S.Heading>Introduction</S.Heading>
