@@ -44,9 +44,7 @@ const PluginPage = () => {
         }
     }, [plugin.status])
 
-    const handleViewOwner = useCallback(() => {
-
-    }, [])
+    const handleViewOwner = useCallback(() => {}, [])
 
     const categories : Category[] = useMemo(() => {
         const ids = plugin.categories.map(c => c.categoryId)
@@ -86,11 +84,14 @@ const PluginPage = () => {
                                     </div>
                                 }
                             </FlexColumn>
-                            <span style={{width:"fit-content"}}>
-                            <Tooltip label={"Status determines plugin's scope"}>
-                                <S.Status>Status: {plugin.status} <span style={{margin: "1px 0 0 4px"}}>{statusIcon}</span></S.Status>
-                            </Tooltip>
-                            </span>
+
+                            {myPlugin &&
+                                <span style={{width:"fit-content"}}>
+                                <Tooltip label={"Status determines plugin's scope"}>
+                                    <S.Status>Status: {plugin.status} <span style={{margin: "1px 0 0 4px"}}>{statusIcon}</span></S.Status>
+                                </Tooltip>
+                                </span>
+                            }
                             <FlexColumn gap={"10px"} style={{marginBottom:"20px"}}>
                                 <FlexRow gap={"10px"}>
                                     <>
