@@ -12,6 +12,8 @@ interface IImgBlock{
 
 export const ImgBlock : FC<IImgBlock> = ({imageRefs}) => {
 
+    console.log(imageRefs)
+
     const [images, setImages] = useState<JSX.Element[]>([])
 
     const ref = useRef(null)

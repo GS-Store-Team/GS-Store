@@ -68,6 +68,8 @@ const PluginPage = () => {
 
     const handleLicenseRegistrationClick = useCallback(() => navigate("/user/license"), [])
 
+    console.log("plugin ", plugin)
+
     return (
         <S1.Wrapper>
             <Header filter={filter} onChangeFilter={setFilter}/>
@@ -76,7 +78,7 @@ const PluginPage = () => {
                     <FlexRow justifyContent={"space-between"}>
                         <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
                             <FlexColumn style={{marginTop: "100px"}} gap={"40px"}>
-                                <ImgBlock imageRefs={plugin.images.map(img => img.id)} />
+                                <ImgBlock imageRefs={plugin.images.map(img => img.imageId)} />
                                 {tags.length > 0 &&
                                     <div>
                                         <div style={{marginBottom: "5px"}}>Appropriate tags</div>

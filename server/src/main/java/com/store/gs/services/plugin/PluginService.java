@@ -68,13 +68,12 @@ public class PluginService {
         return pluginRepository.findById(id).orElse(null);
     }
 
-    public void  add(Plugin plugin) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        SecurityUser securityUser = (SecurityUser) authentication.getPrincipal();
-
+    public Long  add(Plugin plugin) {
         plugin.setDeveloper(ServiceUtils.getUserId());
+        plugin.setStatus(PluginStatus.MODERATION);
+        plugin.setId(null);
 
-        pluginRepository.save(plugin);
+        return pluginRepository.save(plugin).getId();
     }
 
     public void changeById(Plugin plugin){
@@ -91,11 +90,6 @@ public class PluginService {
     }
 
     public void uploadPluginFile(long id, MultipartFile file) throws IOException {
-        PluginFile pluginFile = new PluginFile();
-
-        pluginFile.setId(id);
-        pluginFile.setData(file.getBytes());
-
-        pluginFileRepository.save(pluginFile);
+        pluginFileRepository.insert(id, file.getBytes());
     }
 }

@@ -17,24 +17,19 @@ import java.util.ArrayList;
 public class ValidationService {
     public VerifierObject validate(MultipartFile file) throws IOException, InterruptedException {
         VerifierObject verifierObject = new VerifierObject();
-        System.out.println(System.getProperty("user.dir"));
-        String absolutePath = System.getProperty("user.dir")+ "/validation/src/main/java/com/gs/validation/temporary";
+        String absolutePath = System.getProperty("user.dir")+ "/src/main/java/com/gs/validation/temporary";
+
         file.transferTo(new File(absolutePath + "/validate.dll"));
-        Process proc = Runtime.getRuntime().exec("csc /target:exe /out:" +absolutePath + "/Program.exe "+ absolutePath + "/Program.cs");
+
+        Process proc = Runtime.getRuntime().exec("mcs /target:exe /out:" +absolutePath + "/Program.exe "+ absolutePath + "/Program.cs");
         proc.waitFor();
         Process proc1 = Runtime.getRuntime().exec("mono " + absolutePath+ "/Program.exe " + absolutePath + "/validate.dll ");
-        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc1.getErrorStream()));
-        String error;
-        while ((error = stdError.readLine()) != null){
-            System.out.println(error);
-        }
-        stdError.close();
         BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc1.getInputStream()));
-        String s;
         verifierObject.isPlugin = stdInput.readLine().equals("Is plugin");
         verifierObject.isTypesAvailable = stdInput.readLine().equals("good");
         verifierObject.types = new ArrayList<>();
         verifierObject.mistakes = new ArrayList<>();
+        String s;
         while (!(s = stdInput.readLine()).equals("Errors:")){
             verifierObject.types.add(s);
         }
@@ -42,7 +37,7 @@ public class ValidationService {
             verifierObject.mistakes.add(s);
         }
         stdInput.close();
-        FileUtils.cleanDirectory(new File(absolutePath));
+        //FileUtils.cleanDirectory(new File(absolutePath));
         return verifierObject;
     }
 }

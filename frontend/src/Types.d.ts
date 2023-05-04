@@ -41,7 +41,7 @@ export type Category = {
 }
 
 export type Image = {
-    id: number
+    imageId: number
     image: string
     isPreview: boolean
 }

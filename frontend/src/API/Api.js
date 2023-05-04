@@ -1,6 +1,7 @@
 import {httpHeaders, restClient} from "./Config";
 
 const url = "http://localhost:8080"
+const validationUrl = "http://localhost:8081"
 export default class Api {
 
     static async getPluginsPage(filter){
@@ -97,6 +98,18 @@ export default class Api {
     static async deleteComment(comment){
         return await restClient.delete(`${url}/plugins/comments/${comment.id}`, {
             headers:httpHeaders,
+        });
+    }
+
+    static async uploadPluginFile(plugin_id, file){
+        return await restClient.post(`${url}/plugins/${plugin_id}/file`, file,{
+            headers:{...httpHeaders, 'Content-Type': 'multipart/form-data'},
+        });
+    }
+
+    static async validateFile(file){
+        return await restClient.post(`${validationUrl}/validate`, file,{
+            headers:{...httpHeaders, 'Content-Type': 'multipart/form-data'},
         });
     }
 }

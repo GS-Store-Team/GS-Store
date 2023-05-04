@@ -1,6 +1,6 @@
 package com.store.gs.controllers.advicies;
 
-import com.store.gs.Exceptions.GSException;
+import com.store.gs.exceptions.GSException;
 import io.jsonwebtoken.JwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;

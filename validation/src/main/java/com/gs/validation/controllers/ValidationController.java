@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 
+@CrossOrigin(origins = {"http://localhost:3000"})
 @RestController
 public class ValidationController {
     private final ValidationService validationService;

@@ -8,6 +8,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table("plugin_image")
 public class PluginImageRef {
     @Id

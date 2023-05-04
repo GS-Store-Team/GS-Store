@@ -16,10 +16,11 @@ import java.util.Set;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table("plugin")
 public class Plugin {
     @Id
-    private long id;
+    private Long id;
     private Long developer;
 
     @Size(min = 4, max = 64, message = "Name length should be in range [4 - 64] characters!")

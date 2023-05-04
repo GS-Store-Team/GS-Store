@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table("plugin_category")
 public class CategoryRef {
     @Id

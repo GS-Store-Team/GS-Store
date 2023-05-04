@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const httpHeaders= {
-    "Content-Type": "application/json",
+    'Content-Type': 'application/json',
     "responseType": "arraybuffer",
     "Authorization": "",
 }

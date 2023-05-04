@@ -10,6 +10,7 @@ import org.springframework.data.relational.core.mapping.Table;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 @Table("plugin_tag")
 public
 class TagRef {

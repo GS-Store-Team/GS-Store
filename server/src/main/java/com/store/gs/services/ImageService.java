@@ -1,8 +1,8 @@
 package com.store.gs.services;
 
-import com.store.gs.Exceptions.ImagesCountLimitExceededException;
-import com.store.gs.Exceptions.NotImageException;
-import com.store.gs.Exceptions.NotYourImageException;
+import com.store.gs.exceptions.ImagesCountLimitExceededException;
+import com.store.gs.exceptions.NotImageException;
+import com.store.gs.exceptions.NotYourImageException;
 import com.store.gs.GlobalConfig;
 import com.store.gs.dto.ImageDTO;
 import com.store.gs.models.Image;
@@ -16,7 +16,6 @@ import com.store.gs.repositories.UserDataRepository;
 import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

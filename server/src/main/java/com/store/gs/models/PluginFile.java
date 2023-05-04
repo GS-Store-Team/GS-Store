@@ -2,6 +2,7 @@ package com.store.gs.models;
 
 import lombok.*;
 import nonapi.io.github.classgraph.json.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Data
@@ -10,6 +11,7 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("plugin_file")
 public class PluginFile {
     @Id
+    @Column("plugin_id")
     private long id;
     private byte[] data;
 }

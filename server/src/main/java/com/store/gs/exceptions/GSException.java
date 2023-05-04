@@ -1,3 +1,3 @@
-package com.store.gs.Exceptions;
+package com.store.gs.exceptions;
 
 public class GSException extends RuntimeException{ }

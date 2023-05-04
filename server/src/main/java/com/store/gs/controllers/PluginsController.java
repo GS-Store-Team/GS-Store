@@ -1,6 +1,7 @@
 package com.store.gs.controllers;
 
 import com.store.gs.dto.FilterDTO;
+import com.store.gs.exceptions.GSException;
 import com.store.gs.models.Comment;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
@@ -42,16 +43,12 @@ public class PluginsController {
                 :ResponseEntity.ok(plugin);
     }
 
-    @Operation(summary = "New plugin")
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping
-    public ResponseEntity<?> addNewPlugin(@RequestBody @Valid Plugin plugin,
-                                                          BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
-
-        pluginService.add(plugin);
-
-        return ResponseEntity.ok().build();
+    public Long addNewPlugin(@RequestBody @Valid Plugin plugin,
+                             BindingResult bindingResult){
+        if(bindingResult.hasErrors()) throw new GSException();
+        return pluginService.add(plugin);
     }
 
     @Operation(summary = "Update plugin by plugin-id")
@@ -124,14 +121,10 @@ public class PluginsController {
     @Operation(summary = "Upload plugin file with plugin-id")
     @PostMapping("/{id}/file")
     public ResponseEntity<?> uploadPluginFile(@PathVariable("id") long id,
-                                              @RequestParam("_file") MultipartFile file) throws Exception {
-
-        if(!file.isEmpty() && !file.getContentType().contains(".zip")) throw new FileUploadException();
-
+                                              @RequestParam MultipartFile file) throws Exception {
+        System.out.println(file);
         pluginService.uploadPluginFile(id, file);
 
         return ResponseEntity.ok().build();
     }
-
-
 }
