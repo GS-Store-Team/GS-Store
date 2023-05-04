@@ -1,17 +1,21 @@
 package com.store.gs.models.supportclasses;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.store.gs.models.Tag;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("plugin_tag")
-@NoArgsConstructor
+@Data
 @AllArgsConstructor
-@Getter
-@Setter
+@Table("plugin_tag")
 public
 class TagRef {
+    @Id
+    @Column("tag_id")
     private Long tagId;
+    @Column("plugin_id")
+    private Long pluginId;
 }

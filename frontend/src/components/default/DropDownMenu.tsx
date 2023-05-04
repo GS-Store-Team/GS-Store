@@ -29,6 +29,7 @@ export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements
     }, [setCoords])
 
     const onRefElementClick = useCallback((e : MouseEvent) => {
+        if(!renderElementRef.current) return
         if(renderElementRef.current.contains(e.target)) {
             clickHandler()
 
@@ -39,7 +40,7 @@ export const DropDownMenu : FC<IDropDownMenu> = ({renderElementRef, menuElements
 
             if(scopeElem) processCoords(scopeElem as HTMLElement)
         }
-    },[processCoords, clickHandler])
+    },[processCoords, clickHandler, renderElementRef])
 
     useEffect(() => {
         if(!renderElementRef || !renderElementRef.current) return

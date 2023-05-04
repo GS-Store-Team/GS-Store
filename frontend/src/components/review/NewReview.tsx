@@ -1,11 +1,12 @@
 import React, {CSSProperties, FC, useCallback, useEffect, useState} from 'react';
 import classes from "./stars.module.css";
-import {Comment} from "../../types/Types";
+import {Comment} from "../../Types";
 import {Styled as S} from "./Review.styled";
 import {FlexRow} from "../default/Flex.styled";
 import {Btn} from "../default/Btn";
 import {TextArea} from "../default/Form";
 import cross from './../../UI/img/cross.png'
+import {Icon} from "../default/Icon";
 
 interface INewReview{
     uploadComment: (comment : Partial<Comment>) => void;
@@ -36,12 +37,12 @@ export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
             setInputStyle({height: "120px", resize: "none", backgroundColor: "#eaeaea"})
     }, [comment])
 
+    const equalToPreviousComment = useCallback(() => { return comment.text === currentComment.text && comment.mark === currentComment.mark }, [comment, currentComment])
+
     return (
         <S.NewReview>
             <FlexRow justifyContent={"end"}>
-                <S.Cross onClick={resetComment}>
-                    <img style={{width: "15px", height: "15px"}} src={cross} alt={".."}/>
-                </S.Cross>
+                <Icon style={{width:"15px", height:"15px", margin: "5px"}} img={"cross"} tooltip={{label:"Clear review", placement:"bottom"}} onClick={resetComment}/>
             </FlexRow>
             <TextArea style={inputStyle}
                       placeholder={"Type review"}
@@ -61,7 +62,7 @@ export const NewReview : FC<INewReview>= ({uploadComment, currentComment}) => {
                     <input type="radio" id="star-1" name="rating" value="1" checked={comment.mark === 1} onChange={() => setComment(prevState => ({...prevState, mark: 1}))}/>
                     <label htmlFor="star-1"></label>
                 </div>
-                <Btn style={{fontSize: "12px"}} disabled={comment.text? comment.text.length === 0 || comment.text.length > 2048 : true} secondary onClick={handleClick}>Comment</Btn>
+                <Btn style={{fontSize: "12px"}} disabled={(comment.text? comment.text.length === 0 || comment.text.length > 2048 : true) || equalToPreviousComment()} secondary onClick={handleClick}>Comment</Btn>
             </FlexRow>
         </S.NewReview>
     );

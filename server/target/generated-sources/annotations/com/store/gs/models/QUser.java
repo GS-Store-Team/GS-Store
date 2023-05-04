@@ -34,10 +34,6 @@ public class QUser extends com.querydsl.sql.RelationalPathBase<User> {
 
     public final EnumPath<com.store.gs.enums.Role> role = createEnum("role", com.store.gs.enums.Role.class);
 
-    public final SimplePath<com.store.gs.models.supportclasses.UserData> userData = createSimple("userData", com.store.gs.models.supportclasses.UserData.class);
-
-    public final SimplePath<com.store.gs.models.supportclasses.Avatar> avatar = createSimple("avatar", com.store.gs.models.supportclasses.Avatar.class);
-
     public QUser(String variable) {
         super(User.class, forVariable(variable), null, "usr");
         addMetadata();
@@ -69,8 +65,6 @@ public class QUser extends com.querydsl.sql.RelationalPathBase<User> {
         addMetadata(password, ColumnMetadata.named("Password").withIndex(2));
         addMetadata(active, ColumnMetadata.named("Active").withIndex(3));
         addMetadata(role, ColumnMetadata.named("Role").withIndex(4));
-        addMetadata(userData, ColumnMetadata.named("user_id").withIndex(5));
-        addMetadata(avatar, ColumnMetadata.named("id").withIndex(6));
     }
 
 }

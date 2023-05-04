@@ -65,7 +65,7 @@ public class QComment extends com.querydsl.sql.RelationalPathBase<Comment> {
 
     public void addMetadata() {
         addMetadata(id, ColumnMetadata.named("Id").withIndex(0));
-        addMetadata(pluginId, ColumnMetadata.named("PluginId").withIndex(1));
+        addMetadata(pluginId, ColumnMetadata.named("plugin_id").withIndex(1));
         addMetadata(reviewer, ColumnMetadata.named("Reviewer").withIndex(2));
         addMetadata(mark, ColumnMetadata.named("Mark").withIndex(3));
         addMetadata(text, ColumnMetadata.named("Text").withIndex(4));

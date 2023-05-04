@@ -26,7 +26,7 @@ public class QPlugin extends com.querydsl.sql.RelationalPathBase<Plugin> {
 
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
-    public final StringPath developer = createString("developer");
+    public final NumberPath<Long> developer = createNumber("developer", Long.class);
 
     public final StringPath name = createString("name");
 
@@ -39,6 +39,8 @@ public class QPlugin extends com.querydsl.sql.RelationalPathBase<Plugin> {
     public final NumberPath<Double> price = createNumber("price", Double.class);
 
     public final BooleanPath isDeleted = createBoolean("isDeleted");
+
+    public final EnumPath<com.store.gs.enums.PluginStatus> status = createEnum("status", com.store.gs.enums.PluginStatus.class);
 
     public final BooleanPath checked = createBoolean("checked");
 
@@ -76,7 +78,8 @@ public class QPlugin extends com.querydsl.sql.RelationalPathBase<Plugin> {
         addMetadata(mark, ColumnMetadata.named("Mark").withIndex(5));
         addMetadata(price, ColumnMetadata.named("Price").withIndex(6));
         addMetadata(isDeleted, ColumnMetadata.named("isdeleted").withIndex(7));
-        addMetadata(checked, ColumnMetadata.named("Checked").withIndex(8));
+        addMetadata(status, ColumnMetadata.named("status").withIndex(8));
+        addMetadata(checked, ColumnMetadata.named("Checked").withIndex(9));
     }
 
 }

@@ -1,3 +1,4 @@
+
 export const arrayFromNum = (number) => {
     const arr = []
 
@@ -18,4 +19,8 @@ export const validateEmail = (email) => {
 export const dateFormat = (number) => {
     const date = new Date(number)
     return `${date.getHours() > 9 ? date.getHours() : '0' + date.getHours()}:${date.getMinutes() > 9 ? date.getMinutes() : '0' + date.getMinutes()} (${date.toDateString()})`
+}
+
+export const filtersEquals = (filter, filter1) => {
+    return filter.value === filter1.value && filter.category.id === filter1.category.id && filter.selectedTags.length === filter1.selectedTags.length;
 }

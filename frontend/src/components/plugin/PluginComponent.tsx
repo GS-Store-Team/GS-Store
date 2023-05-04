@@ -2,9 +2,9 @@ import React, {FC, useCallback, useState} from 'react';
 import classes from './plugin.module.css'
 import {useNavigate} from "react-router-dom"
 import Api from "../../API/Api";
-import {ImgComponent} from "../ImgComponent/ImgComponent";
+import {ImgComponent} from "../default/ImgComponent";
 import star from './../../UI/img/star.png'
-import {Plugin} from "../../types/Types";
+import {Plugin} from "../../Types";
 
 interface IPluginComponent{
     plugin: Plugin;

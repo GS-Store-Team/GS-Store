@@ -18,18 +18,19 @@ const Modal = styled.div<{ $height?: Property.Height, $width?: Property.Width }>
   position: absolute;
   background-color: white;
   box-shadow: 0 0 10px rgba(0,0,0,0.5);
-  width: ${({ $width }) => `${$width ? $width : 600}px` };
-  height: ${({ $height }) => `${$height ? $height : 600}px` };
+  width: ${({ $width }) => `${$width ? $width : "600px"}` };
+  height: ${({ $height }) => `${$height ? $height : "600px"}` };
   display: flex;
   flex-direction: column;
+  z-index: 500;
 `
 
 const Buttons = styled.div`
-  width: 50%;
+  width: 100%;
   display: flex;
-  padding: 20px 0 50px 0;
-  justify-content: space-between;
-  margin: auto;
+  padding: 20px 40px 50px 40px;
+  justify-content: flex-end;
+  gap: 20px;
 `
 
 const Title = styled.div`
@@ -50,6 +51,9 @@ const Body = styled.div`
   padding: 0 40px;
   width: 100%;
   overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `
 
 const Cross = styled.div`
@@ -78,6 +82,11 @@ const ScrollSection = styled.div<{$height?: Property.Height}>`
   overflow-y: scroll;
 `
 
+const Row = styled.div`
+  width: 100%;
+  padding: 10px 20px;
+`
+
 export const Styled = {
     ModalBackground,
     Modal,
@@ -87,4 +96,5 @@ export const Styled = {
     Cross,
     Text,
     ScrollSection,
+    Row,
 };

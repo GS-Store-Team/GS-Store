@@ -11,10 +11,20 @@ export const FlexColumn = styled.div<{ gap?: Property.Gap, width?: Property.Widt
 export const FlexRow = styled.div<{ gap?: Property.Gap, justifyContent?: Property.JustifyContent, margin?: Property.Margin}>`
     display: flex;
     justify-content: ${({ justifyContent }) => justifyContent };
-    gap: ${({ gap }) => gap || '1em'};
+    gap: ${({ gap }) => gap};
     margin: ${({ margin }) => margin};
+    
 `;
 
-export const FlexGrow = styled.div`
-    flex-grow: 1;
+export const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: auto;
+    min-width: 300px;
+    max-height: calc(100vh - 170px);
+    height: calc(100vh - 170px);
+    ::-webkit-scrollbar {
+    display: none;
+    }
 `;

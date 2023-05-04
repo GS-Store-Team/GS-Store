@@ -1,13 +1,16 @@
 import React, {useContext, useEffect, useState} from 'react';
 import Api from "../../API/Api";
 import classes from "./login.module.css";
-import {BareHeader} from "../../components/header/BareHeader";
 import {Link} from "react-router-dom";
 import {LoginFooter} from "../../components/footer/LoginFooter";
 import * as Utils from "../../utils/Utils";
 import {AuthContext} from "../../App";
+import {Styled as S} from "../Pages.styled"
+import {Header} from "../../components/header/Header";
+import {defaultFilter} from "../../DefaultObjects";
 
 export const Login = () => {
+    const [filter, setFilter] = useState(defaultFilter);
 
     const [request, setRequest] = useState({
             username:"",
@@ -67,18 +70,16 @@ export const Login = () => {
                 setEmailDoNotExists(true);
                 setEmailList([...emailList, request.username])
             }
-        }).catch((error) => {
-            if(error.response.status === 403){
-                setInvalidPassword(true);
-                setPasswordList([...passwordList, request.password])
-            }
+        }).catch(() => {
+            setInvalidPassword(true);
+            setPasswordList([...passwordList, request.password])
         });
     }
 
     return (
-        <div>
-            <BareHeader />
-            <div className={classes.my__form}>
+        <S.Wrapper>
+            <Header filter={filter} onChangeFilter={setFilter} disableProfile/>
+            <S.Main style={{display: "flex"}}>
                 <div className={classes.my_login__form}>
                    <div className={classes.my__title}>Login</div>
                     <label className={classes.my__label1}
@@ -112,8 +113,8 @@ export const Login = () => {
                             Sign up</Link>
                     </div>
                 </div>
-            </div>
-            <LoginFooter />
-        </div>
+            </S.Main>
+            <LoginFooter/>
+        </S.Wrapper>
     );
 };

@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,23 +22,23 @@ public class CategoryTagController {
 
     @Operation(summary = "Get list of categories")
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> getAllCategories() {
+    public ResponseEntity<List<Category>> getCategories(){
         List<Category> categories = new ArrayList<>();
         categoryRepository.findAll().forEach(categories::add);
 
         return categories.size() > 0 ?
                 ResponseEntity.ok(categories)
-                : ResponseEntity.noContent().build();
+                :ResponseEntity.noContent().build();
     }
 
     @Operation(summary = "Get list of tags")
     @GetMapping("/tags")
-    public ResponseEntity<List<Tag>> getAllategories() {
+    public ResponseEntity<List<Tag>> getTags(){
         List<Tag> tags = new ArrayList<>();
         tagRepository.findAll().forEach(tags::add);
 
         return tags.size() > 0 ?
                 ResponseEntity.ok(tags)
-                : ResponseEntity.noContent().build();
+                :ResponseEntity.noContent().build();
     }
 }

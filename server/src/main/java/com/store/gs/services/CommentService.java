@@ -3,9 +3,10 @@ package com.store.gs.services;
 import com.store.gs.converters.PageConverter;
 import com.store.gs.converters.PageMerger;
 import com.store.gs.dto.CommentDTO;
+import com.store.gs.dto.UserDataDTO;
 import com.store.gs.models.Comment;
 import com.store.gs.models.User;
-import com.store.gs.models.supportclasses.UserData;
+import com.store.gs.models.UserData;
 import com.store.gs.repositories.CommentRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -86,9 +87,8 @@ public class CommentService {
                         resultSet,
                         comment -> {
                             CommentDTO commentDTO = new CommentDTO(comment);
-                            UserData userData = userService.getUserDataById(comment.getReviewer());
-                            commentDTO.setAvatar(userData.getAvatar());
-                            commentDTO.setNickName(userData.getNickName());
+                            UserDataDTO userDataDTO = userService.getUserDataById(comment.getReviewer());
+                            commentDTO.setNickName(userDataDTO.getNickName());
                             return commentDTO;
                         }
                 );
