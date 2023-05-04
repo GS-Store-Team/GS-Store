@@ -1,5 +1,6 @@
 package com.store.gs.models;
 
+import com.store.gs.enums.PluginStatus;
 import com.store.gs.models.supportclasses.CategoryRef;
 import com.store.gs.models.supportclasses.PluginImageRef;
 import com.store.gs.models.supportclasses.TagRef;
@@ -49,6 +50,9 @@ public class Plugin {
 
     @Column("isdeleted")
     private boolean isDeleted;
+
+    @Column("status")
+    private PluginStatus status;
 
     private boolean checked;
 }

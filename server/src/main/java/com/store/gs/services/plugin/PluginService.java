@@ -1,9 +1,9 @@
 package com.store.gs.services.plugin;
 
 import com.store.gs.dto.FilterDTO;
+import com.store.gs.enums.PluginStatus;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
-import com.store.gs.models.supportclasses.QBoughtPluginRef;
 import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
 import com.store.gs.security.SecurityUser;
@@ -58,7 +58,10 @@ public class PluginService {
                 .fetch()
         );
 
-        return pluginRepository.findAllByIdIn(ids, PageRequest.of(pageId-1, pageSize));
+        if(filter.getMy() != null && filter.getMy())
+            return pluginRepository.findAllByIdIn(ids, PageRequest.of(pageId-1, pageSize));
+
+        return pluginRepository.findAllByIdInAndStatus(ids, PluginStatus.OK, PageRequest.of(pageId-1, pageSize));
     }
 
     public Plugin getById(long id){
