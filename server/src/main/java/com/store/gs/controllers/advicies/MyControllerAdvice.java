@@ -19,17 +19,17 @@ import java.util.NoSuchElementException;
 public class MyControllerAdvice {
 
     @ExceptionHandler(FileUploadException.class)
-    public ResponseEntity<?> wrongFileExceptionHandler(){
+    public ResponseEntity<?> wrongFileExceptionHandler() {
         return ResponseEntity.status(-1).build();
     }
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<?> noContent(){
+    public ResponseEntity<?> noContent() {
         return ResponseEntity.noContent().build();
     }
 
     @ExceptionHandler(SizeLimitExceededException.class)
-    public ResponseEntity<?> tooLargeFile(){
+    public ResponseEntity<?> tooLargeFile() {
         return ResponseEntity.status(-2).build();
     }
 

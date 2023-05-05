@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageImpl;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class PageConverter<T,V> {
-    public Page<V> convert(Page<T> initialPage, Function<? super T, ? extends V> mapper){
+public class PageConverter<T, V> {
+    public Page<V> convert(Page<T> initialPage, Function<? super T, ? extends V> mapper) {
         return new PageImpl<V>(
                 initialPage.toList().stream().map(mapper).collect(Collectors.toList()),
                 initialPage.getPageable(),

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import javax.validation.Valid;
 
 @CrossOrigin(origins = {"http://localhost:3000"})
@@ -32,13 +33,13 @@ public class SecurityController {
     public ResponseEntity<?> login(@RequestBody @Valid AuthenticationRequestDTO auth,
                                    BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return new ResponseEntity<>(ControllersUtils.extractErrors(bindingResult), HttpStatus.UNPROCESSABLE_ENTITY);
 
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(auth.getUsername(), auth.getPassword()));
         User user = userService.getUserByEmail(auth.getUsername());
 
-        if(user == null)
+        if (user == null)
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 
         String token = jwtTokenProvider.createToken(user);
@@ -51,13 +52,13 @@ public class SecurityController {
     public ResponseEntity<?> signUp(@RequestBody @Valid AuthenticationRequestDTO signUp,
                                     BindingResult bindingResult) {
 
-        if(bindingResult.hasErrors())
+        if (bindingResult.hasErrors())
             return new ResponseEntity<>(ControllersUtils.extractErrors(bindingResult), HttpStatus.UNPROCESSABLE_ENTITY);
 
         boolean state = userService.createNewUser(signUp.getUsername(), signUp.getPassword());
 
-        return state?
-                ResponseEntity.ok().build():
+        return state ?
+                ResponseEntity.ok().build() :
                 new ResponseEntity<>(HttpStatus.CONFLICT);
     }
 }

@@ -45,4 +45,7 @@ public class UserData {
 
     @MappedCollection(idColumn = "userdata_id")
     private Set<BoughtPluginRef> plugins = new HashSet<>();
+
+    @MappedCollection(idColumn = "id")
+    private UserDarcy userDarcy;
 }
