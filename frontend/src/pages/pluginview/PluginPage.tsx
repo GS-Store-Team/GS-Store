@@ -103,7 +103,7 @@ const PluginPage = () => {
                                 {!user.isDarciUser &&
                                     <>
                                         <span>You need to register in the license server to be able to buy plugins</span>
-                                        <Btn style={{width:"150px", backgroundColor:"rgb(255,179,58)"}} onClick={handleLicenseRegistrationClick}>Sing up to Darci</Btn>
+                                        <Btn theme={"orange"} style={{width:"150px"}} onClick={handleLicenseRegistrationClick}>Sing up to Darci</Btn>
                                     </>
                                 }
                             </FlexColumn>

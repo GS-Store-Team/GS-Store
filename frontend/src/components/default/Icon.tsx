@@ -24,12 +24,14 @@ import auth from "../../UI/img/auth.png"
 import blocked from "../../UI/img/blocked.png"
 import moderation from "../../UI/img/moderation.png"
 import ok from "../../UI/img/ok.png"
+import clip from "../../UI/img/clip.png"
+import pencil from "../../UI/img/pencil.png"
 
 export type IconType =
     "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" |
     "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" |
     "trash-bin" | "full-screen" | "arrow" | "reset-filter" | "not-auth" |
-    "auth" | "blocked" | "moderation" | "ok"
+    "auth" | "blocked" | "moderation" | "ok" | "clip" | "pencil"
 
 
 function getPng(title : IconType){
@@ -56,6 +58,8 @@ function getPng(title : IconType){
         case "blocked": return blocked
         case "moderation": return moderation
         case "ok": return ok
+        case "clip": return clip
+        case "pencil": return pencil
     }
 }
 
@@ -78,7 +82,7 @@ interface IIcon{
 export const Icon : FC<IIcon> = ({img, tooltip, style, onClick, nonClickable=false, size = 22}) => {
     const icon = useMemo(() => {
         return(
-            <S.Icon style={{width: `${size}px`, height: `${size}px`, cursor: `${!nonClickable ? "pointer" : "auto"}`, ...style}} onClick={onClick}>
+            <S.Icon style={{width: `${size}px`, height: `${size}px`, maxWidth: `${size}px`, maxHeight: `${size}px`, cursor: `${!nonClickable ? "pointer" : "auto"}`, opacity: `${nonClickable && "1"}`, ...style}} onClick={onClick}>
                 <img style={{width: "100%", height: "100%"}} draggable={false} src={getPng(img)} alt={":("}/>
             </S.Icon>
         )

@@ -10,6 +10,7 @@ import {Plugin, Tag} from "../../Types";
 import {SelectedTags, TagsCloud} from "../header/tags/TagsCloud";
 import {Btn} from "../default/Btn";
 import Api from "../../API/Api";
+import {UploadImages} from "../uploadImage/UploadImages";
 
 interface IUploadPluginModal {
     opened: boolean;
@@ -33,6 +34,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [file, setFile] = useState<File>()
     const [invalidFile, setInvalidFile] = useState<boolean>(true)
+    const [images, setImages] = useState<File[]>([])
 
     const ref = React.createRef<HTMLDivElement>()
     const handleCloseTagsCloud = useCallback(() => setTagsCloud(false), [setTagsCloud])
@@ -97,14 +99,14 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                         <span>
                             <S.Text>Title:</S.Text>
                             <Input
-                                invalid={false}
+                                invalid={nameInvalid}
                                 value={plugin.name}
                                 onChange={(e) => setPlugin({... plugin, name: e.target.value})}/>
                         </span>
                         <span>
                             <S.Row>Price:</S.Row>
                             <Input
-                                invalid={false}
+                                invalid={priceInvalid}
                                 value={plugin.price}
                                 onChange={handleSetPrice}/>
                         </span>
@@ -112,15 +114,15 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                             <S.Text>Short description:</S.Text>
                             <TextArea
                                 style={{height: "150px", resize: "none"}}
-                                invalid={false}
+                                invalid={shortDescInvalid}
                                 value={plugin.shortDescription}
                                 onChange={(e) => setPlugin({... plugin, shortDescription: e.target.value})}/>
                         </span>
                         <span>
                             <S.Text>Full description:</S.Text>
                             <TextArea
-                                style={{height: "250px", resize: "none"}}
-                                invalid={false}
+                                style={{height: "240px", resize: "none"}}
+                                invalid={fullDescInvalid}
                                 value={plugin.fullDescription}
                                 onChange={(e) => setPlugin({... plugin, fullDescription: e.target.value})}/>
                         </span>
@@ -144,6 +146,8 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                                 <input type={"file"} id="pluginFile" onChange={handleFileChange}/>
                             </span>
                         </FlexRow>
+
+                        <UploadImages images={images} setImages={setImages}/>
                     </FlexColumn>
                 </FlexRow>
             </S.Body>

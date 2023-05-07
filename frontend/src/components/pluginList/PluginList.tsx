@@ -21,7 +21,7 @@ const PluginList : React.FC<IPluginList> = ({list, perLine}) => {
     const pluginList = useMemo(() => splitToLines(list, perLine), [list, perLine])
 
     return (
-        <div>
+        <div style={{paddingBottom: "40px"}}>
             {pluginList.map((subList, index) =>
                 <FlexRow key={index} justifyContent={"space-around"} margin={"60px 0 0 0"}>
                     {subList.map((pl)=> <PluginComponent key={pl.id} plugin={pl} />)}

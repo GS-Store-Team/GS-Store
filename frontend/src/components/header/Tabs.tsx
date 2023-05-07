@@ -51,7 +51,7 @@ export const LogoTab: FC<ILogoTab> = ({onClick}) => {
     return (
         <S.Tab onClick={onClick}>
             <span onClick={(e) => e.stopPropagation()}>
-                <Icon style={{height:"40px", width:"40px", opacity: 1}} img={"logo"} tooltip={{label: "GS-Store - software plugin store"}} onClick={handleClick}/>
+                <Icon style={{opacity: 1}} size={40} img={"logo"} tooltip={{label: "GS-Store - software plugin store"}} onClick={handleClick}/>
             </span>
             <Tooltip label={"Back to previous page"}>
                 <S.TabText style={{fontSize: "22px", padding: "0 5px"}}>GS-Store</S.TabText>
