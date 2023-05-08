@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import {Input, TextArea} from "../default/Form";
@@ -6,11 +6,11 @@ import {Categories} from "../header/category/Categories";
 import {FlexColumn, FlexRow} from "../default/Flex.styled";
 import {defaultPlugin} from "../../DefaultObjects";
 import {useOutsideClick} from "../../hooks/Hooks";
-import {Plugin, Tag} from "../../Types";
+import {ImageWrapper, Plugin, Tag} from "../../Types";
 import {SelectedTags, TagsCloud} from "../header/tags/TagsCloud";
 import {Btn} from "../default/Btn";
 import Api from "../../API/Api";
-import {UploadImages} from "../uploadImage/UploadImages";
+import {UploadImages} from "../image/uploadImage/UploadImages";
 
 interface IUploadPluginModal {
     opened: boolean;
@@ -34,12 +34,13 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
     const [selectedTags, setSelectedTags] = useState<Tag[]>([])
     const [file, setFile] = useState<File>()
     const [invalidFile, setInvalidFile] = useState<boolean>(true)
-    const [images, setImages] = useState<File[]>([])
+    const [images, setImages] = useState<ImageWrapper[]>([])
 
     const ref = React.createRef<HTMLDivElement>()
     const handleCloseTagsCloud = useCallback(() => setTagsCloud(false), [setTagsCloud])
 
     useOutsideClick(ref, handleCloseTagsCloud, tagsCloud)
+    useEffect(() => {if(!file) setInvalidFile(true)},[file])
 
     const handleCloseModal = useCallback(() => setOpened(false), [setOpened])
     const handleAddTag = useCallback((tag : Tag) => setSelectedTags(prevState => [...prevState, tag]), [setSelectedTags])
@@ -127,25 +128,28 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                                 onChange={(e) => setPlugin({... plugin, fullDescription: e.target.value})}/>
                         </span>
                     </FlexColumn>
-                    <FlexColumn style={{width: "50%", gap: "30px"}}>
-                        <FlexRow style={{alignItems: "center", padding:"100px 40px 20px 40px", gap: "50px"}} justifyContent={"center"}>
-                            <span style={{fontWeight: "bold", transform:"translateY(-2px)"}}>Category:</span>
+                    <FlexColumn style={{width: "50%", gap: "30px", padding: "20px 0 0 40px"}}>
+
+                        <FlexColumn style={{gap:"3px"}}>
+                            <FlexRow justifyContent={"space-between"}>
+                                <span style={{fontSize: "18px"}}>Attach software</span>
+                                <span>Appropriate format: dll</span>
+                            </FlexRow>
+                            <span style={invalidFile ? {border: "2px solid red", padding: "10px 20px", borderRadius: "5px"}:{border: "2px solid green", padding: "10px 20px", borderRadius: "5px"}}>
+                                <Input type={"file"} invalid={invalidFile} id="pluginFile" onChange={handleFileChange}/>
+                            </span>
+                        </FlexColumn>
+
+                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
+                            Category:
                             <Categories setCategory={handleSetCategory} category={-1}/>
                         </FlexRow>
 
                         {tagsCloud && <TagsCloud ref={ref} selected={selectedTags} addTag={handleAddTag} removeTag={handleRemoveTag}/>}
-                        <div style={{padding: "40px"}}>
-                            <FlexColumn style={{alignItems: "center"}}>
-                                <SelectedTags selected={selectedTags} onRemove={handleRemoveTag} onRemoveAll={() => setSelectedTags([])}/>
-                                <Btn style={{width: "60%"}} onClick={() => setTagsCloud(true)} disabled={tagsCloud} secondary>Apply tags</Btn>
-                            </FlexColumn>
-                        </div>
-
-                        <FlexRow justifyContent={"center"} >
-                            <span style={invalidFile ? {border: "1px solid red", padding: "10px 20px", borderRadius: "5px"}:{border: "1px solid green", padding: "10px 20px", borderRadius: "5px"}}>
-                                <input type={"file"} id="pluginFile" onChange={handleFileChange}/>
-                            </span>
-                        </FlexRow>
+                        <FlexColumn>
+                            <SelectedTags selected={selectedTags} onRemove={handleRemoveTag} onRemoveAll={() => setSelectedTags([])}/>
+                            <Btn style={{width: "100px"}} onClick={() => setTagsCloud(true)} disabled={tagsCloud} secondary>Apply tags</Btn>
+                        </FlexColumn>
 
                         <UploadImages images={images} setImages={setImages}/>
                     </FlexColumn>

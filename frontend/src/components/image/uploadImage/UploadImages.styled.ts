@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 const Area = styled.div`
   width: 350px;
-  padding: 10px;
 `
 
 const Image = styled.div`
@@ -26,7 +25,6 @@ const Empty = styled(Image)`
 const Title = styled.div`
   cursor: pointer;
   &:hover{
-    scale: 1.1;
     color: rgb(255,179,58);
   }
 `

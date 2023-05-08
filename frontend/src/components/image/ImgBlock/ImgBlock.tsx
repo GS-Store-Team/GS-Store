@@ -1,21 +1,17 @@
 import React, {Dispatch, FC, SetStateAction, useCallback, useEffect, useRef, useState} from "react";
-import Api from "../../API/Api";
-import {ImgComponent} from "../default/ImgComponent";
+import Api from "../../../API/Api";
+import {ImgComponent} from "../../default/ImgComponent";
 import {Styled as S} from "./ImgBlock.styled"
-import {Icon} from "../default/Icon";
-import {FlexRow} from "../default/Flex.styled";
-import {Tooltip} from "../default/Tooltip";
+import {Icon} from "../../default/Icon";
+import {FlexRow} from "../../default/Flex.styled";
+import {Tooltip} from "../../default/Tooltip";
 
 interface IImgBlock{
     imageRefs: number[]
 }
 
 export const ImgBlock : FC<IImgBlock> = ({imageRefs}) => {
-
-    console.log(imageRefs)
-
     const [images, setImages] = useState<JSX.Element[]>([])
-
     const ref = useRef(null)
 
     useEffect(() => {

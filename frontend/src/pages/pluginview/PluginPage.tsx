@@ -4,7 +4,7 @@ import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ReviewArea} from "../../components/review/ReviewArea";
 import {Column, FlexColumn, FlexRow} from "../../components/default/Flex.styled";
-import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
+import {ImgBlock} from "../../components/image/ImgBlock/ImgBlock";
 import {Styled as S} from "./PluginPage.styled"
 import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
@@ -146,7 +146,7 @@ const PluginPage = () => {
                             }
                         </Column>
                         <Column style={{width: "400px"}}>
-                            { plugin.id && <ReviewArea pluginId={plugin.id}/> }
+                            { plugin.id && <ReviewArea plugin={plugin}/> }
                         </Column>
                     </FlexRow>
                 </Container>

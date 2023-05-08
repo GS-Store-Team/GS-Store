@@ -40,6 +40,11 @@ export type Category = {
     title: string
 }
 
+export type ImageWrapper = {
+    file: File
+    title: string
+}
+
 export type Image = {
     imageId: number
     image: string

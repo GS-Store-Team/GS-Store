@@ -26,12 +26,13 @@ import moderation from "../../UI/img/moderation.png"
 import ok from "../../UI/img/ok.png"
 import clip from "../../UI/img/clip.png"
 import pencil from "../../UI/img/pencil.png"
+import author from "../../UI/img/author.png"
 
 export type IconType =
     "man" | "exit" | "bug" | "cross" | "filter" | "line" | "logo" |
     "menu" | "plus" | "reviewPic" | "settings" | "shovel" | "star" |
     "trash-bin" | "full-screen" | "arrow" | "reset-filter" | "not-auth" |
-    "auth" | "blocked" | "moderation" | "ok" | "clip" | "pencil"
+    "auth" | "blocked" | "moderation" | "ok" | "clip" | "pencil" | "author"
 
 
 function getPng(title : IconType){
@@ -60,6 +61,7 @@ function getPng(title : IconType){
         case "ok": return ok
         case "clip": return clip
         case "pencil": return pencil
+        case "author": return author
     }
 }
 
