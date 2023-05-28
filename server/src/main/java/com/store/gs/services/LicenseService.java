@@ -50,7 +50,7 @@ public class LicenseService {
         if (!licenseRepository.existsById(license.getId())) {
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
             User user = userService.getUserByEmail(authentication.getName());
-            UserDarcy userDarcy = userService.getUserDataById(user.getId()).getUserDarcy();
+            UserDarcy userDarcy = userDarcyService.findByUsername(user.getEmail());
 
             license.setOwner(userDarcy);
             license.setActivationKey(LicenseKeyGenerator.generate());

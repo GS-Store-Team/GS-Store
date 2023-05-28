@@ -1,11 +1,11 @@
 package com.store.gs.models;
 
+import com.store.gs.models.darcy.UserDarcy;
 import com.store.gs.models.supportclasses.BoughtPluginRef;
 import com.store.gs.models.supportclasses.UserdataImageRef;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;

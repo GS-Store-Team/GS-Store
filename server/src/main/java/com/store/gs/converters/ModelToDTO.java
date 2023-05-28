@@ -4,10 +4,8 @@ import com.store.gs.dto.UserDataDTO;
 import com.store.gs.models.UserData;
 import com.store.gs.models.supportclasses.UserdataImageRef;
 
-import java.util.Optional;
-
 public class ModelToDTO {
-    public static UserDataDTO userDataDTO(UserData userData){
+    public static UserDataDTO userDataDTO(UserData userData) {
         var userDataDTO = new UserDataDTO();
 
         userDataDTO.setUserId(userData.getUserId());

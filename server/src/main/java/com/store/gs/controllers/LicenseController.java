@@ -50,7 +50,7 @@ public class LicenseController {
     public void logoutDarcy(Authentication authentication) {
         if (authentication.isAuthenticated()) {
             User user = userService.getUserByEmail(authentication.getName());
-            UserDarcy userDarcy = userService.getUserDataById(user.getId()).getUserDarcy();
+            UserDarcy userDarcy = userDarcyService.findByUsername(user.getEmail());
             userDarcy.setLogged(false);
             userDarcyService.save(userDarcy);
         }
@@ -70,7 +70,8 @@ public class LicenseController {
     @GetMapping("/me")
     public ResponseEntity<List<License>> myLicenses(Authentication authentication) {
         User user = userService.getUserByEmail(authentication.getName());
-        UserDarcy userDarcy = userService.getUserDataById(user.getId()).getUserDarcy();
+        UserDarcy userDarcy = userDarcyService.findByUsername(user.getEmail());
+
         if (userDarcy.isLogged()) {
             return ResponseEntity.ok(
                     licenseService.getLicensesByUserId(userService.getUserByEmail(authentication.getName()).getId())
@@ -82,7 +83,8 @@ public class LicenseController {
     @PostMapping("/me/create")
     public void addLicense(Authentication authentication, License license) {
         User user = userService.getUserByEmail(authentication.getName());
-        UserDarcy userDarcy = userService.getUserDataById(user.getId()).getUserDarcy();
+        UserDarcy userDarcy = userDarcyService.findByUsername(user.getEmail());
+
         if (authentication.isAuthenticated()) {
             if (userDarcy.isLogged()) {
                 licenseService.createLicense(license);
@@ -93,7 +95,8 @@ public class LicenseController {
     @PostMapping("/me/delete/{id}")
     public ResponseEntity<Boolean> deleteLicense(Authentication authentication, @PathVariable("id") long licenseId) {
         User user = userService.getUserByEmail(authentication.getName());
-        UserDarcy userDarcy = userService.getUserDataById(user.getId()).getUserDarcy();
+        UserDarcy userDarcy = userDarcyService.findByUsername(user.getEmail());
+
         if (authentication.isAuthenticated()) {
             if (userDarcy.isLogged()) {
                 return ResponseEntity.ok(licenseService.deleteLicense(licenseId));
