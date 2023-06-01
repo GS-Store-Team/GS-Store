@@ -24,10 +24,21 @@ public class ValidationController {
     public ValidationController(ValidationService validationService){
         this.validationService = validationService;
     }
+
+    @PostMapping("/validate/raw")
+    public VerifierObject validate(@RequestBody byte[] rawData) throws IOException, InterruptedException {
+        return innerValidate(new MockMultipartFile("file.zip", rawData));
+    }
+
     @PostMapping("/validate")
     public VerifierObject validate(@RequestParam() MultipartFile file) throws IOException, InterruptedException {
+        return innerValidate(file);
+    }
+
+    private VerifierObject innerValidate(MultipartFile file) throws IOException, InterruptedException {
         VerifierObject verifierObject = new VerifierObject();
-        if (file.getOriginalFilename().contains(".zip")){
+
+        if (file.getName().contains(".zip")){
             String temporaryPath = System.getProperty("user.dir")+ "/src/main/java/com/gs/validation/temporary";
             Path source = Path.of(temporaryPath + "/Example.zip");
             String target = temporaryPath +"/Example";
@@ -74,7 +85,7 @@ public class ValidationController {
             return verifierObject;
         }
         else{
-            verifierObject.whatHappened = "File is not zip;";
+            verifierObject.whatHappened = "Inappropriate file format: file is not zip.";
             return verifierObject;
         }
     }

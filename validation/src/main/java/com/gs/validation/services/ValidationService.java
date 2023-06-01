@@ -37,14 +37,12 @@ public class ValidationService {
         proc.waitFor();
         Process proc1 = Runtime.getRuntime().exec("mono " + absolutePath+ "/Program.exe " + absolutePath + "/validate.dll ");
 
-
-
         BufferedReader stdError1 = new BufferedReader(new InputStreamReader(proc1.getErrorStream()));
 
         String error1;
         while ((error1 = stdError1.readLine()) != null){
             if (error1.contains("Unhandled Exception")){
-                verifierObject.whatHappened = "not supported";
+                verifierObject.whatHappened = "Compiler version is not comparable.";
                 return verifierObject;
             }
         }
@@ -63,20 +61,6 @@ public class ValidationService {
         }
         stdInput1.close();
 
-
-
-       /* String s;
-        verifierObject.isPlugin = stdInput.readLine().equals("Is plugin");
-        verifierObject.isTypesAvailable = stdInput.readLine().equals("good");
-        verifierObject.types = new ArrayList<>();
-        verifierObject.mistakes = new ArrayList<>();
-        while (!(s = stdInput.readLine()).equals("Errors:")){
-            verifierObject.types.add(s);
-        }
-        while ((s = stdInput.readLine()) != null){
-            verifierObject.mistakes.add(s);
-        }
-        stdInput.close();*/
         return verifierObject;
     }
 }

@@ -75,3 +75,11 @@ export type Tag = {
 export type ManagementPluginFilterDTO = {
     status: PluginStatus
 }
+
+export type Verifier = {
+    isPlugin: boolean
+    whatHappened: string
+    isTypesAvailable: boolean
+    types: string[]
+    mistakes: string[]
+}

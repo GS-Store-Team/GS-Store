@@ -6,24 +6,28 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     danger?: boolean;
     outline?: boolean;
     round?: boolean;
+    success?: boolean;
+    info?: boolean;
     sm?: boolean;
     theme?: "orange"
     style?: CSSProperties
 }
 
-export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, secondary, danger, outline, round, sm, theme, style, children, ...other }, ref) => {
+export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, info, secondary, success, danger, outline, round, sm, theme, style, children, ...other }, ref) => {
     const classNames = useMemo(
         () =>
             ['btn']
                 .concat(primary ? 'btn-primary' : '')
                 .concat(secondary ? 'btn-secondary' : '')
                 .concat(danger ? 'btn-danger' : '')
+                .concat(success ? 'btn-success' : '')
                 .concat(outline ? 'btn-outline' : '')
+                .concat(info ? 'btn-warning' : '')
                 .concat(round ? 'btn-round btn-round_small' : '')
                 .concat(sm ? 'btn_sm' : '')
                 .filter((className) => className)
                 .join(' '),
-        [outline, primary, round, secondary, sm, danger]
+        [primary, secondary, danger, success, outline, info, round, sm]
     );
 
     const backgroundColor = useCallback((theme : string) => {

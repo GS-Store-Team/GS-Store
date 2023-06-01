@@ -3,8 +3,7 @@ import {PluginStatus} from "../../Types";
 
 const PluginTab = styled.div<{$status: PluginStatus }>`
   width: 80%;
-  height: 100px;
-  min-height: 100px;
+  min-height: 130px;
   min-width: 500px;
   padding: 20px 30px;
   cursor: pointer;
@@ -25,9 +24,9 @@ const PluginTab = styled.div<{$status: PluginStatus }>`
   }
 
   @keyframes appear1 {
-    0% {opacity: 0.6; scale: 1}
+    0% {opacity: 0.6}
     
-    100% {opacity: 1; scale: 1.02}
+    100% {opacity: 1}
   }
 `
 

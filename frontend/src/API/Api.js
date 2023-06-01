@@ -17,7 +17,13 @@ export default class Api {
     }
 
     static async getVerificationResult(pluginId){
-        return await restClient.get(`${url}/plugins/${pluginId}/verify`,{
+        return await restClient.get(`${url}/management/plugins/${pluginId}/verify`,{
+            headers:{...httpHeaders},
+        });
+    }
+
+    static async managePlugin(pluginId, status){
+        return await restClient.post(`${url}/management/plugins/${pluginId}`, status, {
             headers:{...httpHeaders},
         });
     }
