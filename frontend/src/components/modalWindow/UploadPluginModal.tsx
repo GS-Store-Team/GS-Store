@@ -2,16 +2,17 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import {Input, TextArea} from "../default/Form";
-import {Categories} from "../header/category/Categories";
 import {FlexColumn, FlexRow} from "../default/Flex.styled";
 import {useOutsideClick} from "../../hooks/Hooks";
-import {ImageWrapper, Plugin, Tag} from "../../Types";
+import {Category, ImageWrapper, Plugin, Tag} from "../../Types";
 import {SelectedTags, TagsCloud} from "../header/tags/TagsCloud";
 import {Btn} from "../default/Btn";
 import Api from "../../API/Api";
 import {UploadImages} from "../image/uploadImage/UploadImages";
 import cross from "../../UI/img/cross.png";
 import {useNavigate} from "react-router-dom";
+import {useSessionState} from "../../hooks/UseSessionState";
+import Select, {OnChangeValue} from 'react-select';
 
 interface IUploadPluginModal {
     initialPlugin: Plugin;
@@ -35,6 +36,10 @@ function mapToTags(refs: {tagId: number, pluginId:number }[]): Tag[]{
     const tags : Tag[] = JSON.parse(tagsStr)
     return refs.map(r => tags.find(t => t.id === r.tagId)).filter((e): e is Tag => !!e)
 }
+export interface StateOption {
+    readonly value: number;
+    readonly label: string;
+}
 
 export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initialPlugin}) => {
     const [plugin, setPlugin] = useState<Plugin>(() => {
@@ -47,6 +52,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
     const navigate = useNavigate()
     const [tagsCloud, setTagsCloud] = useState<boolean>(false);
     const [selectedTags, setSelectedTags] = useState<Tag[]>(mapToTags(plugin.tags))
+    const [categoryList, setCategoryList] = useSessionState<Category[]>("CATEGORIES",[], Api.getCategories());
     const [file, setFile] = useState<File>()
     const [invalidFile, setInvalidFile] = useState<boolean>(true)
     const [images, setImages] = useState<ImageWrapper[]>([])
@@ -87,6 +93,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                                 return prev.then(() => Api.uploadImageForPlugin(data,formData, img.title)) as Promise<any>
                             }, Promise.resolve())
                     })
+        console.log(plugin)
             // })
     }, [plugin, onClose, selectedTags, file, images])
 
@@ -101,6 +108,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
         let price = Number(e.currentTarget.value);
         if(!price) price = 0
         setPlugin(prevState => ({...prevState, price}))
+        console.log(categoryList);
     }, [setPlugin])
 
     const handleFileChange = useCallback((e : React.FormEvent<HTMLInputElement>) => {
@@ -109,6 +117,14 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
         setInvalidFile(checkFile(file.name))
         setFile(file)
     }, [])
+
+    const transformedCategories : readonly StateOption[] = categoryList.map((c, index)=>({value: c.id, label: c.title}))
+
+    const handleSelectionChangeCategory = (category: OnChangeValue<StateOption, true>) => {
+        if (category) {
+            setPlugin({...plugin, categories: (category as StateOption[]).map((value: StateOption) => ({categoryId: value.value, pluginId: 0}))})
+        }
+    }
 
     return (
         <Modal
@@ -170,9 +186,21 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                             </span>
                         </FlexColumn>
 
-                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
+{/*                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
                             Category:
                             <Categories setCategory={handleSetCategory} category={-1}/>
+                        </FlexRow>*/}
+                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
+                            <Select
+                                isMulti
+                                menuPlacement="auto"
+                                menuPosition="fixed"
+                                name="categories"
+                                options={transformedCategories}
+                                className="basic-multi-select"
+                                classNamePrefix="select"
+                                onChange={handleSelectionChangeCategory}
+                            />
                         </FlexRow>
 
                         {tagsCloud && <TagsCloud ref={ref} selected={selectedTags} addTag={handleAddTag} removeTag={handleRemoveTag}/>}
