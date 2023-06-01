@@ -54,14 +54,18 @@ const PluginManagement: FC<IPluginManagement> = ({plugin, onChange}) => {
     const navigate = useNavigate()
     const handleClick = useCallback(() => navigate(`/main/${plugin.id}`), [navigate, plugin.id])
     const [modal, setModal] = useState<Verifier>()
+    const [errorModal, setErrorModal] = useState<string>()
 
-    const handleCloseModal = useCallback(() => setModal(undefined), [])
+    const handleCloseModal = useCallback(() => {
+        setModal(undefined)
+        setErrorModal(undefined)
+    }, [])
 
     const handleClickInfo = useCallback((e: React.MouseEvent) => {
         e.stopPropagation()
-        Api.getVerificationResult(plugin.id).then(response => {
-            setModal(response.data)
-        })
+        Api.getVerificationResult(plugin.id)
+            .then(response => setModal(response.data))
+            .catch(e => setErrorModal(e.message))
     }, [plugin])
 
     const managePlugin = useCallback((status: PluginStatus) => {
@@ -114,6 +118,14 @@ const PluginManagement: FC<IPluginManagement> = ({plugin, onChange}) => {
                     <hr/>
                     <S2.Row>Types - {modal.types.length}</S2.Row>
                     {modal.types.map((m, index) => <S2.Text key={index}>{m}</S2.Text>)}
+                </InfoModal>
+            }
+            {errorModal &&
+                <InfoModal
+                    $height={"300px"}
+                    title={"SOMETHING WENT WRONG"}
+                    onOk={handleCloseModal}>
+                    <S2.Text>{errorModal}</S2.Text>
                 </InfoModal>
             }
         </>

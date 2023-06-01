@@ -53,13 +53,21 @@ public class ValidationService {
         verifierObject.isTypesAvailable = stdInput1.readLine().equals("good");
         verifierObject.types = new ArrayList<>();
         verifierObject.mistakes = new ArrayList<>();
-        while (!(s = stdInput1.readLine()).equals("Errors:")){
-            verifierObject.types.add(s);
-        }
-        while ((s = stdInput1.readLine()) != null){
-            verifierObject.mistakes.add(s);
+
+        if(stdInput1.readLine() != null) {
+            while (!(s = stdInput1.readLine()).equals("Errors:")) {
+                verifierObject.types.add(s);
+            }
+            while ((s = stdInput1.readLine()) != null) {
+                verifierObject.mistakes.add(s);
+            }
         }
         stdInput1.close();
+
+        File file1 = new File(absolutePath + "/Example.zip");
+        file1.delete();
+        new File(absolutePath+"/Program.exe").delete();
+        new File(absolutePath+"/validate.exe").delete();
 
         return verifierObject;
     }

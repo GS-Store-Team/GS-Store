@@ -10,6 +10,7 @@ import {UserPluginPurchased} from "../pages/usersplugin/UserPluginPurchased";
 import {Login} from "../pages/login/Login";
 import {SignUp} from "../pages/signup/SignUp";
 import {PluginManagementList} from "../pages/management/PluginManagementList";
+import {AboutUs} from "../pages/AboutUs";
 
 const AppRouter = () => {
     const { isAuth } = useContext(AuthContext);
@@ -35,6 +36,7 @@ const AppRouter = () => {
                     <Route path={"/user/plugins/uploaded"} element={<UserPluginUploaded/>}/>
                     <Route path={"/user/plugins/purchased"} element={<UserPluginPurchased/>}/>
 
+                    <Route path={"/about"} element={<AboutUs/>}/>
                     <Route path={"*"} element={<NoMatch path={"/main"} />}/>
                 </Route>
          </Routes>

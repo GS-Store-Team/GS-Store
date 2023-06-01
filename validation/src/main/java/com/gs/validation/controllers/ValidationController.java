@@ -3,6 +3,7 @@ package com.gs.validation.controllers;
 import com.gs.validation.models.VerifierObject;
 import com.gs.validation.services.ValidationService;
 import net.lingala.zip4j.ZipFile;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -38,10 +39,13 @@ public class ValidationController {
     private VerifierObject innerValidate(MultipartFile file) throws IOException, InterruptedException {
         VerifierObject verifierObject = new VerifierObject();
 
-        if (file.getName().contains(".zip")){
+        if (true){
             String temporaryPath = System.getProperty("user.dir")+ "/src/main/java/com/gs/validation/temporary";
             Path source = Path.of(temporaryPath + "/Example.zip");
             String target = temporaryPath +"/Example";
+            if (Files.exists(Path.of(target))) {
+                FileUtils.cleanDirectory(new File(target));
+            }
             file.transferTo(new File(source.toUri()));
             try (ZipInputStream zis = new ZipInputStream(new FileInputStream(source.toFile()))) {
                 ZipEntry zipEntry = zis.getNextEntry();
