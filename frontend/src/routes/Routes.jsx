@@ -7,6 +7,7 @@ import {SignUp} from "../pages/signup/SignUp";
 import {UserProfilePage} from "../pages/userprofile/UserProfilePage";
 import {UserPluginUploaded} from "../pages/usersplugin/UserPluginUploaded";
 import {UserPluginPurchased} from "../pages/usersplugin/UserPluginPurchased";
+import {AboutUs} from "../pages/AboutUs";
 
 
 export const adminRoutes = [
@@ -15,6 +16,7 @@ export const adminRoutes = [
 
 export const userRoutes = [
     {path:"/main", component: <MainPage/>},
+    {path:"/about", component: <AboutUs/>},
     {path:"/main/:id", component: <PluginPage/>},
     {path:"/user/:id", component: <UserProfilePage/>},
     {path:"/user", component: <UserProfilePage/>},
