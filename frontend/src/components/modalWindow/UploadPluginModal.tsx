@@ -1,19 +1,21 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {Styled as S} from "./../default/Modal.styled";
 import {Modal} from "../default/Modal";
 import {Input, TextArea} from "../default/Form";
 import {Categories} from "../header/category/Categories";
 import {FlexColumn, FlexRow} from "../default/Flex.styled";
-import {defaultPlugin} from "../../DefaultObjects";
 import {useOutsideClick} from "../../hooks/Hooks";
-import {Plugin, Tag} from "../../Types";
+import {ImageWrapper, Plugin, Tag} from "../../Types";
 import {SelectedTags, TagsCloud} from "../header/tags/TagsCloud";
 import {Btn} from "../default/Btn";
 import Api from "../../API/Api";
+import {UploadImages} from "../image/uploadImage/UploadImages";
+import cross from "../../UI/img/cross.png";
+import {useNavigate} from "react-router-dom";
 
 interface IUploadPluginModal {
-    opened: boolean;
-    setOpened: (state : boolean) => void;
+    initialPlugin: Plugin;
+    onClose: () => void;
 }
 
 const initialText = {
@@ -27,21 +29,40 @@ function checkFile(fileName : string): boolean {
     return "dll" !== words[words.length - 1]
 }
 
-export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) => {
-    const [plugin, setPlugin] = useState<Plugin>({...defaultPlugin, ...initialText});
+function mapToTags(refs: {tagId: number, pluginId:number }[]): Tag[]{
+    const tagsStr = sessionStorage.getItem("TAGS_SET")
+    if(!tagsStr) return []
+    const tags : Tag[] = JSON.parse(tagsStr)
+    return refs.map(r => tags.find(t => t.id === r.tagId)).filter((e): e is Tag => !!e)
+}
+
+export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initialPlugin}) => {
+    const [plugin, setPlugin] = useState<Plugin>(() => {
+        if(initialPlugin.id) {
+            return {...initialPlugin}
+        }
+        return {...initialPlugin, ...initialText}
+    });
+
+    const navigate = useNavigate()
     const [tagsCloud, setTagsCloud] = useState<boolean>(false);
-    const [selectedTags, setSelectedTags] = useState<Tag[]>([])
+    const [selectedTags, setSelectedTags] = useState<Tag[]>(mapToTags(plugin.tags))
     const [file, setFile] = useState<File>()
     const [invalidFile, setInvalidFile] = useState<boolean>(true)
+    const [images, setImages] = useState<ImageWrapper[]>([])
+    const [deleteModal, setDeleteModal] = useState<boolean>()
 
     const ref = React.createRef<HTMLDivElement>()
     const handleCloseTagsCloud = useCallback(() => setTagsCloud(false), [setTagsCloud])
 
     useOutsideClick(ref, handleCloseTagsCloud, tagsCloud)
+    useEffect(() => {if(!file) setInvalidFile(true)},[file])
 
-    const handleCloseModal = useCallback(() => setOpened(false), [setOpened])
     const handleAddTag = useCallback((tag : Tag) => setSelectedTags(prevState => [...prevState, tag]), [setSelectedTags])
     const handleRemoveTag = useCallback((tag: Tag) => setSelectedTags(prevState => [...prevState.filter(t => t.id !== tag.id)]), [setSelectedTags])
+    const handleDeleteWarn = useCallback(() => setDeleteModal(true), [])
+    const handleCloseDeleteWarn = useCallback(() => setDeleteModal(false), [])
+    const handleDeletePlugin = useCallback(() => Api.deletePlugin(plugin.id).then(() => navigate("/user/plugins/uploaded")), [plugin])
 
     const handleAcceptModal = useCallback(() =>{
         plugin.tags = selectedTags.map(t => ({tagId: t.id, pluginId:0 }))
@@ -49,17 +70,25 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
         if(!file) return
         const formData = new FormData();
         formData.append("file", file)
-        Api.validateFile(formData)
-            .then(response => {
-                if(!response.data.isPlugin){
-                    setInvalidFile(true)
-                }
-                Api.sendNewPlugin(plugin)
-                    .then(response => {
-                        Api.uploadPluginFile(response.data, formData).then(() => setOpened(false))
+        // Api.validateFile(formData)
+        //     .then(response => {
+        //         if(!response.data.isPlugin){
+        //             setInvalidFile(true)
+        //             return
+        //         }
+                Api.sendPlugin(plugin)
+                    .then(({data}) => {
+                        Api.uploadPluginFile(data, formData)
+                            .then(onClose)
+
+                        images.reduce((prev, img) => {
+                                const formData = new FormData()
+                                formData.append("image", img.file)
+                                return prev.then(() => Api.uploadImageForPlugin(data,formData, img.title)) as Promise<any>
+                            }, Promise.resolve())
                     })
-            })
-    }, [plugin, setOpened, selectedTags, file])
+            // })
+    }, [plugin, onClose, selectedTags, file, images])
 
     const handleSetCategory = useCallback((categoryId: number) => setPlugin(prevState => ({...prevState, categories: [{categoryId, pluginId:0}]})), [])
 
@@ -83,11 +112,11 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
 
     return (
         <Modal
-            $height={"920px"}
+            $height={"910px"}
             $width={"1200px"}
             onAccept={handleAcceptModal}
-            onDecline={handleCloseModal}
-            onClose={handleCloseModal}
+            onDecline={onClose}
+            onClose={onClose}
             disableAccept={priceInvalid || fullDescInvalid || shortDescInvalid || nameInvalid || invalidFile}
         >
             <S.Title>UPLOAD NEW PLUGIN</S.Title>
@@ -97,14 +126,14 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                         <span>
                             <S.Text>Title:</S.Text>
                             <Input
-                                invalid={false}
+                                invalid={nameInvalid}
                                 value={plugin.name}
                                 onChange={(e) => setPlugin({... plugin, name: e.target.value})}/>
                         </span>
                         <span>
                             <S.Row>Price:</S.Row>
                             <Input
-                                invalid={false}
+                                invalid={priceInvalid}
                                 value={plugin.price}
                                 onChange={handleSetPrice}/>
                         </span>
@@ -112,38 +141,64 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({setOpened}) =>
                             <S.Text>Short description:</S.Text>
                             <TextArea
                                 style={{height: "150px", resize: "none"}}
-                                invalid={false}
+                                invalid={shortDescInvalid}
                                 value={plugin.shortDescription}
                                 onChange={(e) => setPlugin({... plugin, shortDescription: e.target.value})}/>
                         </span>
                         <span>
                             <S.Text>Full description:</S.Text>
                             <TextArea
-                                style={{height: "250px", resize: "none"}}
-                                invalid={false}
+                                style={{height: "240px", resize: "none"}}
+                                invalid={fullDescInvalid}
                                 value={plugin.fullDescription}
                                 onChange={(e) => setPlugin({... plugin, fullDescription: e.target.value})}/>
                         </span>
                     </FlexColumn>
-                    <FlexColumn style={{width: "50%", gap: "30px"}}>
-                        <FlexRow style={{alignItems: "center", padding:"100px 40px 20px 40px", gap: "50px"}} justifyContent={"center"}>
-                            <span style={{fontWeight: "bold", transform:"translateY(-2px)"}}>Category:</span>
+                    <FlexColumn style={{width: "50%", gap: "30px", padding: "20px 0 0 40px"}}>
+                        { plugin.id !== undefined &&
+                            <FlexRow justifyContent={"flex-end"}>
+                                <Btn danger onClick={handleDeleteWarn} style={{width: "150px"}}>DELETE PLUGIN</Btn>
+                            </FlexRow>
+                        }
+                        <FlexColumn style={{gap:"3px"}}>
+                            <FlexRow justifyContent={"space-between"}>
+                                <span style={{fontSize: "18px"}}>Attach software</span>
+                                <span>Appropriate format: dll</span>
+                            </FlexRow>
+                            <span style={invalidFile ? {border: "2px solid red", padding: "10px 20px", borderRadius: "5px"}:{border: "2px solid green", padding: "10px 20px", borderRadius: "5px"}}>
+                                <Input type={"file"} invalid={invalidFile} id="pluginFile" onChange={handleFileChange}/>
+                            </span>
+                        </FlexColumn>
+
+                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
+                            Category:
                             <Categories setCategory={handleSetCategory} category={-1}/>
                         </FlexRow>
 
                         {tagsCloud && <TagsCloud ref={ref} selected={selectedTags} addTag={handleAddTag} removeTag={handleRemoveTag}/>}
-                        <div style={{padding: "40px"}}>
-                            <FlexColumn style={{alignItems: "center"}}>
-                                <SelectedTags selected={selectedTags} onRemove={handleRemoveTag} onRemoveAll={() => setSelectedTags([])}/>
-                                <Btn style={{width: "60%"}} onClick={() => setTagsCloud(true)} disabled={tagsCloud} secondary>Apply tags</Btn>
-                            </FlexColumn>
-                        </div>
+                        <FlexColumn>
+                            <SelectedTags selected={selectedTags} onRemove={handleRemoveTag} onRemoveAll={() => setSelectedTags([])}/>
+                            <Btn style={{width: "100px"}} onClick={() => setTagsCloud(true)} disabled={tagsCloud} secondary>Apply tags</Btn>
+                        </FlexColumn>
 
-                        <FlexRow justifyContent={"center"} >
-                            <span style={invalidFile ? {border: "1px solid red", padding: "10px 20px", borderRadius: "5px"}:{border: "1px solid green", padding: "10px 20px", borderRadius: "5px"}}>
-                                <input type={"file"} id="pluginFile" onChange={handleFileChange}/>
-                            </span>
-                        </FlexRow>
+                        <UploadImages images={images} setImages={setImages}/>
+
+                        {deleteModal &&
+                            <S.ModalBackground>
+                                <S.Modal $height={"400px"}>
+                                    <S.Title>Delete plugin completely?</S.Title>
+                                    <S.Body>
+                                        <S.Row>Be careful, the action <strong>cannot be measured</strong>, the software will be <strong>completely removed</strong>.</S.Row>
+                                        <S.Row>Users who already purchased a license will be able to use the software. Other users will no longer see the plugin.</S.Row>
+                                    </S.Body>
+                                    <S.Cross onClick={handleCloseDeleteWarn}><img style={{width: "15px", height: "15px", margin: "auto"}} src={cross} alt={".."}/></S.Cross>
+                                    <S.Buttons>
+                                        <Btn primary onClick={handleCloseDeleteWarn} style={{width: "140px"}}>NO</Btn>
+                                        <Btn danger onClick={handleDeletePlugin} style={{width: "80px"}} >DELETE</Btn>
+                                    </S.Buttons>
+                                </S.Modal>
+                            </S.ModalBackground>
+                        }
                     </FlexColumn>
                 </FlexRow>
             </S.Body>

@@ -43,10 +43,20 @@ const PluginList = styled.div`
   height: 100%;
 `
 
+const Heading = styled.div`
+  transform: translateY(30px);
+  font-size: 20px;
+  padding-left: 40px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+`
+
 export const Styled = {
     PluginList,
     UploadButton,
     MiddleMenu,
     MenuBtn,
     PhotoBlock,
+    Heading,
 };

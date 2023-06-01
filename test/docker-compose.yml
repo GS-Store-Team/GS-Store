@@ -17,6 +17,13 @@ services:
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "1234"
     depends_on:
+      - validation
+
+  validation:
+    build: ../validation
+    ports:
+      - "8081:8081"
+    depends_on:
       - postgres
 
   postgres:

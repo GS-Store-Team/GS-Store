@@ -15,7 +15,7 @@ const PluginForm = (props) => {
 
     const clicked = (e) =>{
         e.preventDefault();
-        Api.sendNewPlugin(plugin).then(() => setPlugin({...emptyPlugin}));
+        Api.sendPlugin(plugin).then(() => setPlugin({...emptyPlugin}));
     }
 
     return (

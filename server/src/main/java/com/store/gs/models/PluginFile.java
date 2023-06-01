@@ -12,6 +12,6 @@ import org.springframework.data.relational.core.mapping.Table;
 public class PluginFile {
     @Id
     @Column("plugin_id")
-    private long id;
+    private Long id;
     private byte[] data;
 }

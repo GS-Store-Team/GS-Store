@@ -15,13 +15,13 @@ interface IReview{
     comment: Comment;
     deleteComment: (comment: Comment) => void;
     handleEdit: (comment: Comment) => void;
-    hovered?: boolean
+    developerId: number
 }
 
 function calculateOpacity(mark: number, total: number): number{
     return 0.1 + Math.pow(mark,2) / Math.pow(total,2);
 }
-export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered}) => {
+export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, developerId}) => {
     const navigate = useNavigate();
     const { user } = useContext(AuthContext)
     const ref = useRef(null)
@@ -57,7 +57,7 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered
                     <M.Text>Are you sure you want to delete the comment?</M.Text>
                     <M.ScrollSection $height={"150"}>
                         <div style={{position: "absolute", backgroundColor:"transparent", height:"150px", width:"505px", zIndex:1, cursor:"not-allowed"}}></div>
-                        <Review comment={comment} deleteComment={() =>{}} handleEdit={handleEdit}/>
+                        <Review comment={comment} deleteComment={() =>{}} handleEdit={handleEdit} developerId={developerId}/>
                     </M.ScrollSection>
                 </M.Body>
             </Modal>
@@ -69,7 +69,7 @@ export const Review : FC<IReview>= ({comment, deleteComment, handleEdit, hovered
             <S.Review>
                 <FlexRow  gap={"0"}>
                     <S.Avatar onClick={navigateProfile}>
-                        <Icon img={"reviewPic"} style={{width:"24px", height: "24px"}} />
+                        <Icon img={developerId === comment.reviewer? "author": "reviewPic"} style={{width:"24px", height: "24px"}}/>
                     </S.Avatar>
                     <FlexRow justifyContent={"space-between"} gap={"0"} style={{width : "100%"}}>
                         <Tooltip label={"View user"}>
@@ -115,8 +115,9 @@ interface IReviewList{
     comments: Comment[];
     deleteComment: (comment: Comment) => void;
     handleEdit: (comment: Comment) => void;
+    developerId: number
 }
-export const ReviewList : FC<IReviewList>= ({comments, deleteComment, handleEdit}) => {
+export const ReviewList : FC<IReviewList>= ({comments, deleteComment, handleEdit, developerId}) => {
     return (
         comments.length === 0?
           <S.NoComments>No reviews yet</S.NoComments>
@@ -125,6 +126,7 @@ export const ReviewList : FC<IReviewList>= ({comments, deleteComment, handleEdit
                         key={c.id}
                         deleteComment={deleteComment}
                         handleEdit={handleEdit}
+                        developerId={developerId}
                 />
             )}</S.Reviews>
     );

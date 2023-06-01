@@ -8,7 +8,13 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://psql:5432/gsstore
       SPRING_DATASOURCE_USERNAME: "admin"
       SPRING_DATASOURCE_PASSWORD: "1234"
+    depends_on:
+      - validation
 
+  validation:
+    build: .
+    ports:
+      - "8081:8081"
     depends_on:
       - postgres
 

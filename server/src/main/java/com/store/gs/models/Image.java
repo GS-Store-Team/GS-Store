@@ -15,9 +15,11 @@ public class Image {
     @Column("is_preview")
     private boolean isPreview;
     private byte[] data;
+    private String name;
 
-    public Image(byte[] data, boolean isPreview) {
+    public Image(byte[] data, boolean isPreview, String name) {
         this.data = data;
         this.isPreview = isPreview;
+        this.name = name;
     }
 }

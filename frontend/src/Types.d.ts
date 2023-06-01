@@ -15,8 +15,8 @@ export type Plugin = {
     developer: number
     fullDescription: string
     tags: {tagId: number, pluginId:number }[]
-    images: Image[]
-    id: number
+    images: ImageDTO[]
+    id: number | null
     mark: number
     name: string
     price: number
@@ -40,7 +40,12 @@ export type Category = {
     title: string
 }
 
-export type Image = {
+export type ImageWrapper = {
+    file: File
+    title: string
+}
+
+export type ImageDTO = {
     imageId: number
     image: string
     isPreview: boolean

@@ -7,7 +7,7 @@ import {UserMenu, UserProfileData} from "../../components/user/UserProfileData";
 import {AuthContext} from "../../App";
 import {Styled as Sp} from "../Pages.styled";
 import {Container} from "react-bootstrap";
-import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
+import {ImgBlock} from "../../components/image/ImgBlock/ImgBlock";
 import {Header} from "../../components/header/Header";
 import {Filter} from "../../Types";
 import {defaultFilter} from "../../DefaultObjects";

@@ -43,7 +43,7 @@ public class SecurityController {
 
         String token = jwtTokenProvider.createToken(user);
 
-        return ResponseEntity.ok(new AuthenticationResponseDTO(auth.getUsername(), token));
+        return ResponseEntity.ok(new AuthenticationResponseDTO(auth.getUsername(), token, user.getRole().name()));
     }
 
     @Operation(summary = "Signup")

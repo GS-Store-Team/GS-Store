@@ -2,7 +2,7 @@ import React, {FC, Ref, useCallback, useEffect, useRef, useState} from 'react';
 import {ReviewList} from "./ReviewList";
 import Api from "../../API/Api";
 import {NewReview} from "./NewReview";
-import {Comment} from "../../Types";
+import {Comment, Plugin} from "../../Types";
 import {Styled as S} from "./Review.styled"
 import {Styled as S1} from "./../default/Modal.styled"
 import {FlexRow} from "../default/Flex.styled";
@@ -12,11 +12,11 @@ import {Icon} from "../default/Icon";
 import {useOutsideClick} from "../../hooks/Hooks";
 
 interface IReviewArea{
-    pluginId: number;
+    plugin: Plugin;
 }
 
 const defaultComment = {id:undefined, mark:1, text:""}
-export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
+export const ReviewArea : FC<IReviewArea> = ({plugin}) => {
     const [reviews, setReviews] = useState([])
     const [fetch, setFetch] = useState<boolean>(false)
     const [, setCurrentPage] = useState(null)
@@ -27,14 +27,14 @@ export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
     const handleCloseWideView = useCallback(() => setWideView(false), [setWideView])
 
     useEffect(() => {
-        Api.getReviews(pluginId, 1, 100, sortType).then((response) => {
+        Api.getReviews(plugin.id, 1, 100, sortType).then((response) => {
             setCurrentPage(response.data)
             setReviews(response.data.content)
         })
     }, [fetch, sortType])
 
     const handleUploadComment = useCallback((comment : Partial<Comment>) => {
-        Api.sendReview(comment, pluginId).then(r => {
+        Api.sendReview(comment, plugin.id).then(r => {
             setFetch(prevState => (!prevState))
         })
     },[setFetch])
@@ -93,7 +93,7 @@ export const ReviewArea : FC<IReviewArea> = ({pluginId}) => {
                     </FlexRow>
                 </FlexRow>
             </S.Title>
-            <ReviewList comments={reviews} deleteComment={deleteComment} handleEdit={handleEdit}/>
+            <ReviewList comments={reviews} deleteComment={deleteComment} handleEdit={handleEdit} developerId={plugin.developer}/>
             <FlexRow justifyContent={"flex-end"}>
                 <NewReview uploadComment={handleUploadComment} currentComment={comment}/>
             </FlexRow>

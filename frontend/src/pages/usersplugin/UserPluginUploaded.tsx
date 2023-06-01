@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {MyFooter} from "../../components/footer/MyFooter";
 import {useNavigate} from "react-router-dom";
 import {Column, FlexRow} from "../../components/default/Flex.styled";
@@ -11,7 +11,7 @@ import {Header, useHeader} from "../../components/header/Header";
 import {Icon} from "../../components/default/Icon";
 import {UserMenu} from "../../components/user/UserProfileData";
 import {filtersEquals} from "../../utils/Utils";
-import {defaultFilter} from "../../DefaultObjects";
+import {defaultFilter, defaultPlugin} from "../../DefaultObjects";
 
 export const UserPluginUploaded = () => {
     const navigate = useNavigate()
@@ -23,10 +23,19 @@ export const UserPluginUploaded = () => {
         resetFilter,
         loading,
         noContent,
+        renew,
     } = useHeader("MY_PLUGINS_UPLOADED_FILTER", {...defaultFilter, my:true})
 
     const handleOpenModal = useCallback(() => setPluginDataModal(true), [setPluginDataModal])
     const handleClickPurchased = useCallback(() => navigate("/user/plugins/purchased"),[])
+
+    const okPlugins = useMemo(() => plugins.filter(p => p.status === "OK"),[plugins])
+    const moderatedPlugins = useMemo(() => plugins.filter(p => p.status === "MODERATION"),[plugins])
+    const blockedPlugins = useMemo(() => plugins.filter(p => p.status === "BLOCKED"),[plugins])
+    const handleCloseUpload = useCallback(() => {
+        setPluginDataModal(false)
+        renew()
+    }, [])
 
     return (
         <Sp.Wrapper>
@@ -47,17 +56,33 @@ export const UserPluginUploaded = () => {
                                 </FlexRow>
                             </FlexRow>
                             <hr style={{margin:"5px 0 0 40px"}}/>
-                            {noContent ? <span style={{padding:"20px 40px"}}>No content</span>:<PluginList list={plugins} perLine={3}/>}
+                            {noContent ? <span style={{padding:"20px 40px"}}>No content</span>:
+                                <>
+                                    { blockedPlugins.length > 0 &&
+                                        <>
+                                            <S.Heading>Blocked<Icon img={"blocked"} nonClickable /></S.Heading>
+                                            <PluginList list={blockedPlugins} perLine={3}/>
+                                        </>
+                                    }
+                                    { moderatedPlugins.length > 0 &&
+                                        <>
+                                            <S.Heading>Moderation stage<Icon img={"moderation"} nonClickable /></S.Heading>
+                                            <PluginList list={moderatedPlugins} perLine={3}/>
+                                        </>
+                                    }
+                                    { okPlugins.length > 0 &&
+                                        <>
+                                            <S.Heading>Successfully uploaded<Icon img={"ok"} nonClickable /></S.Heading>
+                                            <PluginList list={okPlugins} perLine={3}/>
+                                        </>
+                                    }
+                                </>
+                            }
                         </Column>
                     </FlexRow>
                 </Container>
             </Sp.Main>
-            {pluginDataModal ?
-                <UploadPluginModal
-                    opened={pluginDataModal}
-                    setOpened={setPluginDataModal}
-                /> : <></>
-            }
+            {pluginDataModal && <UploadPluginModal initialPlugin={defaultPlugin} onClose={handleCloseUpload} />}
             <MyFooter/>
         </Sp.Wrapper>
     );

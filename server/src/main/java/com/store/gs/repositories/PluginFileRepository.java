@@ -14,4 +14,8 @@ public interface PluginFileRepository extends CrudRepository<PluginFile, Long> {
             "values (:plugin_id, :data)")
     void insert(@Param("plugin_id") Long pluginId,
                 @Param("data") byte[] data);
+
+    @Modifying
+    @Query("delete from plugin_file where plugin_id = :plugin_id" )
+    void deleteById(@Param("plugin_id") Long pluginId);
 }

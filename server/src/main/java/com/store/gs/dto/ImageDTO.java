@@ -9,5 +9,6 @@ import lombok.Setter;
 public class ImageDTO{
     private Long id;
     private String image;
+    private String name;
     private Boolean isPreview;
 }

@@ -1,7 +1,7 @@
 import {Filter} from "./Types";
 
 export const defaultPlugin = {
-    id: 0,
+    id: null,
     categories: [],
     checked: false,
     developer: 0,
@@ -16,4 +16,4 @@ export const defaultPlugin = {
     status: "OK"
 }
 
-export const defaultFilter : Filter = {value:'', category:{title:'', id: -1}, selectedTags:[], pageId: 1, pageSize: 18}
+export const defaultFilter : Filter = {value:'', category:{title:'', id: -1}, selectedTags:[], pageId: 1, pageSize: 100}

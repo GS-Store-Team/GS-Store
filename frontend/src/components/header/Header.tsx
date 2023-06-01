@@ -87,11 +87,13 @@ export const useHeader = (key: string, defaultFilter: Filter) => {
     const [filter, setFilter] = useSessionState<Filter>(key, defaultFilter);
     const [plugins, setPlugins] = useState<Plugin[]>([]);
     const [pageCount, setPageCount] = useState<number>(1);
+    const [loading, setLoading] = useState(false);
+    const [fetch, setFetch] = useState<boolean>(false)
+    const [noContent, setNoContent] = useState(false);
 
     const resetFilter = useCallback(() => setFilter(defaultFilter), [key, filter])
+    const renew = useCallback(() => setFetch(prevState => !prevState), [])
     const handleChangePage = useCallback((page : number) => setFilter(prevState => ({...prevState, pageId: page})), [key, filter])
-    const [loading, setLoading] = useState(false);
-    const [noContent, setNoContent] = useState(false);
 
     useEffect(() => {
         setLoading(true)
@@ -101,7 +103,7 @@ export const useHeader = (key: string, defaultFilter: Filter) => {
             setPageCount(response.data.totalPages)
             setPlugins(response.data.content)
         })
-    }, [filter])
+    }, [filter, fetch])
 
     return{
         filter,
@@ -112,5 +114,6 @@ export const useHeader = (key: string, defaultFilter: Filter) => {
         handleChangePage,
         loading,
         noContent,
+        renew,
     }
 }

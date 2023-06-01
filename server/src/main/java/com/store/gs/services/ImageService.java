@@ -17,6 +17,9 @@ import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -39,6 +42,7 @@ public class ImageService {
         return new ImageDTO(
                 image.getId(),
                 wrap(Base64.encodeBase64String(image.getData())),
+                image.getName(),
                 image.isPreview()
         );
     }
@@ -55,6 +59,7 @@ public class ImageService {
         return new ImageDTO(
                 image.getId(),
                 wrap(Base64.encodeBase64String(image.getData())),
+                image.getName(),
                 image.isPreview()
         );
     }
@@ -71,20 +76,22 @@ public class ImageService {
         return new ImageDTO(
                 image.getId(),
                 wrap(Base64.encodeBase64String(image.getData())),
+                image.getName(),
                 image.isPreview()
         );
     }
 
-    public void uploadImageForPlugin(Long id, MultipartFile file){
+    public void uploadImageForPlugin(Long id, MultipartFile file, String name){
         if(!ServiceUtils.isImage(file)) throw new NotImageException();
 
         Plugin plugin = pluginRepository.findById(id).orElseThrow();
+        System.out.println(plugin);
         Set<PluginImageRef> imageRefs = plugin.getImages();
 
         if(imageRefs.size() + 1 > config.get_PLUGIN_PICTURES_MAX()) throw new ImagesCountLimitExceededException();
 
         try {
-            Image image = new Image(file.getBytes(), imageRefs.size() == 0);
+            Image image = new Image(file.getBytes(), imageRefs.size() == 0, name);
             image = imageRepository.save(image);
 
             imageRefs.add(new PluginImageRef(image.getId(), plugin.getId()));
@@ -96,7 +103,7 @@ public class ImageService {
         }
     }
 
-    public void uploadImageForUser(MultipartFile file){
+    public void uploadImageForUser(MultipartFile file, String name){
         if(!ServiceUtils.isImage(file)) throw new NotImageException();
 
         UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
@@ -105,7 +112,7 @@ public class ImageService {
         if(imageRefs.size() + 1 > config.get_USER_PICTURES_MAX()) throw new ImagesCountLimitExceededException();
 
         try {
-            Image image = new Image(file.getBytes(), imageRefs.size() == 0);
+            Image image = new Image(file.getBytes(), imageRefs.size() == 0, name);
             image = imageRepository.save(image);
 
             imageRefs.add(new UserdataImageRef(image.getId(), ServiceUtils.getUserId()));

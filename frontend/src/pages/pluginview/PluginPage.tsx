@@ -4,7 +4,7 @@ import Api from "../../API/Api";
 import {MyFooter} from "../../components/footer/MyFooter";
 import {ReviewArea} from "../../components/review/ReviewArea";
 import {Column, FlexColumn, FlexRow} from "../../components/default/Flex.styled";
-import {ImgBlock} from "../../components/ImgBlock/ImgBlock";
+import {ImgBlock} from "../../components/image/ImgBlock/ImgBlock";
 import {Styled as S} from "./PluginPage.styled"
 import {Icon} from "../../components/default/Icon";
 import {Btn} from "../../components/default/Btn";
@@ -16,12 +16,16 @@ import {defaultFilter, defaultPlugin} from "../../DefaultObjects";
 import {SelectedTags} from "../../components/header/tags/TagsCloud";
 import {Tooltip} from "../../components/default/Tooltip";
 import {AuthContext} from "../../App";
+import {UploadPluginModal} from "../../components/modalWindow/UploadPluginModal";
 
 const PluginPage = () => {
     const {user} = useContext(AuthContext)
     const navigate = useNavigate()
     const [filter, setFilter] = useState<Filter>(defaultFilter);
     const [plugin, setPlugin] = useState<Plugin>(defaultPlugin);
+    const [configurePlugin, setConfigurePlugin] = useState<boolean>(false)
+    const [fetch, setFetch] = useState<boolean>()
+
     const params = useParams();
 
     const myPlugin = user.userId === plugin.developer
@@ -33,7 +37,7 @@ const PluginPage = () => {
                 }
             }
         )
-    },[]);
+    },[fetch]);
 
     const statusIcon = useMemo(() => {
         switch (plugin.status){
@@ -65,8 +69,11 @@ const PluginPage = () => {
     }, [plugin])
 
     const handleLicenseRegistrationClick = useCallback(() => navigate("/user/license"), [])
-
-    console.log("plugin ", plugin)
+    const handleOpenConfigure = useCallback(() => setConfigurePlugin(true), [])
+    const handleCloseConfigure = useCallback(() => {
+        setConfigurePlugin(false)
+        setFetch(prevState => !prevState)
+    }, [])
 
     return (
         <S1.Wrapper>
@@ -77,19 +84,13 @@ const PluginPage = () => {
                         <Column style={{minWidth: "200px", width: "300px", justifyContent:"space-between"}}>
                             <FlexColumn style={{marginTop: "100px"}} gap={"40px"}>
                                 <ImgBlock imageRefs={plugin.images.map(img => img.imageId)} />
-                                {tags.length > 0 &&
-                                    <div>
-                                        <div style={{marginBottom: "5px"}}>Appropriate tags</div>
-                                        <SelectedTags selected={tags} />
-                                    </div>
-                                }
+                                {tags.length > 0 && <SelectedTags selected={tags} />}
                             </FlexColumn>
-
                             {myPlugin &&
-                                <span style={{width:"fit-content"}}>
-                                <Tooltip label={"Status determines plugin's scope"}>
-                                    <S.Status>Status: {plugin.status} <span style={{margin: "1px 0 0 4px"}}>{statusIcon}</span></S.Status>
-                                </Tooltip>
+                                <span style={{width:"fit-content", padding: "20px 0 10px 0"}}>
+                                    <Tooltip label={"Status determines plugin's scope"}>
+                                        <S.Status>Status: {plugin.status} <span style={{margin: "1px 0 0 4px"}}>{statusIcon}</span></S.Status>
+                                    </Tooltip>
                                 </span>
                             }
                             <FlexColumn gap={"10px"} style={{marginBottom:"20px"}}>
@@ -103,7 +104,7 @@ const PluginPage = () => {
                                 {!user.isDarciUser &&
                                     <>
                                         <span>You need to register in the license server to be able to buy plugins</span>
-                                        <Btn style={{width:"150px", backgroundColor:"rgb(255,179,58)"}} onClick={handleLicenseRegistrationClick}>Sing up to Darci</Btn>
+                                        <Btn theme={"orange"} style={{width:"150px"}} onClick={handleLicenseRegistrationClick}>Sing up to Darci</Btn>
                                     </>
                                 }
                             </FlexColumn>
@@ -121,7 +122,7 @@ const PluginPage = () => {
                             <S.Items>
                                 { myPlugin ?
                                     <>
-                                        <Icon img={"settings"} size={24} tooltip={{label:"Configure plugin", placement:"top"}} onClick={handleViewOwner}/>
+                                        <Icon img={"settings"} size={24} tooltip={{label:"Configure plugin", placement:"top"}} onClick={handleOpenConfigure}/>
                                         <Icon img={"full-screen"} size={20} tooltip={{label:"View all bug reports", placement:"top"}} onClick={handleViewOwner}/>
                                     </>
                                     :<>
@@ -146,11 +147,12 @@ const PluginPage = () => {
                             }
                         </Column>
                         <Column style={{width: "400px"}}>
-                            { plugin.id && <ReviewArea pluginId={plugin.id}/> }
+                            { plugin.id && <ReviewArea plugin={plugin}/> }
                         </Column>
                     </FlexRow>
                 </Container>
             </S1.Main>
+            { configurePlugin && <UploadPluginModal initialPlugin={plugin} onClose={handleCloseConfigure}/> }
             <MyFooter />
         </S1.Wrapper>
     );
