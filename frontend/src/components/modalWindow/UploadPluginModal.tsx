@@ -27,7 +27,7 @@ const initialText = {
 
 function checkFile(fileName : string): boolean {
     const words = fileName.toLowerCase().split(".")
-    return "dll" !== words[words.length - 1]
+    return "zip" !== words[words.length - 1]
 }
 
 function mapToTags(refs: {tagId: number, pluginId:number }[]): Tag[]{
@@ -43,7 +43,7 @@ export interface StateOption {
 
 export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initialPlugin}) => {
     const [plugin, setPlugin] = useState<Plugin>(() => {
-        if(initialPlugin.id) {
+        if(initialPlugin.id !== null) {
             return {...initialPlugin}
         }
         return {...initialPlugin, ...initialText}
@@ -68,7 +68,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
     const handleRemoveTag = useCallback((tag: Tag) => setSelectedTags(prevState => [...prevState.filter(t => t.id !== tag.id)]), [setSelectedTags])
     const handleDeleteWarn = useCallback(() => setDeleteModal(true), [])
     const handleCloseDeleteWarn = useCallback(() => setDeleteModal(false), [])
-    const handleDeletePlugin = useCallback(() => Api.deletePlugin(plugin.id).then(() => navigate("/user/plugins/uploaded")), [plugin])
+    const handleDeletePlugin = useCallback(() => Api.deletePlugin(plugin.id).then(() => navigate("/user/plugins/uploaded")), [navigate, plugin.id])
 
     const handleAcceptModal = useCallback(() =>{
         plugin.tags = selectedTags.map(t => ({tagId: t.id, pluginId:0 }))
@@ -76,12 +76,12 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
         if(!file) return
         const formData = new FormData();
         formData.append("file", file)
-        // Api.validateFile(formData)
-        //     .then(response => {
-        //         if(!response.data.isPlugin){
-        //             setInvalidFile(true)
-        //             return
-        //         }
+        Api.validateFile(formData)
+            .then(response => {
+                if(!response.data.isPlugin){
+                    setInvalidFile(true)
+                    return
+                }
                 Api.sendPlugin(plugin)
                     .then(({data}) => {
                         Api.uploadPluginFile(data, formData)
@@ -94,10 +94,8 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                             }, Promise.resolve())
                     })
         console.log(plugin)
-            // })
+            })
     }, [plugin, onClose, selectedTags, file, images])
-
-    const handleSetCategory = useCallback((categoryId: number) => setPlugin(prevState => ({...prevState, categories: [{categoryId, pluginId:0}]})), [])
 
     const nameInvalid = plugin.name.length < 4 || plugin.name.length > 64;
     const shortDescInvalid = plugin.shortDescription.length < 20 || plugin.shortDescription.length > 512;
@@ -108,8 +106,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
         let price = Number(e.currentTarget.value);
         if(!price) price = 0
         setPlugin(prevState => ({...prevState, price}))
-        console.log(categoryList);
-    }, [setPlugin])
+    }, [])
 
     const handleFileChange = useCallback((e : React.FormEvent<HTMLInputElement>) => {
         const file = e.currentTarget.files ? e.currentTarget.files[0] : null;
@@ -144,7 +141,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                             <Input
                                 invalid={nameInvalid}
                                 value={plugin.name}
-                                onChange={(e) => setPlugin({... plugin, name: e.target.value})}/>
+                                onChange={(e) => setPlugin({...plugin, name: e.target.value})}/>
                         </span>
                         <span>
                             <S.Row>Price:</S.Row>
@@ -159,7 +156,7 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                                 style={{height: "150px", resize: "none"}}
                                 invalid={shortDescInvalid}
                                 value={plugin.shortDescription}
-                                onChange={(e) => setPlugin({... plugin, shortDescription: e.target.value})}/>
+                                onChange={(e) => setPlugin({...plugin, shortDescription: e.target.value})}/>
                         </span>
                         <span>
                             <S.Text>Full description:</S.Text>
@@ -167,11 +164,11 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                                 style={{height: "240px", resize: "none"}}
                                 invalid={fullDescInvalid}
                                 value={plugin.fullDescription}
-                                onChange={(e) => setPlugin({... plugin, fullDescription: e.target.value})}/>
+                                onChange={(e) => setPlugin({...plugin, fullDescription: e.target.value})}/>
                         </span>
                     </FlexColumn>
                     <FlexColumn style={{width: "50%", gap: "30px", padding: "20px 0 0 40px"}}>
-                        { plugin.id !== undefined &&
+                        { plugin.id !== null &&
                             <FlexRow justifyContent={"flex-end"}>
                                 <Btn danger onClick={handleDeleteWarn} style={{width: "150px"}}>DELETE PLUGIN</Btn>
                             </FlexRow>
@@ -179,22 +176,17 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                         <FlexColumn style={{gap:"3px"}}>
                             <FlexRow justifyContent={"space-between"}>
                                 <span style={{fontSize: "18px"}}>Attach software</span>
-                                <span>Appropriate format: dll</span>
+                                <span>Appropriate format: .zip</span>
                             </FlexRow>
                             <span style={invalidFile ? {border: "2px solid red", padding: "10px 20px", borderRadius: "5px"}:{border: "2px solid green", padding: "10px 20px", borderRadius: "5px"}}>
                                 <Input type={"file"} invalid={invalidFile} id="pluginFile" onChange={handleFileChange}/>
                             </span>
                         </FlexColumn>
 
-{/*                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
-                            Category:
-                            <Categories setCategory={handleSetCategory} category={-1}/>
-                        </FlexRow>*/}
                         <FlexRow style={{alignItems:"center"}} gap={"40px"}>
                             <Select
+
                                 isMulti
-                                menuPlacement="auto"
-                                menuPosition="fixed"
                                 name="categories"
                                 options={transformedCategories}
                                 className="basic-multi-select"

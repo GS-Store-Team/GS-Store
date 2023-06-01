@@ -35,14 +35,27 @@ export const UserProfileData : FC<IUserProfileData> = ({userData, onOpenModal}) 
 };
 
 export const UserMenu: FC<{ chosen: number }> = React.memo(({chosen}) => {
+    const { user } = useContext(AuthContext);
     const navigate = useNavigate();
-    const handleClickProfile = useCallback(() => navigate('/user/0'),[navigate])
+    const handleClickProfile = useCallback(() => navigate('/user'),[navigate])
     const handleClickPlugins = useCallback(() => navigate('/user/plugins/uploaded'),[navigate])
-    const elements = useMemo(() => [{label:"PROFILE",    onClick:handleClickProfile}, {label:"PLUGINS", onClick:handleClickPlugins}], [handleClickProfile, handleClickPlugins])
+    const handleClickDarci = useCallback(() => {},[])
+    const handleClickModerate = useCallback(() => navigate('/moderate'),[navigate])
+    const elements = useMemo(() => {
+        const arr = [
+            {label:"PROFILE", onClick:handleClickProfile},
+            {label:"PLUGINS", onClick:handleClickPlugins},
+            {label:"DARCI", onClick:handleClickDarci}
+        ]
+        if(user.role === 'ADMIN'){
+            arr.push({label:"MODERATE", onClick:handleClickModerate})
+        }
+        return arr
+        }, [handleClickProfile, handleClickPlugins, handleClickDarci, user.role, handleClickModerate])
 
     return(
         <S.UserMenu>
-            {elements.map((e, index) => <S.MenuElem key={index} onClick={e.onClick} chosen={index === chosen}>{e.label}</S.MenuElem>)}
+            {elements?.map((e, index) => <S.MenuElem key={index} onClick={e.onClick} chosen={index === chosen}>{e.label}</S.MenuElem>)}
         </S.UserMenu>
     )
 })

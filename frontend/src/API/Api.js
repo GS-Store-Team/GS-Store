@@ -10,6 +10,24 @@ export default class Api {
         })
     }
 
+    static async getPluginsForModeration(filter){
+        return await restClient.post(`${url}/management/plugins`, filter, {
+            headers:{...httpHeaders},
+        });
+    }
+
+    static async getVerificationResult(pluginId){
+        return await restClient.get(`${url}/management/plugins/${pluginId}/verify`,{
+            headers:{...httpHeaders},
+        });
+    }
+
+    static async managePlugin(pluginId, status){
+        return await restClient.post(`${url}/management/plugins/${pluginId}`, status, {
+            headers:{...httpHeaders},
+        });
+    }
+
     static async getPluginById(id){
         return await restClient.get(`${url}/plugins/` + id,{
             headers:httpHeaders,

@@ -1,5 +1,6 @@
 package com.store.gs.dto;
 
+import com.store.gs.enums.Role;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,4 +14,5 @@ public class UserDataDTO {
     private String phoneNumber;
     private String description;
     private List<Long> images;
+    private Role role;
 }

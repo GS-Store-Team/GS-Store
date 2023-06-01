@@ -21,13 +21,12 @@ export const UserPluginUploaded = () => {
         setFilter,
         plugins,
         resetFilter,
-        loading,
         noContent,
         renew,
     } = useHeader("MY_PLUGINS_UPLOADED_FILTER", {...defaultFilter, my:true})
 
     const handleOpenModal = useCallback(() => setPluginDataModal(true), [setPluginDataModal])
-    const handleClickPurchased = useCallback(() => navigate("/user/plugins/purchased"),[])
+    const handleClickPurchased = useCallback(() => navigate("/user/plugins/purchased"),[navigate])
 
     const okPlugins = useMemo(() => plugins.filter(p => p.status === "OK"),[plugins])
     const moderatedPlugins = useMemo(() => plugins.filter(p => p.status === "MODERATION"),[plugins])
@@ -35,7 +34,7 @@ export const UserPluginUploaded = () => {
     const handleCloseUpload = useCallback(() => {
         setPluginDataModal(false)
         renew()
-    }, [])
+    }, [renew])
 
     return (
         <Sp.Wrapper>

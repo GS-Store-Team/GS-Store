@@ -20,7 +20,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table("userdata")
-public class UserData {
+public class    UserData {
     @Id
     @Column("user_id")
     private Long userId;

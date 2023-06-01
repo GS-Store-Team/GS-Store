@@ -13,11 +13,12 @@ import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import static com.store.gs.models.QPlugin.plugin;
@@ -92,13 +93,9 @@ public class PluginService {
     }
 
     public List<Plugin> pluginsForManagement(ManagementPluginFilterDTO filter){
-        BooleanBuilder predicate = new BooleanBuilder(plugin.status.eq(filter.status));
-
-        return pluginRepository.query(q -> q
-                .select(pluginRepository.entityProjection())
-                .from(plugin)
-                .where(predicate)
-                .fetch()
-        );
+        if(filter.status == null){
+            return pluginRepository.findAll().stream().sorted(Comparator.comparing(Plugin::getId)).toList();
+        }
+        return pluginRepository.findAllByStatus(filter.status).stream().sorted(Comparator.comparing(Plugin::getId)).toList();
     }
 }

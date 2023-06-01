@@ -18,4 +18,7 @@ public interface PluginFileRepository extends CrudRepository<PluginFile, Long> {
     @Modifying
     @Query("delete from plugin_file where plugin_id = :plugin_id" )
     void deleteById(@Param("plugin_id") Long pluginId);
+
+    @Query("select * from plugin_file where plugin_id = :plugin_id" )
+    Optional<PluginFile> manualFindById(@Param("plugin_id") Long pluginId);
 }

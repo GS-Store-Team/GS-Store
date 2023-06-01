@@ -22,8 +22,8 @@ export const Column = styled.div`
     flex: 1 1 auto;
     overflow: auto;
     min-width: 300px;
-    max-height: calc(100vh - 170px);
-    height: calc(100vh - 170px);
+    max-height: calc(100vh - 190px);
+    height: calc(100vh - 190px);
     ::-webkit-scrollbar {
     display: none;
     }

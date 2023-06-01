@@ -17,13 +17,12 @@ restClient.interceptors.response.use(
         return response;
     },
     error => {
-        console.log(error)
         if(error.response.status === 403){
             window.dispatchEvent(new Event('logout'))
         }
         if(error.response.status === 500){
             window.dispatchEvent(new Event('error'))
         }
-        return error
+        return Promise.reject(error)
     }
 );

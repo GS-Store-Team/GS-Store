@@ -26,7 +26,7 @@ export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch
     const [tagsCloud, setTagsCloud] = useState<boolean>(false);
     const ref = React.createRef<HTMLDivElement>()
     const [search, setSearch] = useState<string>('')
-    const handleChangeValue = useCallback((e : ChangeEvent<HTMLInputElement>) => setSearch(e.target.value), [onChangeFilter])
+    const handleChangeValue = useCallback((e : ChangeEvent<HTMLInputElement>) => setSearch(e.target.value), [])
     const applySearch = useCallback(() => onChangeFilter(prevState => ({...prevState, value: search})), [search, onChangeFilter])
     const handleChangeCategory = useCallback((id : number) => onChangeFilter(prevState => ({...prevState, category: {id, title:''}})), [onChangeFilter])
     const handleCloseTagsCloud = useCallback(() => setTagsCloud(false), [setTagsCloud])
@@ -37,7 +37,7 @@ export const Header:FC<IHeader> = ({onChangeFilter, disableProfile, enableSearch
     const handleLogoClick = useCallback(() => {
         if(onLogoClick) onLogoClick()
         else navigate(-1)
-    }, [navigate])
+    }, [navigate, onLogoClick])
 
     useEffect(() => setSearch(filter.value), [filter.value])
 
@@ -91,9 +91,9 @@ export const useHeader = (key: string, defaultFilter: Filter) => {
     const [fetch, setFetch] = useState<boolean>(false)
     const [noContent, setNoContent] = useState(false);
 
-    const resetFilter = useCallback(() => setFilter(defaultFilter), [key, filter])
+    const resetFilter = useCallback(() => setFilter(defaultFilter), [setFilter, defaultFilter])
     const renew = useCallback(() => setFetch(prevState => !prevState), [])
-    const handleChangePage = useCallback((page : number) => setFilter(prevState => ({...prevState, pageId: page})), [key, filter])
+    const handleChangePage = useCallback((page : number) => setFilter(prevState => ({...prevState, pageId: page})), [setFilter])
 
     useEffect(() => {
         setLoading(true)

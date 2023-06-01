@@ -18,26 +18,57 @@ public class ValidationService {
     public VerifierObject validate(MultipartFile file) throws IOException, InterruptedException {
         VerifierObject verifierObject = new VerifierObject();
         String absolutePath = System.getProperty("user.dir")+ "/src/main/java/com/gs/validation/temporary";
-
         file.transferTo(new File(absolutePath + "/validate.dll"));
-
         Process proc = Runtime.getRuntime().exec("mcs /target:exe /out:" +absolutePath + "/Program.exe "+ absolutePath + "/Program.cs");
+        //Process proc = Runtime.getRuntime().exec("csc /target:exe /out:" +absolutePath + "/Program.exe "+ absolutePath + "/Program.cs");
+        BufferedReader stdError = new BufferedReader(new InputStreamReader(proc.getErrorStream()));
+        BufferedReader stdOut = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+        String error;
+        while ((error = stdError.readLine()) != null){
+            System.out.println(error);
+        }
+
+        String line;
+        while ((line = stdOut.readLine()) != null){
+            System.out.println(line);
+        }
+        stdOut.close();
+        stdError.close();
         proc.waitFor();
         Process proc1 = Runtime.getRuntime().exec("mono " + absolutePath+ "/Program.exe " + absolutePath + "/validate.dll ");
-        BufferedReader stdInput = new BufferedReader(new InputStreamReader(proc1.getInputStream()));
-        verifierObject.isPlugin = stdInput.readLine().equals("Is plugin");
-        verifierObject.isTypesAvailable = stdInput.readLine().equals("good");
+
+        BufferedReader stdError1 = new BufferedReader(new InputStreamReader(proc1.getErrorStream()));
+
+        String error1;
+        while ((error1 = stdError1.readLine()) != null){
+            if (error1.contains("Unhandled Exception")){
+                verifierObject.whatHappened = "Compiler version is not comparable.";
+                return verifierObject;
+            }
+        }
+
+        BufferedReader stdInput1 = new BufferedReader(new InputStreamReader(proc1.getInputStream()));
+        String s;
+        verifierObject.isPlugin = stdInput1.readLine().equals("Is plugin");
+        verifierObject.isTypesAvailable = stdInput1.readLine().equals("good");
         verifierObject.types = new ArrayList<>();
         verifierObject.mistakes = new ArrayList<>();
-        String s;
-        while (!(s = stdInput.readLine()).equals("Errors:")){
-            verifierObject.types.add(s);
+
+        if(stdInput1.readLine() != null) {
+            while (!(s = stdInput1.readLine()).equals("Errors:")) {
+                verifierObject.types.add(s);
+            }
+            while ((s = stdInput1.readLine()) != null) {
+                verifierObject.mistakes.add(s);
+            }
         }
-        while ((s = stdInput.readLine()) != null){
-            verifierObject.mistakes.add(s);
-        }
-        stdInput.close();
-        //FileUtils.cleanDirectory(new File(absolutePath));
+        stdInput1.close();
+
+        File file1 = new File(absolutePath + "/Example.zip");
+        file1.delete();
+        new File(absolutePath+"/Program.exe").delete();
+        new File(absolutePath+"/validate.exe").delete();
+
         return verifierObject;
     }
 }
