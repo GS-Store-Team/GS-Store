@@ -3,6 +3,7 @@ import React, {ButtonHTMLAttributes, CSSProperties, PropsWithChildren, useCallba
 interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     primary?: boolean;
     secondary?: boolean;
+    danger?: boolean;
     outline?: boolean;
     round?: boolean;
     sm?: boolean;
@@ -10,12 +11,13 @@ interface BtnProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     style?: CSSProperties
 }
 
-export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, secondary, outline, round, sm, theme, style, children, ...other }, ref) => {
+export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProps>>(({ primary, secondary, danger, outline, round, sm, theme, style, children, ...other }, ref) => {
     const classNames = useMemo(
         () =>
             ['btn']
                 .concat(primary ? 'btn-primary' : '')
                 .concat(secondary ? 'btn-secondary' : '')
+                .concat(danger ? 'btn-danger' : '')
                 .concat(outline ? 'btn-outline' : '')
                 .concat(round ? 'btn-round btn-round_small' : '')
                 .concat(sm ? 'btn_sm' : '')

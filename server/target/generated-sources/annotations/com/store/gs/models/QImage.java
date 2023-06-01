@@ -30,6 +30,8 @@ public class QImage extends com.querydsl.sql.RelationalPathBase<Image> {
 
     public final ArrayPath<byte[], Byte> data = createArray("data", byte[].class);
 
+    public final StringPath name = createString("name");
+
     public QImage(String variable) {
         super(Image.class, forVariable(variable), null, "image");
         addMetadata();
@@ -59,6 +61,7 @@ public class QImage extends com.querydsl.sql.RelationalPathBase<Image> {
         addMetadata(id, ColumnMetadata.named("Id").withIndex(0));
         addMetadata(isPreview, ColumnMetadata.named("is_preview").withIndex(1));
         addMetadata(data, ColumnMetadata.named("Data").withIndex(2));
+        addMetadata(name, ColumnMetadata.named("Name").withIndex(3));
     }
 
 }

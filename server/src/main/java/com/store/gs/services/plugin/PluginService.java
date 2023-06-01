@@ -1,23 +1,23 @@
 package com.store.gs.services.plugin;
 
+import com.querydsl.core.BooleanBuilder;
 import com.store.gs.dto.FilterDTO;
+import com.store.gs.dto.ManagementPluginFilterDTO;
 import com.store.gs.enums.PluginStatus;
 import com.store.gs.models.Plugin;
 import com.store.gs.models.PluginFile;
 import com.store.gs.repositories.PluginFileRepository;
 import com.store.gs.repositories.PluginRepository;
-import com.store.gs.security.SecurityUser;
 import com.store.gs.services.CommentService;
 import com.store.gs.utils.ServiceUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 import static com.store.gs.models.QPlugin.plugin;
@@ -68,20 +68,18 @@ public class PluginService {
         return pluginRepository.findById(id).orElse(null);
     }
 
-    public Long  add(Plugin plugin) {
+    public Long add(Plugin plugin) {
         plugin.setDeveloper(ServiceUtils.getUserId());
         plugin.setStatus(PluginStatus.MODERATION);
-        plugin.setId(null);
 
         return pluginRepository.save(plugin).getId();
     }
 
-    public void changeById(Plugin plugin){
-        pluginRepository.save(plugin);
-    }
-
     public void deleteById(long id){
         commentService.deleteAllCommentsForPlugin(id);
+
+        // TODO: if any user bought plugin, set plugin as deleted
+        pluginFileRepository.deleteById(id);
         pluginRepository.deleteById(id);
     }
 
@@ -91,5 +89,16 @@ public class PluginService {
 
     public void uploadPluginFile(long id, MultipartFile file) throws IOException {
         pluginFileRepository.insert(id, file.getBytes());
+    }
+
+    public List<Plugin> pluginsForManagement(ManagementPluginFilterDTO filter){
+        BooleanBuilder predicate = new BooleanBuilder(plugin.status.eq(filter.status));
+
+        return pluginRepository.query(q -> q
+                .select(pluginRepository.entityProjection())
+                .from(plugin)
+                .where(predicate)
+                .fetch()
+        );
     }
 }

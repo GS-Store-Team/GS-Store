@@ -23,7 +23,8 @@ export const UploadImages : FC<IUploadImages> = ({images, setImages, imageCount 
     const handleUpload = useCallback((e : React.FormEvent<HTMLInputElement>) => {
         if (!e.currentTarget.files) return;
         const file = e.currentTarget.files[0]
-        setImages(prevState => [...prevState, {file, title: file.name, description:""}])
+        const title = file.name ? file.name.slice(0, 20) : ''
+        setImages(prevState => [...prevState, {file, title, description:""}])
 
     }, [setImages, imageCount, images])
 

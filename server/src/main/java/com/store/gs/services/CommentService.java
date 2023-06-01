@@ -54,7 +54,7 @@ public class CommentService {
     }
 
     public void deleteAllCommentsForPlugin(long pluginId){
-        commentRepository.deleteAllByPluginId(pluginId);
+        commentRepository.deleteByPluginId(pluginId);
     }
 
     public Page<CommentDTO> getCommentsForPluginId(Long id, Integer page, Integer limit, Integer type, Authentication authentication){

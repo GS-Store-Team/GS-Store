@@ -11,9 +11,9 @@ import org.springframework.data.relational.core.mapping.Table;
 @NoArgsConstructor
 @Table("plugin_image")
 public class PluginImageRef {
-    @Id
     @Column("image_id")
     private Long imageId;
+    @Id
     @Column("plugin_id")
     private Long pluginId;
 }

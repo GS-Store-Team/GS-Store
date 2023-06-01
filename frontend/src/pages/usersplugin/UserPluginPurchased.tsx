@@ -11,7 +11,7 @@ import {Header, useHeader} from "../../components/header/Header";
 import {Icon} from "../../components/default/Icon";
 import {UserMenu} from "../../components/user/UserProfileData";
 import {filtersEquals} from "../../utils/Utils";
-import {defaultFilter} from "../../DefaultObjects";
+import {defaultFilter, defaultPlugin} from "../../DefaultObjects";
 
 const defaultUserData = {nickName: '', email: '', phoneNumber: '', description: '', images: [], userId: 0}
 
@@ -25,10 +25,15 @@ export const UserPluginPurchased = () => {
         resetFilter,
         loading,
         noContent,
+        renew,
     } = useHeader("MY_PLUGINS_PURCHASED_FILTER", {...defaultFilter, bought:true})
 
     const handleOpenModal = useCallback(() => setPluginDataModal(true), [setPluginDataModal])
     const handleClickUploaded = useCallback(() => navigate("/user/plugins/uploaded"),[])
+    const handleCloseUpload = useCallback(() => {
+        setPluginDataModal(false)
+        renew()
+    }, [])
 
     return (
         <Sp.Wrapper>
@@ -54,12 +59,7 @@ export const UserPluginPurchased = () => {
                     </FlexRow>
                 </Container>
             </Sp.Main>
-            {pluginDataModal ?
-                <UploadPluginModal
-                    opened={pluginDataModal}
-                    setOpened={setPluginDataModal}
-                /> : <></>
-            }
+            {pluginDataModal && <UploadPluginModal initialPlugin={defaultPlugin} onClose={handleCloseUpload} />}
             <MyFooter/>
         </Sp.Wrapper>
     );

@@ -40,14 +40,16 @@ public class ImageController {
         imageService.setPreviewForUser(id);
     }
 
-    @PostMapping("/plugin/{id}")
+    @PostMapping("/plugin/{id}/{image_name}")
     public void uploadImageForPlugin(@PathVariable("id") Long id,
-                                     @RequestParam("_file") MultipartFile image) {
-        imageService.uploadImageForPlugin(id, image);
+                                     @PathVariable("image_name") String name,
+                                     @RequestParam MultipartFile image) {
+        imageService.uploadImageForPlugin(id, image, name);
     }
 
-    @PostMapping("/user")
-    public void uploadImageForUser(@RequestParam("_file") MultipartFile image) {
-        imageService.uploadImageForUser(image);
+    @PostMapping("/user/{image_name}")
+    public void uploadImageForUser(@PathVariable("image_name") String name,
+                                   @RequestParam MultipartFile image) {
+        imageService.uploadImageForUser(image, name);
     }
 }

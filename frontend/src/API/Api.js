@@ -16,8 +16,14 @@ export default class Api {
         });
     }
 
-    static async sendNewPlugin(plugin){
+    static async sendPlugin(plugin){
         return await restClient.post(`${url}/plugins`, plugin, {
+            headers:httpHeaders,
+        });
+    }
+
+    static async deletePlugin(pluginId){
+        return await restClient.delete(`${url}/plugins/${pluginId}`, {
             headers:httpHeaders,
         });
     }
@@ -109,6 +115,12 @@ export default class Api {
 
     static async validateFile(file){
         return await restClient.post(`${validationUrl}/validate`, file,{
+            headers:{...httpHeaders, 'Content-Type': 'multipart/form-data'},
+        });
+    }
+
+    static async uploadImageForPlugin(pluginId, image, name){
+            return await restClient.post(`${url}/images/plugin/${pluginId}/${name}`, image,{
             headers:{...httpHeaders, 'Content-Type': 'multipart/form-data'},
         });
     }

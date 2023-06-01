@@ -51,19 +51,6 @@ public class PluginsController {
         return pluginService.add(plugin);
     }
 
-    @Operation(summary = "Update plugin by plugin-id")
-    @PatchMapping("/{id}")
-    public ResponseEntity<?> changePlugin(@PathVariable("id") long id,
-                             @RequestBody @Valid Plugin plugin,
-                             BindingResult bindingResult){
-
-        if(bindingResult.hasErrors()) return ResponseEntity.unprocessableEntity().body(bindingResult.getAllErrors());
-
-        pluginService.changeById(plugin);
-
-        return ResponseEntity.ok().build();
-    }
-
     @Operation(summary = "Leave comment under current plugin")
     @PostMapping("/{id}/comment")
     public ResponseEntity<?> leaveComment(@PathVariable("id") long id,
@@ -103,7 +90,6 @@ public class PluginsController {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deletePlugin(@PathVariable("id") long id){
         pluginService.deleteById(id);
-
         return ResponseEntity.noContent().build();
     }
 
@@ -122,7 +108,6 @@ public class PluginsController {
     @PostMapping("/{id}/file")
     public ResponseEntity<?> uploadPluginFile(@PathVariable("id") long id,
                                               @RequestParam MultipartFile file) throws Exception {
-        System.out.println(file);
         pluginService.uploadPluginFile(id, file);
 
         return ResponseEntity.ok().build();
