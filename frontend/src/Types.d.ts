@@ -6,7 +6,10 @@ export type UserData = {
     images: number[],
     userId: number,
     isDarciUser: boolean,
+    role?: Role
 }
+
+export type Role = "ADMIN" | "USER"
 
 export type Plugin = {
     categories: {categoryId: number, pluginId:number }[]
@@ -21,8 +24,10 @@ export type Plugin = {
     name: string
     price: number
     shortDescription: string
-    status: string
+    status: PluginStatus
 }
+
+export type PluginStatus = "MODERATION" | "OK" | "BLOCKED" | undefined
 
 export type Comment = {
     id: number | undefined;
@@ -65,4 +70,8 @@ export type Tag = {
     id: number
     title: string
     color?:string
+}
+
+export type ManagementPluginFilterDTO = {
+    status: PluginStatus
 }

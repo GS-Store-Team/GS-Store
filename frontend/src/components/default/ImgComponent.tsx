@@ -1,7 +1,6 @@
-import React, {CSSProperties, FC, useEffect, useMemo, useState} from 'react';
+import React, {CSSProperties, FC, useEffect, useState} from 'react';
 import defaultImg from "../../UI/img/default.png";
 import Loader from "../loading/Loader";
-import classes from "./img.module.css";
 import {ImageDTO} from "../../Types";
 
 interface IImgComponent {

@@ -16,7 +16,8 @@ function useCredentials(){
         id: 1,
         image: '',
         nickName: '',
-        phoneNumber: ''
+        phoneNumber: '',
+        role: 'USER',
     })
 
     useEffect(() =>{
@@ -29,7 +30,7 @@ function useCredentials(){
         })
     }, [isAuth])
 
-    const setAuth = useCallback((value) => {
+    const setAuth = useCallback( (value) => {
         if(value === false) sessionStorage.removeItem("token")
         setIsAuth(value)
     }, [])

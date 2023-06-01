@@ -1,4 +1,4 @@
-import {Filter} from "./Types";
+import {Filter, PluginStatus} from "./Types";
 
 export const defaultPlugin = {
     id: null,
@@ -13,7 +13,7 @@ export const defaultPlugin = {
     deleted: false,
     mark: 5,
     price: 0,
-    status: "OK"
+    status: "OK" as PluginStatus
 }
 
 export const defaultFilter : Filter = {value:'', category:{title:'', id: -1}, selectedTags:[], pageId: 1, pageSize: 100}

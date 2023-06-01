@@ -13,8 +13,6 @@ import {UserMenu} from "../../components/user/UserProfileData";
 import {filtersEquals} from "../../utils/Utils";
 import {defaultFilter, defaultPlugin} from "../../DefaultObjects";
 
-const defaultUserData = {nickName: '', email: '', phoneNumber: '', description: '', images: [], userId: 0}
-
 export const UserPluginPurchased = () => {
     const navigate = useNavigate()
     const [pluginDataModal, setPluginDataModal] = useState(false);
@@ -23,17 +21,16 @@ export const UserPluginPurchased = () => {
         setFilter,
         plugins,
         resetFilter,
-        loading,
         noContent,
         renew,
     } = useHeader("MY_PLUGINS_PURCHASED_FILTER", {...defaultFilter, bought:true})
 
     const handleOpenModal = useCallback(() => setPluginDataModal(true), [setPluginDataModal])
-    const handleClickUploaded = useCallback(() => navigate("/user/plugins/uploaded"),[])
+    const handleClickUploaded = useCallback(() => navigate("/user/plugins/uploaded"),[navigate])
     const handleCloseUpload = useCallback(() => {
         setPluginDataModal(false)
         renew()
-    }, [])
+    }, [renew])
 
     return (
         <Sp.Wrapper>

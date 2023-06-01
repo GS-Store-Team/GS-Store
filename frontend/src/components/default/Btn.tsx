@@ -23,7 +23,7 @@ export const Btn = React.forwardRef<HTMLButtonElement, PropsWithChildren<BtnProp
                 .concat(sm ? 'btn_sm' : '')
                 .filter((className) => className)
                 .join(' '),
-        [outline, primary, round, secondary, sm]
+        [outline, primary, round, secondary, sm, danger]
     );
 
     const backgroundColor = useCallback((theme : string) => {

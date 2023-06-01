@@ -186,15 +186,10 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
                             </span>
                         </FlexColumn>
 
-{/*                        <FlexRow style={{alignItems:"center"}} gap={"40px"}>
-                            Category:
-                            <Categories setCategory={handleSetCategory} category={-1}/>
-                        </FlexRow>*/}
                         <FlexRow style={{alignItems:"center"}} gap={"40px"}>
                             <Select
+
                                 isMulti
-                                menuPlacement="auto"
-                                menuPosition="fixed"
                                 name="categories"
                                 options={transformedCategories}
                                 className="basic-multi-select"

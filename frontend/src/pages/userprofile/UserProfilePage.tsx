@@ -14,17 +14,8 @@ import {defaultFilter} from "../../DefaultObjects";
 
 export const UserProfilePage = () => {
     const [filter, setFilter] = useState<Filter>(defaultFilter);
-    const navigate = useNavigate();
     const { user, setUser } = useContext(AuthContext);
     const [userDataModal, setUserDataModal] = useState(false);
-
-    const myProfile = useCallback(() =>{
-        navigate('/user/' + user.id);
-    },[navigate])
-
-    const myPlugins = useCallback(() =>{
-        navigate('/user/' + user.id + '/plugins');
-    },[navigate])
 
     const handleOpenModal = useCallback(() =>{
         setUserDataModal(true);

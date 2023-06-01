@@ -52,13 +52,13 @@ public class UserService {
 
     public UserDataDTO getUserDataById(long userId) throws NoSuchElementException{
         UserData userData = userDataRepository.findById(userId).orElseThrow();
-
-        return ModelToDTO.userDataDTO(userData);
+        return ModelToDTO.userDataDTO(userData, null);
     }
 
     public UserDataDTO getUserDataFromCurrentUser(){
         UserData userData = userDataRepository.findById(ServiceUtils.getUserId()).orElseThrow();
-        return ModelToDTO.userDataDTO(userData);
+        User user = userRepository.getUserById(userData.getUserId()).get();
+        return ModelToDTO.userDataDTO(userData, user.getRole());
     }
 
     public void deleteCurrentUser(Authentication authentication) throws UserPrincipalNotFoundException{

@@ -11,4 +11,6 @@ import java.util.List;
 public interface PluginRepository extends QuerydslJdbcRepository<Plugin, Long> {
     Page<Plugin> findAllByIdIn(List<Long> ids, Pageable pageable);
     Page<Plugin> findAllByIdInAndStatus(List<Long> ids, PluginStatus status, Pageable pageable);
+
+    List<Plugin> findAllByStatus(PluginStatus status);
 }

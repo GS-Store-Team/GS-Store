@@ -92,13 +92,9 @@ public class PluginService {
     }
 
     public List<Plugin> pluginsForManagement(ManagementPluginFilterDTO filter){
-        BooleanBuilder predicate = new BooleanBuilder(plugin.status.eq(filter.status));
-
-        return pluginRepository.query(q -> q
-                .select(pluginRepository.entityProjection())
-                .from(plugin)
-                .where(predicate)
-                .fetch()
-        );
+        if(filter.status == null){
+            return pluginRepository.findAll();
+        }
+        return pluginRepository.findAllByStatus(filter.status);
     }
 }

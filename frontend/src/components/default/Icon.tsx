@@ -88,7 +88,7 @@ export const Icon : FC<IIcon> = ({img, tooltip, style, onClick, nonClickable=fal
                 <img style={{width: "100%", height: "100%"}} draggable={false} src={getPng(img)} alt={":("}/>
             </S.Icon>
         )
-    }, [img, style, onClick])
+    }, [img, style, onClick, nonClickable, size])
 
     return(
         tooltip?

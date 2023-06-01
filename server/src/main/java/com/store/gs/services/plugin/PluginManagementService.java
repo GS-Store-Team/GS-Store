@@ -20,7 +20,7 @@ public class PluginManagementService {
     private final PluginRepository pluginRepository;
     private final PluginFileRepository pluginFileRepository;
     private final RestTemplate restTemplate;
-    private static final String VERIFIER_URL = "http://localhost:8080/api/random";
+    private static final String VERIFIER_URL = "http://localhost:8081/validation";
     private static final Logger log = LoggerFactory.getLogger(PluginManagementService.class);
 
     public void managePlugin(Long pluginId, PluginStatus pluginStatus){
