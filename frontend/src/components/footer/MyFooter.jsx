@@ -6,7 +6,7 @@ import Api from "../../API/Api";
 export const MyFooter = () => {
     const navigate = useNavigate();
     const myNavigate = () =>{
-        navigate(-1);
+        navigate('/main');
     }
 
     const [userData, setUserData] = useState({
@@ -27,6 +27,10 @@ export const MyFooter = () => {
         navigate('/user/' + userData.id);
     }
 
+    const about = () =>{
+        navigate('/about');
+    }
+
     return (
         <div className={classes.my_footer}>
             <div className={"container"}>
@@ -35,7 +39,7 @@ export const MyFooter = () => {
                              className={classes.footer_text}>
                             Home
                         </div>
-                        <div className={classes.footer_text}>
+                        <div className={classes.footer_text} onClick={about}>
                             Contacts
                         </div>
                         <div onClick={myProfile}
