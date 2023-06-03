@@ -72,28 +72,19 @@ export const UploadPluginModal : React.FC<IUploadPluginModal> = ({onClose, initi
 
     const handleAcceptModal = useCallback(() =>{
         plugin.tags = selectedTags.map(t => ({tagId: t.id, pluginId:0 }))
-
         if(!file) return
         const formData = new FormData();
         formData.append("file", file)
-        Api.validateFile(formData)
-            .then(response => {
-                if(!response.data.isPlugin){
-                    setInvalidFile(true)
-                    return
-                }
-                Api.sendPlugin(plugin)
-                    .then(({data}) => {
-                        Api.uploadPluginFile(data, formData)
-                            .then(onClose)
+        Api.sendPlugin(plugin)
+            .then(({data}) => {
+                Api.uploadPluginFile(data, formData)
+                    .then(onClose)
 
-                        images.reduce((prev, img) => {
-                                const formData = new FormData()
-                                formData.append("image", img.file)
-                                return prev.then(() => Api.uploadImageForPlugin(data,formData, img.title)) as Promise<any>
-                            }, Promise.resolve())
-                    })
-        console.log(plugin)
+                images.reduce((prev, img) => {
+                        const formData = new FormData()
+                        formData.append("image", img.file)
+                        return prev.then(() => Api.uploadImageForPlugin(data,formData, img.title)) as Promise<any>
+                    }, Promise.resolve())
             })
     }, [plugin, onClose, selectedTags, file, images])
 
